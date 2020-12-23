@@ -1,7 +1,7 @@
-name: unit-tests
+name: prettier
 on: [push]
 jobs:
-  run-unit-tests:
+  run-prettier:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -9,4 +9,4 @@ jobs:
         with:
           node-version: "12"
       - run: npm install
-      - run: npm test
+      - run: npx prettier --check src
