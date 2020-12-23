@@ -1,12 +1,15 @@
-import React from 'react';
-import '../assets/css/components/Label.css';
+import './Label.css';
+import { ReactNode } from 'react';
 
-type LabelProps = { labelName: string, color: string }; 
-const Label = ({labelName, color} : LabelProps) => {
+type Type = "normal" | "secondary" | "progress" | "error" | "success";
+type LabelProps = { type:Type , children: ReactNode }; 
+
+const Label = ({type, children}: LabelProps) => {
+  
   return (
-    <div className={`labelText ${color}`}>
-        {labelName}
-    </div>
+    <span className={`label ${type}`}>
+      {children}
+    </span>
   );
 }
 
