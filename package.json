@@ -34,7 +34,11 @@
       "prettier",
       "prettier/@typescript-eslint",
       "prettier/react"
-    ]
+    ],
+    "rules": {
+      "react/jsx-uses-react": "off",
+      "react/react-in-jsx-scope": "off"
+    }
   },
   "browserslist": {
     "production": [
