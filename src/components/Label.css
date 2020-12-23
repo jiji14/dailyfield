@@ -1,0 +1,18 @@
+.label {
+  font-weight: bold;
+}
+.primary {
+  color: var(--orange-color);
+}
+.secondary {
+  color: var(--grey-color);
+}
+.error {
+  color: var(--red-color);
+}
+.success {
+  color: var(--green-color);
+}
+.progress {
+  color: var(--blue-color);
+}
