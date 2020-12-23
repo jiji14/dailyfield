@@ -1,0 +1,31 @@
+:root {
+    --textWhite : #ffffff;
+    --textlightGrey : #666666;
+    --textOrange : #FF7B25
+}
+
+.dateText {
+    color: var(--textlightGrey);
+    font-size: 22px;
+    margin-bottom: 10px;
+}
+.timeText {
+    text-align: start;
+    font-size: 18px;
+}
+.placeText {
+    text-align: start;
+    font-size: 14px;
+    margin-bottom: 4px;
+}
+.infoContainer {
+    display: flex;
+}
+.infoText {
+    font-size: 10px;
+    color: var(--textlightGrey);
+    margin-right: 4px;
+}
+.matchListDivider {
+    margin: 4px 0 8px 0;
+}
