@@ -1,4 +1,4 @@
-import logo from "./logo.svg";
+import MatchList from "./components/MatchList";
 import "./App.css";
 
 function App() {
