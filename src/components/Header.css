@@ -10,11 +10,11 @@
   color: var(--white-color);
   box-sizing: border-box;
 }
+.menu > :not(:last-child) {
+  margin-right: 16px;
+}
 .selectedMenu {
   border-bottom: 1px solid var(--orange-color);
-}
-.menuFirstItem {
-  margin-right: 16px;
 }
 .login {
   display: flex;
