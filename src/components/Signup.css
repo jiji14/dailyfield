@@ -1,0 +1,20 @@
+.signUp {
+  padding: 20px 10px;
+}
+.signUpContainer {
+  margin-bottom: 20px;
+}
+.signUpTitle {
+  font-size: 12px;
+}
+.signUpSubtitle {
+  color: var(--grey-color);
+}
+.marginBottom {
+  margin-bottom: 4px;
+}
+.signUpButtonContainer {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 20px;
+}
