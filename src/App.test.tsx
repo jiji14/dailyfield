@@ -25,4 +25,10 @@ describe("Test", () => {
     const button = screen.getByText(/신청승인/i);
     expect(button).toBeInTheDocument();
   });
+
+  test("renders Signup", () => {
+    render(<App />);
+    const button = screen.getByText(/가입하기/i);
+    expect(button).toBeInTheDocument();
+  });
 });
