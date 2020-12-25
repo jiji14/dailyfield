@@ -15,10 +15,10 @@ export interface Match {
 }
 
 export interface Player {
-    id: number;
-    name: string;
-    gender: "남성" | "여성";
-    phoneNumber: string;
-    matchesPlayed: number;
-    status: "예약신청" | "취소신청" | "확정"
+  id: number;
+  name: string;
+  gender: "남성" | "여성";
+  phoneNumber: string;
+  matchesPlayed: number;
+  status: "예약신청" | "취소신청" | "확정";
 }
