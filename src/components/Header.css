@@ -1,0 +1,28 @@
+.menubar {
+  background-color: var(--black-color);
+  padding: 20px 10px;
+}
+.logo {
+  color: var(--orange-color);
+}
+.menu {
+  display: flex;
+  color: var(--white-color);
+  box-sizing: border-box;
+}
+.selectedMenu {
+  border-bottom: 1px solid var(--orange-color);
+}
+.menuFirstItem {
+  margin-right: 16px;
+}
+.login {
+  display: flex;
+  justify-content: flex-end;
+  color: var(--white-color);
+}
+.infobar {
+  background-color: var(--orange-color);
+  font-size: 20px;
+  padding: 10px;
+}
