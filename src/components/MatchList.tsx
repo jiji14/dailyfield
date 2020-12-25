@@ -7,13 +7,12 @@ import { Match } from "../types";
 
 const match: Match = {
   id: 1,
-  date: new Date("2020-12-23"),
-  time: "12:00",
+  dateTime: new Date(),
   place: "용산 더베이스",
   memberCount: 15,
   teamCount: 3,
-  gender: "female",
-  level: "easy",
+  gender: "여성",
+  level: "초급",
   link: "naver.com",
   gameType: "gx",
   fee: 20000,
@@ -27,7 +26,9 @@ const MatchList = () => {
     <>
       <Row align="middle">
         <Col span={6}>
-          <div className="time">{match.time}</div>
+          <div className="time">
+            {match.dateTime.getHours()}:{match.dateTime.getMinutes()}
+          </div>
         </Col>
         <Col span={12}>
           <div className="place">{match.place}</div>
