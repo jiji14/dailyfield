@@ -6,3 +6,7 @@
   --red-color: #ff3300;
   --blue-color: #1fbff1;
 }
+
+.divider {
+  margin: 4px 0 8px 0;
+}
