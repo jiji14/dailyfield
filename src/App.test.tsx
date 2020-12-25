@@ -1,20 +1,22 @@
 import { render, screen } from "@testing-library/react";
 import App from "./App";
 
-test("renders MatchLists", () => {
+describe("Test", () => {
   beforeAll(() => {
-    Object.defineProperty(window, "matchMedia", {
-      value: jest.fn(() => {
+    global.matchMedia =
+      global.matchMedia ||
+      function () {
         return {
           matches: true,
           addListener: jest.fn(),
-          removeListener: jest.fn()
+          removeListener: jest.fn(),
         };
-      })
-    });
+      };
   });
 
-  render(<App />);
-  const linkElement = screen.getByText(/신청가능/i);
-  expect(linkElement).toBeInTheDocument();
+  test("renders MatchLists", () => {
+    render(<App />);
+    const label = screen.getByText(/신청가능/i);
+    expect(label).toBeInTheDocument();
+  });
 });
