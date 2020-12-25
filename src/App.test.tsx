@@ -1,8 +1,22 @@
 import { render, screen } from "@testing-library/react";
 import App from "./App";
 
-test("renders learn react link", () => {
-  render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+describe("Test", () => {
+  beforeAll(() => {
+    global.matchMedia =
+      global.matchMedia ||
+      function () {
+        return {
+          matches: true,
+          addListener: jest.fn(),
+          removeListener: jest.fn(),
+        };
+      };
+  });
+
+  test("renders MatchLists", () => {
+    render(<App />);
+    const label = screen.getByText(/신청가능/i);
+    expect(label).toBeInTheDocument();
+  });
 });
