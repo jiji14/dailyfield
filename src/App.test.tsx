@@ -19,4 +19,10 @@ describe("Test", () => {
     const label = screen.getByText(/신청가능/i);
     expect(label).toBeInTheDocument();
   });
+
+  test("renders Headers", () => {
+    render(<App />);
+    const menu = screen.getByText(/MATCH/i);
+    expect(menu).toBeInTheDocument();
+  });
 });
