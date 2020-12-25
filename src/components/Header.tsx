@@ -19,7 +19,7 @@ const Header = (): JSX.Element => {
           LOGIN
         </Col>
       </Row>
-      <div className="infobar">새로운 커뮤니티의 시작♡ DAILY FIELD</div>
+      <div className="banner">새로운 커뮤니티의 시작♡ DAILY FIELD</div>
     </div>
   );
 };
