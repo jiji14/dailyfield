@@ -21,7 +21,7 @@ const match: Match = {
   manager: "배성진",
 };
 
-const MatchList = () => {
+const MatchList = (): JSX.Element => {
   return (
     <>
       <Row align="middle">
