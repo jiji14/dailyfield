@@ -1,8 +1,10 @@
 import MatchList from "./components/MatchList";
 import PlayerList from "./components/PlayerList";
+import Header from "./components/Header";
 import "./App.css";
 import firebase from "firebase";
 import { Player, Match } from "./types";
+
 // Required for side-effects
 require("firebase/firestore");
 // Initialize Cloud Firestore through Firebase
@@ -58,6 +60,7 @@ const addMatch = () => {
 function App(): JSX.Element {
   return (
     <div className="App">
+      <Header />
       <MatchList />
       <PlayerList />
       <button onClick={addUser}>Add User</button>
