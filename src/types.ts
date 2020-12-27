@@ -1,5 +1,4 @@
 export interface Match {
-  id: number;
   dateTime: Date;
   place: string;
   memberCount: number;
@@ -15,10 +14,10 @@ export interface Match {
 }
 
 export interface Player {
-  id: number;
   name: string;
   gender: "남성" | "여성";
   phoneNumber: string;
+  birthDate: Date;
   matchesPlayed: number;
-  status: "예약신청" | "취소신청" | "확정";
+  status?: "예약신청" | "취소신청" | "확정";
 }

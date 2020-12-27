@@ -6,7 +6,6 @@ import "./MatchList.css";
 import { Match } from "../types";
 
 const match: Match = {
-  id: 1,
   dateTime: new Date(),
   place: "용산 더베이스",
   memberCount: 15,
