@@ -22,7 +22,7 @@ describe("Test", () => {
 
   test("renders Headers", () => {
     render(<App />);
-    const menu = screen.getByText(/MATCH/i);
+    const menu = screen.getByText(/새로운 커뮤니티의 시작/i);
     expect(menu).toBeInTheDocument();
   });
 
