@@ -5,10 +5,10 @@ import "./PlayerList.css";
 import { Player } from "../types";
 
 const player: Player = {
-  id: 1,
   name: "이지정",
   gender: "여성",
   phoneNumber: "010-9014-3492",
+  birthDate: new Date("1992-01-14"),
   matchesPlayed: 10,
   status: "예약신청",
 };
