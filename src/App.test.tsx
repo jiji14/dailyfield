@@ -1,17 +1,10 @@
 import { render, screen } from "@testing-library/react";
+import { matchMediaSetup } from "./jestSetup";
 import App from "./App";
 
 describe("Test", () => {
   beforeAll(() => {
-    global.matchMedia =
-      global.matchMedia ||
-      function () {
-        return {
-          matches: true,
-          addListener: jest.fn(),
-          removeListener: jest.fn(),
-        };
-      };
+    matchMediaSetup();
   });
 
   test("renders MatchLists", () => {
@@ -23,12 +16,6 @@ describe("Test", () => {
   test("renders PlayerLists", () => {
     render(<App />);
     const button = screen.getByText(/신청승인/i);
-    expect(button).toBeInTheDocument();
-  });
-
-  test("renders Signup", () => {
-    render(<App />);
-    const button = screen.getByText(/가입하기/i);
     expect(button).toBeInTheDocument();
   });
 });
