@@ -23,54 +23,50 @@ const Signup = (): JSX.Element => {
 
   return (
     <div className="signUp">
-      <div className="signUpContainer">
-        <Row align="middle" className="signUpTitle">
-          필수사항
-        </Row>
+      <section className="signUpContainer">
+        <h3>필수사항</h3>
         <Divider className="divider" />
-        <Row align="middle" className="marginBottom">
+        <Row align="middle" className="Row">
           <Col span={6} className="signUpSubtitle">
             이름
           </Col>
-          <Col span={18} className="alignRight">
+          <Col span={18}>
             <Input placeholder="이름을 입력해주세요." />
           </Col>
         </Row>
-        <Row align="middle">
+        <Row align="middle" className="Row">
           <Col span={6} className="signUpSubtitle">
             생년월일
           </Col>
-          <Col span={18} className="alignRight">
+          <Col span={18}>
             <DatePicker />
           </Col>
         </Row>
-      </div>
-      <div>
-        <Row align="middle" className="signUpTitle">
-          선택사항
-        </Row>
+      </section>
+      <section className="signUpContainer">
+        <h3>선택사항</h3>
         <Divider className="divider" />
-        <Row align="middle" className="marginBottom">
+        <Row align="middle" className="Row">
           <Col span={6} className="signUpSubtitle">
             성별
           </Col>
-          <Col span={18} className="alignRight">
-            <Select defaultValue="남성" style={{ width: 120 }}>
+          <Col span={18}>
+            <Select defaultValue="남성" className="signUpSelect">
               <Option value="남성">남성</Option>
               <Option value="여성">여성</Option>
             </Select>
           </Col>
         </Row>
-        <Row align="middle">
+        <Row align="middle" className="Row">
           <Col span={6} className="signUpSubtitle">
             테마
           </Col>
-          <Col span={18} className="alignRight">
+          <Col span={18}>
             <div className="signUpSubtitle"> 중복선택 가능합니다.</div>
             <Checkbox.Group options={options} defaultValue={["sporty"]} />
           </Col>
         </Row>
-      </div>
+      </section>
       <div className="signUpButtonContainer">
         <Button type="primary">가입하기</Button>
       </div>

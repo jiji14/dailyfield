@@ -4,17 +4,20 @@
 .signUpContainer {
   margin-bottom: 20px;
 }
+.signUpContainer .Row {
+  margin-bottom: 8px;
+}
 .signUpTitle {
   font-size: 12px;
 }
 .signUpSubtitle {
   color: var(--grey-color);
 }
-.marginBottom {
-  margin-bottom: 4px;
-}
 .signUpButtonContainer {
   display: flex;
   justify-content: flex-end;
-  margin-top: 20px;
+  margin-top: 40px;
+}
+.signUpSelect {
+  width: 120px;
 }
