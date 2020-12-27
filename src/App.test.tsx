@@ -1,17 +1,10 @@
 import { render, screen } from "@testing-library/react";
+import { matchMediaSetup } from "./jestSetup";
 import App from "./App";
 
 describe("Test", () => {
   beforeAll(() => {
-    global.matchMedia =
-      global.matchMedia ||
-      function () {
-        return {
-          matches: true,
-          addListener: jest.fn(),
-          removeListener: jest.fn(),
-        };
-      };
+    matchMediaSetup();
   });
 
   test("renders MatchLists", () => {

@@ -2,6 +2,7 @@ import MatchList from "./components/MatchList";
 import PlayerList from "./components/PlayerList";
 import Header from "./components/Header";
 import "./App.css";
+import Signup from "./components/Signup";
 import firebase from "firebase";
 import { Player, Match } from "./types";
 
@@ -63,6 +64,7 @@ function App(): JSX.Element {
       <Header />
       <MatchList />
       <PlayerList />
+      <Signup />
       <button onClick={addUser}>Add User</button>
       <button onClick={addMatch}>Add Match</button>
     </div>
