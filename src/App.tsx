@@ -57,9 +57,6 @@ function App(): JSX.Element {
       <Header />
       <MatchList />
       <PlayerList />
-      <Signup />
-      <button onClick={addUser}>Add User</button>
-      <button onClick={addMatch}>Add Match</button>
     </div>
   );
 }
