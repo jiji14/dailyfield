@@ -26,3 +26,9 @@
   font-size: 20px;
   padding: 10px;
 }
+#sign-in-button {
+  color: var(--white-color);
+  background: var(--black-color);
+  box-shadow: none;
+  border: none;
+}
