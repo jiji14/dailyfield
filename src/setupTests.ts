@@ -3,6 +3,7 @@
 // expect(element).toHaveTextContent(/react/i)
 // learn more: https://github.com/testing-library/jest-dom
 import "@testing-library/jest-dom";
+import firebase from "firebase";
 
 global.matchMedia =
   global.matchMedia ||
@@ -13,3 +14,5 @@ global.matchMedia =
       removeListener: jest.fn(),
     };
   };
+
+jest.mock("firebase");
