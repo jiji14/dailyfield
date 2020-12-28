@@ -6,37 +6,6 @@ import Signup from "./components/Signup";
 import firebase from "firebase";
 import { Player, Match } from "./types";
 
-// Required for side-effects
-require("firebase/firestore");
-// Initialize Cloud Firestore through Firebase
-firebase.initializeApp({
-  apiKey: "AIzaSyAe49YgiJ8xkL43GPyhFuBXoB4bAzzkHms",
-  authDomain: "dailyfield-a845d.firebaseapp.com",
-  projectId: "dailyfield-a845d",
-});
-firebase.auth().languageCode = "ko";
-declare global {
-  interface Window {
-    recaptchaVerifier: unknown;
-  }
-}
-window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier(
-  "recaptcha-container",
-  {
-    size: "normal",
-    callback: function (response: unknown) {
-      // reCAPTCHA solved, allow signInWithPhoneNumber.
-      // ...
-      console.log(response);
-    },
-    "expired-callback": function () {
-      // Response expired. Ask user to solve reCAPTCHA again.
-      // ...
-    },
-  }
-);
-
-const db = firebase.firestore();
 const player: Player = {
   name: "이지정",
   gender: "여성",
@@ -59,6 +28,7 @@ const match: Match = {
   manager: "배성진",
 };
 const addUser = () => {
+  const db = firebase.firestore();
   db.collection("users")
     .add(player)
     .then(function (docRef) {
@@ -70,6 +40,7 @@ const addUser = () => {
 };
 
 const addMatch = () => {
+  const db = firebase.firestore();
   db.collection("matches")
     .add(match)
     .then(function (docRef) {
