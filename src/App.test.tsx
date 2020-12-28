@@ -1,12 +1,7 @@
 import { render, screen } from "@testing-library/react";
-import { matchMediaSetup } from "./setupTests";
 import App from "./App";
 
 describe("Test", () => {
-  beforeAll(() => {
-    matchMediaSetup();
-  });
-
   test("renders MatchLists", () => {
     render(<App />);
     const label = screen.getByText(/신청가능/i);
