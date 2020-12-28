@@ -3,6 +3,17 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
+import firebase from "firebase";
+
+// Required for side-effects
+require("firebase/firestore");
+// Initialize Cloud Firestore through Firebase
+firebase.initializeApp({
+  apiKey: "AIzaSyAe49YgiJ8xkL43GPyhFuBXoB4bAzzkHms",
+  authDomain: "dailyfield-a845d.firebaseapp.com",
+  projectId: "dailyfield-a845d",
+});
+firebase.auth().languageCode = "ko";
 
 ReactDOM.render(
   <StrictMode>
