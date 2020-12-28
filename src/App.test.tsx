@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import { matchMediaSetup } from "./jestSetup";
+import { matchMediaSetup } from "./setupTests";
 import App from "./App";
 
 describe("Test", () => {
