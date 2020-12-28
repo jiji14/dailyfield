@@ -14,6 +14,28 @@ firebase.initializeApp({
   authDomain: "dailyfield-a845d.firebaseapp.com",
   projectId: "dailyfield-a845d",
 });
+firebase.auth().languageCode = "ko";
+declare global {
+  interface Window {
+    recaptchaVerifier: unknown;
+  }
+}
+window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier(
+  "recaptcha-container",
+  {
+    size: "normal",
+    callback: function (response: unknown) {
+      // reCAPTCHA solved, allow signInWithPhoneNumber.
+      // ...
+      console.log(response);
+    },
+    "expired-callback": function () {
+      // Response expired. Ask user to solve reCAPTCHA again.
+      // ...
+    },
+  }
+);
+
 const db = firebase.firestore();
 const player: Player = {
   name: "이지정",
