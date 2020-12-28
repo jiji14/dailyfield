@@ -5,34 +5,22 @@ import "./Header.css";
 import firebase from "firebase";
 import { Player } from "../types";
 
-declare global {
-  interface Window {
-    recaptchaVerifier: firebase.auth.ApplicationVerifier;
-    confirmationResult: firebase.auth.ConfirmationResult;
-  }
-}
-
 const signInWithPhoneNumber = () => {
-  window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier(
-    "sign-in-button",
-    {
-      size: "invisible",
-      callback: function (response: unknown) {
-        console.log(response);
-      },
-      "expired-callback": function () {
-        console.log("failed");
-      },
-    }
-  );
+  const appVerifier = new firebase.auth.RecaptchaVerifier("sign-in-button", {
+    size: "invisible",
+    callback: function (response: unknown) {
+      console.log(response);
+    },
+    "expired-callback": function () {
+      console.log("failed");
+    },
+  });
 
   const phoneNumber = "+821090143492";
-  const appVerifier = window.recaptchaVerifier;
   firebase
     .auth()
     .signInWithPhoneNumber(phoneNumber, appVerifier)
     .then(function (confirmationResult) {
-      window.confirmationResult = confirmationResult;
       const code = window.prompt("코드를 입력해주세요.") || "";
       confirmationResult.confirm(code).then(function (result) {
         const user = result.user;
