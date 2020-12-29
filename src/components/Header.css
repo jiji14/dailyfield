@@ -10,9 +10,6 @@
   color: var(--white-color);
   box-sizing: border-box;
 }
-.menu > div {
-  cursor: pointer;
-}
 .menu > :not(:last-child) {
   margin-right: 16px;
 }
@@ -34,5 +31,4 @@
   background: var(--black-color);
   box-shadow: none;
   border: none;
-  cursor: pointer;
 }
