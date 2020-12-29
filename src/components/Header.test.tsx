@@ -13,7 +13,7 @@ describe("Test", () => {
         }),
       }),
     });
-
+    // Fake constructor.
     firebase.auth.RecaptchaVerifier = jest.fn();
     window.prompt = () => "123456";
 
