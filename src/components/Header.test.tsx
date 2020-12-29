@@ -19,20 +19,20 @@ describe("Test", () => {
 
     render(<Header />);
 
-    fireEvent.click(screen.getByText("LOGIN"));
+    fireEvent.click(screen.getByText("SIGNIN"));
 
     const input = screen.getByPlaceholderText("핸드폰번호");
     fireEvent.change(input, { target: { value: "+1 650-555-3434" } });
 
-    const button = screen.getByText(/로그인/i);
-    expect(button).toBeInTheDocument();
+    const loginButton = screen.getByText(/로그인/i);
+    expect(loginButton).toBeInTheDocument();
 
     await act(async () => {
-      fireEvent.click(button);
+      fireEvent.click(loginButton);
     });
 
-    const logoutButton = screen.getByText("LOGOUT");
-    await expect(logoutButton).toBeInTheDocument();
+    const logoutButton = screen.getByText("SIGNOUT");
+    expect(logoutButton).toBeInTheDocument();
   });
 
   test("Sign Out", async () => {
@@ -44,10 +44,10 @@ describe("Test", () => {
     render(<Header />);
 
     await act(async () => {
-      fireEvent.click(screen.getByText("LOGOUT"));
+      fireEvent.click(screen.getByText("SIGNOUT"));
     });
 
-    const logoutButton = screen.getByText("LOGIN");
-    await expect(logoutButton).toBeInTheDocument();
+    const logoutButton = screen.getByText("SIGNIN");
+    expect(logoutButton).toBeInTheDocument();
   });
 });

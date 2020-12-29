@@ -16,7 +16,7 @@
 .selectedMenu {
   border-bottom: 1px solid var(--orange-color);
 }
-.login {
+.signin {
   display: flex;
   justify-content: flex-end;
   color: var(--white-color);
