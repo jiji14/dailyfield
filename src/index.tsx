@@ -18,12 +18,14 @@ firebase.initializeApp({
 firebase.auth().languageCode = "ko";
 
 ReactDOM.render(
-  <BrowserRouter>
-    <Switch>
-      <Route exact path="/" component={App} />
-      <Route path="/signup" component={Signup} />
-    </Switch>
-  </BrowserRouter>,
+  <StrictMode>
+    <BrowserRouter>
+      <Switch>
+        <Route exact path="/" component={App} />
+        <Route path="/signup" component={Signup} />
+      </Switch>
+    </BrowserRouter>
+  </StrictMode>,
   document.getElementById("root")
 );
 
