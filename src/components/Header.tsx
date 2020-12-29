@@ -17,7 +17,7 @@ const Header = (): JSX.Element => {
     setIsModalVisible(true);
   };
 
-  const handleCancel = () => {
+  const hideModal = () => {
     setIsModalVisible(false);
   };
 
@@ -27,15 +27,12 @@ const Header = (): JSX.Element => {
   };
 
   const signInWithPhoneNumber = () => {
-    console.log(appVerifier);
     if (!appVerifier) {
       appVerifier = new firebase.auth.RecaptchaVerifier("sign-in-button", {
         size: "invisible",
       });
     }
-    console.log(appVerifier);
-    if (!appVerifier) return;
-    console.log(appVerifier);
+
     firebase
       .auth()
       .signInWithPhoneNumber(phoneNumber, appVerifier)
@@ -56,19 +53,19 @@ const Header = (): JSX.Element => {
               });
             } else {
               setUser(user);
-              setIsModalVisible(false);
+              hideModal();
             }
           })
           .catch((e) => {
-            window.confirm(e);
+            window.alert(e);
           });
       })
       .catch(function (error) {
-        console.log(error);
+        window.alert(error);
       });
   };
 
-  const logOut = () => {
+  const signOut = () => {
     firebase
       .auth()
       .signOut()
@@ -76,7 +73,7 @@ const Header = (): JSX.Element => {
         setUser(null);
       })
       .catch(function (error) {
-        console.log(error);
+        window.alert(error);
       });
   };
 
@@ -91,32 +88,32 @@ const Header = (): JSX.Element => {
           <div>ABOUT</div>
         </Col>
         <Col span={4}></Col>
-        <Col span={4} className="login">
+        <Col span={4} className="signin">
           {!user ? (
             <button
               onClick={showModal}
               id="sign-in-button"
               className="headerButton"
             >
-              LOGIN
+              SIGNIN
             </button>
           ) : (
             <button
-              onClick={logOut}
+              onClick={signOut}
               id="sign-out-button"
               className="headerButton"
             >
-              LOGOUT
+              SIGNOUT
             </button>
           )}
         </Col>
       </Row>
       <div className="banner">새로운 커뮤니티의 시작♡ DAILY FIELD</div>
       <Modal
-        title="LOGIN"
+        title="SIGNIN"
         visible={isModalVisible}
         onOk={signInWithPhoneNumber}
-        onCancel={handleCancel}
+        onCancel={hideModal}
         cancelText="취소"
         okText="로그인"
       >
