@@ -4,6 +4,8 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import firebase from "firebase";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
+import Signup from "./components/Signup";
 
 // Required for side-effects
 require("firebase/firestore");
@@ -17,7 +19,12 @@ firebase.auth().languageCode = "ko";
 
 ReactDOM.render(
   <StrictMode>
-    <App />
+    <BrowserRouter>
+      <Switch>
+        <Route exact path="/" component={App} />
+        <Route path="/signup" component={Signup} />
+      </Switch>
+    </BrowserRouter>
   </StrictMode>,
   document.getElementById("root")
 );

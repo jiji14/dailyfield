@@ -16,17 +16,17 @@
 .selectedMenu {
   border-bottom: 1px solid var(--orange-color);
 }
-.login {
+.signin {
   display: flex;
   justify-content: flex-end;
   color: var(--white-color);
 }
-.infobar {
+.banner {
   background-color: var(--orange-color);
-  font-size: 20px;
+  font-size: 16px;
   padding: 10px;
 }
-#sign-in-button {
+.headerButton {
   color: var(--white-color);
   background: var(--black-color);
   box-shadow: none;

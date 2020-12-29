@@ -1,0 +1,53 @@
+import { act, fireEvent, render, screen } from "@testing-library/react";
+import Header from "./Header";
+import firebase from "firebase";
+
+describe("Test", () => {
+  test("Sign In", async () => {
+    ((firebase.auth as unknown) as jest.Mock).mockReturnValue({
+      currentUser: null,
+      signInWithPhoneNumber: jest.fn().mockResolvedValue({
+        confirm: jest.fn().mockResolvedValue({
+          additionalUserInfo: { isNewUser: false },
+          user: {},
+        }),
+      }),
+    });
+    // Fake constructor.
+    firebase.auth.RecaptchaVerifier = jest.fn();
+    window.prompt = () => "123456";
+
+    render(<Header />);
+
+    fireEvent.click(screen.getByText("SIGNIN"));
+
+    const input = screen.getByPlaceholderText("핸드폰번호");
+    fireEvent.change(input, { target: { value: "+1 650-555-3434" } });
+
+    const loginButton = screen.getByText(/로그인/i);
+    expect(loginButton).toBeInTheDocument();
+
+    await act(async () => {
+      fireEvent.click(loginButton);
+    });
+
+    const logoutButton = screen.getByText("SIGNOUT");
+    expect(logoutButton).toBeInTheDocument();
+  });
+
+  test("Sign Out", async () => {
+    ((firebase.auth as unknown) as jest.Mock).mockReturnValue({
+      currentUser: {},
+      signOut: jest.fn().mockResolvedValue(null),
+    });
+
+    render(<Header />);
+
+    await act(async () => {
+      fireEvent.click(screen.getByText("SIGNOUT"));
+    });
+
+    const logoutButton = screen.getByText("SIGNIN");
+    expect(logoutButton).toBeInTheDocument();
+  });
+});
