@@ -1,3 +1,5 @@
+import { CheckboxValueType } from "antd/lib/checkbox/Group";
+
 export interface Match {
   dateTime: Date;
   place: string;
@@ -19,5 +21,6 @@ export interface Player {
   phoneNumber: string;
   birthDate: Date;
   matchesPlayed: number;
+  theme?: CheckboxValueType[];
   status?: "예약신청" | "취소신청" | "확정";
 }
