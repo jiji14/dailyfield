@@ -6,6 +6,7 @@ import "@testing-library/jest-dom";
 // We need to import firebase to mock it below.
 // eslint-disable-next-line no-unused-vars
 import firebase from "firebase";
+import "react-router-dom";
 
 global.matchMedia =
   global.matchMedia ||
@@ -18,3 +19,11 @@ global.matchMedia =
   };
 
 jest.mock("firebase");
+
+const mockHistory = {
+  push: jest.fn(),
+};
+
+jest.mock("react-router-dom", () => ({
+  useHistory: () => mockHistory,
+}));
