@@ -45,12 +45,7 @@ const Header = (): JSX.Element => {
             const isNewUser = result.additionalUserInfo?.isNewUser;
 
             if (isNewUser) {
-              history.push({
-                pathname: "/signup",
-                state: {
-                  user: user,
-                },
-              });
+              history.push("/signup");
             } else {
               setUser(user);
               hideModal();
