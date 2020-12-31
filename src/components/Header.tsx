@@ -105,11 +105,7 @@ const Header = (): JSX.Element => {
               SIGNIN
             </button>
           ) : (
-            <button
-              onClick={signOut}
-              id="sign-out-button"
-              className="headerButton"
-            >
+            <button onClick={signOut} className="headerButton">
               SIGNOUT
             </button>
           )}
