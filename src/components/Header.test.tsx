@@ -24,11 +24,11 @@ describe("Test", () => {
     const input = screen.getByPlaceholderText("핸드폰번호");
     fireEvent.change(input, { target: { value: "+1 650-555-3434" } });
 
-    const loginButton = screen.getByText(/로그인/i);
-    expect(loginButton).toBeInTheDocument();
+    const signinButton = screen.getByText(/로그인/i);
+    expect(signinButton).toBeInTheDocument();
 
     await act(async () => {
-      fireEvent.click(loginButton);
+      fireEvent.click(signinButton);
     });
 
     const logoutButton = screen.getByText("SIGNOUT");
