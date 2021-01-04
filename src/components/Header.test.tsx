@@ -13,9 +13,17 @@ describe("Test", () => {
         }),
       }),
     });
+    ((firebase.firestore as unknown) as jest.Mock).mockReturnValue({
+      collection: jest.fn().mockReturnValue({
+        where: jest.fn().mockReturnValue({
+          get: jest.fn().mockResolvedValue(null),
+        }),
+      }),
+    });
     // Fake constructor.
     firebase.auth.RecaptchaVerifier = jest.fn();
     window.prompt = () => "123456";
+    window.alert = () => "";
 
     render(<Header />);
 

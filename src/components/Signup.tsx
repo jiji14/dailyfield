@@ -100,7 +100,11 @@ const Signup = (): JSX.Element => {
             생년월일
           </Col>
           <Col span={18}>
-            <DatePicker onChange={setBirthDate} value={birthDate} />
+            <DatePicker
+              data-testid="birthDate"
+              onChange={setBirthDate}
+              value={birthDate}
+            />
           </Col>
         </Row>
       </section>
