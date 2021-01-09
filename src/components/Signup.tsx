@@ -11,8 +11,7 @@ import {
 } from "antd";
 import "antd/dist/antd.css";
 import "./Signup.css";
-import Header from "./Header";
-import moment, { Moment } from "moment";
+import { Moment } from "moment";
 import firebase from "firebase";
 import { CheckboxValueType } from "antd/lib/checkbox/Group";
 import { Player, Gender } from "../types";
@@ -65,6 +64,7 @@ const Signup = (): JSX.Element => {
       matchesPlayed: 0,
       purpose: purpose,
     };
+
     const db = firebase.firestore();
     db.collection("users")
       .doc(currentUser.uid)
