@@ -16,7 +16,9 @@ describe("Test", () => {
     ((firebase.firestore as unknown) as jest.Mock).mockReturnValue({
       collection: jest.fn().mockReturnValue({
         where: jest.fn().mockReturnValue({
-          get: jest.fn().mockResolvedValue(null),
+          get: jest
+            .fn()
+            .mockResolvedValue([{ data: jest.fn().mockReturnValue({}) }]),
         }),
       }),
     });
@@ -36,11 +38,11 @@ describe("Test", () => {
     expect(signinButton).toBeInTheDocument();
 
     await act(async () => {
-      fireEvent.click(signinButton);
+      fireEvent.click(screen.getByText(/로그인/i));
     });
 
-    const logoutButton = screen.getByText("SIGNOUT");
-    expect(logoutButton).toBeInTheDocument();
+    const signoutButton = screen.getByText(/SIGNOUT/i);
+    expect(signoutButton).toBeInTheDocument();
   });
 
   test("Sign Out", async () => {
@@ -55,7 +57,7 @@ describe("Test", () => {
       fireEvent.click(screen.getByText("SIGNOUT"));
     });
 
-    const logoutButton = screen.getByText("SIGNIN");
-    expect(logoutButton).toBeInTheDocument();
+    const signoutButton = screen.getByText("SIGNIN");
+    expect(signoutButton).toBeInTheDocument();
   });
 });

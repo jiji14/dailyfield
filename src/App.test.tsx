@@ -8,16 +8,11 @@ describe("Test", () => {
       currentUser: {},
     });
   });
+
   test("renders MatchLists", () => {
     render(<App />);
     const label = screen.getByText(/신청가능/i);
     expect(label).toBeInTheDocument();
-  });
-
-  test("renders Headers", () => {
-    render(<App />);
-    const menu = screen.getByText(/새로운 커뮤니티의 시작/i);
-    expect(menu).toBeInTheDocument();
   });
 
   test("renders PlayerLists", () => {
