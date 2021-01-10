@@ -15,10 +15,8 @@ describe("Test", () => {
     });
     ((firebase.firestore as unknown) as jest.Mock).mockReturnValue({
       collection: jest.fn().mockReturnValue({
-        where: jest.fn().mockReturnValue({
-          get: jest
-            .fn()
-            .mockResolvedValue([{ data: jest.fn().mockReturnValue({}) }]),
+        doc: jest.fn().mockReturnValue({
+          get: jest.fn().mockResolvedValue({ exists: {} }),
         }),
       }),
     });
