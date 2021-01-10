@@ -2,6 +2,7 @@ import { act, fireEvent, render, screen } from "@testing-library/react";
 import Signup from "./Signup";
 import firebase from "firebase";
 import { useHistory } from "react-router-dom";
+import userEvent from "@testing-library/user-event";
 
 describe("Test", () => {
   beforeEach(() => {
@@ -44,7 +45,7 @@ describe("Test", () => {
     });
 
     const sporty = screen.getByDisplayValue("sporty");
-    fireEvent.click(sporty);
+    userEvent.click(sporty);
 
     await act(async () => {
       const signupButton = screen.getByText(/가입하기/i);
