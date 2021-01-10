@@ -1,5 +1,14 @@
 import React, { useState } from "react";
-import { Row, Col, Divider, Input, DatePicker, Select, Button } from "antd";
+import {
+  Row,
+  Col,
+  Divider,
+  Input,
+  DatePicker,
+  Select,
+  Button,
+  Checkbox,
+} from "antd";
 import "antd/dist/antd.css";
 import "./Signup.css";
 import { Moment } from "moment";
@@ -10,7 +19,7 @@ import { useHistory } from "react-router-dom";
 const { Option } = Select;
 const timeOption = [8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22];
 
-const countOption = [10, 15, 18, 20];
+const countOption = [10, 15, 18, 20]; // 참석가능 인원 (단위 : 명)
 
 const AddMatch = (): JSX.Element => {
   const history = useHistory();
@@ -25,8 +34,8 @@ const AddMatch = (): JSX.Element => {
   const [link, setLink] = useState("");
   const [gameType, setGameType] = useState<GameType>("gx+match");
   const [fee, setFee] = useState(20000);
-  const [canPark, setCanPark] = useState("true");
-  const [canRentShoes, setCanRentShoes] = useState("true");
+  const [canPark, setCanPark] = useState(true);
+  const [canRentShoes, setCanRentShoes] = useState(true);
   const [manager, setManager] = useState("배성진");
 
   const changePlace = (e: React.FormEvent<HTMLInputElement>) => {
@@ -42,24 +51,22 @@ const AddMatch = (): JSX.Element => {
   };
 
   const addMatch = () => {
-    const parkBool = canPark === "true" ? true : false;
-    const rentBool = canRentShoes === "true" ? true : false;
     const date = gameDate?.toDate() || null;
     if (date) date.setUTCHours(time, 0, 0);
 
     const match: Match = {
       dateTime: date || null,
-      place: place,
-      memberCount: memberCount,
-      teamCount: teamCount,
-      gender: gender,
-      level: level,
-      link: link,
-      gameType: gameType,
-      fee: fee,
-      canPark: parkBool,
-      canRentShoes: rentBool,
-      manager: manager,
+      place,
+      memberCount,
+      teamCount,
+      gender,
+      level,
+      link,
+      gameType,
+      fee,
+      canPark,
+      canRentShoes,
+      manager,
     };
 
     const db = firebase.firestore();
@@ -77,9 +84,7 @@ const AddMatch = (): JSX.Element => {
 
   return (
     <div className="signUp">
-      <h3>
-        <b>매치등록</b>
-      </h3>
+      <h2>매치등록</h2>
       <Divider className="divider" />
       <section className="signUpContainer">
         <Row align="middle" className="Row">
@@ -244,29 +249,29 @@ const AddMatch = (): JSX.Element => {
             주차
           </Col>
           <Col span={6}>
-            <Select
+            <Checkbox
               value={canPark}
-              onChange={setCanPark}
-              className="signUpSelect"
-              data-testid="canParkSelect"
+              checked={canPark}
+              onChange={(e) => {
+                setCanPark(e.target.checked);
+              }}
             >
-              <Option value="true">가능</Option>
-              <Option value="false">불가능</Option>
-            </Select>
+              주차 가능
+            </Checkbox>
           </Col>
           <Col span={6} className="signUpSubtitle">
             풋살화
           </Col>
           <Col span={6}>
-            <Select
+            <Checkbox
               value={canRentShoes}
-              onChange={setCanRentShoes}
-              className="signUpSelect"
-              data-testid="canRentSelect"
+              checked={canRentShoes}
+              onChange={(e) => {
+                setCanRentShoes(e.target.checked);
+              }}
             >
-              <Option value="true">가능</Option>
-              <Option value="false">불가능</Option>
-            </Select>
+              풋살화 대여 가능
+            </Checkbox>
           </Col>
         </Row>
         <Row align="middle" className="Row">
