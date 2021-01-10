@@ -42,20 +42,9 @@ const Header = (): JSX.Element => {
           .confirm(code)
           .then(async function (result) {
             const { user } = result;
-            let isNewUser = true;
             const db = firebase.firestore();
-            await db
-              .collection("users")
-              .where("phoneNumber", "==", user?.phoneNumber)
-              .get()
-              .then(function (querySnapshot) {
-                querySnapshot.forEach(function (doc) {
-                  if (doc.data()) isNewUser = false;
-                });
-              })
-              .catch(function (error) {
-                window.alert(error);
-              });
+            const doc = await db.collection("users").doc(user?.uid).get();
+            const isNewUser = !doc.exists;
             await hideModal();
             if (isNewUser) {
               history.push("/signup");
