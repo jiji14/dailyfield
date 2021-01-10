@@ -35,7 +35,7 @@ const AddMatch = (): JSX.Element => {
   const [gameType, setGameType] = useState<GameType>("gx+match");
   const [fee, setFee] = useState(20000);
   const [canPark, setCanPark] = useState(true);
-  const [canRentShoes, setCanRentShoes] = useState(true);
+  const [canRentShoes, setCanRentShoes] = useState(false);
   const [manager, setManager] = useState("배성진");
 
   const changePlace = (e: React.FormEvent<HTMLInputElement>) => {
@@ -257,6 +257,7 @@ const AddMatch = (): JSX.Element => {
           </Col>
           <Col span={6}>
             <Checkbox
+              data-testid="canPark"
               value={canPark}
               checked={canPark}
               onChange={(e) => {
@@ -271,6 +272,7 @@ const AddMatch = (): JSX.Element => {
           </Col>
           <Col span={6}>
             <Checkbox
+              data-testid="canRentShoes"
               value={canRentShoes}
               checked={canRentShoes}
               onChange={(e) => {

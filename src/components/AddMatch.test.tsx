@@ -2,6 +2,7 @@ import { act, fireEvent, render, screen } from "@testing-library/react";
 import firebase from "firebase";
 import { useHistory } from "react-router-dom";
 import AddMatch from "./AddMatch";
+import { fireAntEvent } from "../setupTests";
 
 describe("Test", () => {
   beforeEach(() => {
@@ -11,9 +12,7 @@ describe("Test", () => {
 
     ((firebase.firestore as unknown) as jest.Mock).mockReturnValue({
       collection: jest.fn().mockReturnValue({
-        doc: jest
-          .fn()
-          .mockReturnValue({ set: jest.fn().mockResolvedValue(null) }),
+        add: jest.fn().mockResolvedValue({}),
       }),
     });
     window.alert = () => "";
@@ -23,13 +22,7 @@ describe("Test", () => {
     render(<AddMatch />);
 
     await act(async () => {
-      const gameDate = screen.getByTestId("gameDate");
-      fireEvent.mouseDown(gameDate);
-    });
-
-    await act(async () => {
-      const today = screen.getByText("Today");
-      fireEvent.click(today);
+      await fireAntEvent.actAndSetDate(screen.getByTestId("gameDate"));
     });
 
     await act(async () => {
@@ -66,11 +59,7 @@ describe("Test", () => {
     });
 
     await act(async () => {
-      fireEvent.mouseDown(screen.getByTestId("genderSelect").firstElementChild);
-    });
-    await act(async () => {
-      const gender = screen.getByTitle("혼성");
-      fireEvent.click(gender);
+      fireAntEvent.actAndSelect(screen.getByTestId("genderSelect"), "혼성");
     });
 
     await act(async () => {
@@ -105,13 +94,13 @@ describe("Test", () => {
     });
 
     await act(async () => {
-      fireEvent.mouseDown(
-        screen.getByTestId("canParkSelect").firstElementChild
-      );
-    });
-    await act(async () => {
-      const canPark = screen.getByTitle("불가능");
+      const canPark = screen.getByTestId("canPark");
       fireEvent.click(canPark);
+    });
+
+    await act(async () => {
+      const canRentShoes = screen.getByTestId("canRentShoes");
+      fireEvent.click(canRentShoes);
     });
 
     await act(async () => {
@@ -126,9 +115,8 @@ describe("Test", () => {
       fireEvent.click(addButton);
     });
 
-    const match = firebase.firestore().collection("matches").doc().set.mock
+    const match = firebase.firestore().collection("matches").add.mock
       .calls[0][0];
-    console.log(match);
     expect(match.place).toBe("용산 더베이스"); // 장소가 "용산 더베이스"이 맞는지 확인
     expect(match.memberCount).toBe(20); // 인원수가 20이 맞는지 확인
     expect(match.teamCount).toBe(3); // 팀형태가 3파전이 맞는지 확인
