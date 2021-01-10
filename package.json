@@ -57,6 +57,8 @@
     ]
   },
   "devDependencies": {
+    "@testing-library/dom": "^7.29.2",
+    "@testing-library/user-event": "^12.6.0",
     "@types/react-router-dom": "^5.1.6",
     "@typescript-eslint/parser": "^4.11.0",
     "eslint": "^7.16.0",
