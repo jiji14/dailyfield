@@ -24,12 +24,6 @@ describe("Test", () => {
     const name = screen.getByPlaceholderText("이름을 입력해주세요.");
     fireEvent.change(name, { target: { value: "지정" } });
 
-    // await act(async () => {
-    //   const datePicker = screen.getByTestId("date-picker");
-    //   await fireEvent.click(datePicker);
-    //   await fireEvent.change(datePicker, { target: { value: "2021-01-01" } }); //enter 눌러야 onChange 발생
-    // });
-
     await act(async () => {
       const birthDate = screen.getByTestId("birthDate");
       fireEvent.mouseDown(birthDate);
