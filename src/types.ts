@@ -22,7 +22,7 @@ export interface Player {
   name: string;
   gender: Gender;
   phoneNumber: string;
-  birthDate: Date | null;
+  birthDate?: Date;
   matchesPlayed: number;
   purpose?: string[];
   status?: Status;
