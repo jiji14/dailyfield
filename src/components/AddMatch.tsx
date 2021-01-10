@@ -51,11 +51,20 @@ const AddMatch = (): JSX.Element => {
   };
 
   const addMatch = () => {
-    const date = gameDate?.toDate() || null;
-    if (date) date.setUTCHours(time, 0, 0);
+    if (!gameDate) {
+      window.alert("매치 일시를 선택해주세요.");
+      return;
+    }
+    if (place.length < 1) {
+      window.alert("매치 장소를 입력해주세요.");
+      return;
+    }
+
+    const date = gameDate.toDate();
+    date.setHours(time, 0, 0);
 
     const match: Match = {
-      dateTime: date || null,
+      dateTime: date,
       place,
       memberCount,
       teamCount,
@@ -68,11 +77,9 @@ const AddMatch = (): JSX.Element => {
       canRentShoes,
       manager,
     };
-
     const db = firebase.firestore();
     db.collection("matches")
-      .doc()
-      .set(match)
+      .add(match)
       .then(function () {
         window.alert("매치가 등록되었습니다!");
         history.push("/");
