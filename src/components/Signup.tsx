@@ -57,12 +57,12 @@ const Signup = (): JSX.Element => {
     }
 
     const user: Player = {
-      name: name,
-      gender: gender,
-      phoneNumber: currentUser?.phoneNumber || "",
-      birthDate: birthDate?.toDate() || null,
+      name,
+      gender,
+      phoneNumber: currentUser.phoneNumber || "",
+      birthDate: birthDate?.toDate(),
       matchesPlayed: 0,
-      purpose: purpose,
+      purpose,
     };
 
     const db = firebase.firestore();
