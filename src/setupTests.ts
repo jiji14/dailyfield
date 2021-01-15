@@ -30,7 +30,7 @@ jest.mock("react-router-dom", () => ({
 }));
 
 export const fireAntEvent = {
-  actAndSelect: async function (id: HTMLElement, type: "string"): void {
+  actAntdSelect: async function (id: HTMLElement, type: string): void {
     await act(async () => {
       fireEvent.mouseDown(id.firstElementChild);
     });
@@ -39,12 +39,24 @@ export const fireAntEvent = {
       fireEvent.click(gender);
     });
   },
-  actAndSetDate: async function (id: HTMLElement): void {
+  actAntdSetDate: async function (id: HTMLElement, date: string): void {
     await act(async () => {
       fireEvent.mouseDown(id);
     });
     await act(async () => {
-      fireEvent.click(screen.getByText("Today"));
+      fireEvent.click(screen.getByText(date));
+    });
+  },
+  actAntdInput: async function (placeholder: string, text: string): void {
+    await act(async () => {
+      const input = screen.getByPlaceholderText(placeholder);
+      fireEvent.change(input, { target: { value: text } });
+    });
+  },
+  actAntdCheckbox: async function (id: string): void {
+    await act(async () => {
+      const checkbox = screen.getByTestId(id);
+      fireEvent.click(checkbox);
     });
   },
 };
