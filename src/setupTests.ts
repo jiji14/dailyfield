@@ -7,6 +7,7 @@ import "@testing-library/jest-dom";
 // eslint-disable-next-line no-unused-vars
 import firebase from "firebase";
 import "react-router-dom";
+import { act, fireEvent, screen } from "@testing-library/react";
 
 global.matchMedia =
   global.matchMedia ||
@@ -27,3 +28,35 @@ const mockHistory = {
 jest.mock("react-router-dom", () => ({
   useHistory: () => mockHistory,
 }));
+
+export const fireAntEvent = {
+  actAntdSelect: async function (id: HTMLElement, type: string): void {
+    await act(async () => {
+      fireEvent.mouseDown(id.firstElementChild);
+    });
+    await act(async () => {
+      const gender = screen.getByTitle(type);
+      fireEvent.click(gender);
+    });
+  },
+  actAntdSetDate: async function (id: HTMLElement, date: string): void {
+    await act(async () => {
+      fireEvent.mouseDown(id);
+    });
+    await act(async () => {
+      fireEvent.click(screen.getByText(date));
+    });
+  },
+  actAntdInput: async function (placeholder: string, text: string): void {
+    await act(async () => {
+      const input = screen.getByPlaceholderText(placeholder);
+      fireEvent.change(input, { target: { value: text } });
+    });
+  },
+  actAntdCheckbox: async function (id: string): void {
+    await act(async () => {
+      const checkbox = screen.getByTestId(id);
+      fireEvent.click(checkbox);
+    });
+  },
+};

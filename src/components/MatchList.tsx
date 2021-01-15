@@ -26,7 +26,8 @@ const MatchList = (): JSX.Element => {
       <Row align="middle">
         <Col span={6}>
           <div className="time">
-            {match.dateTime.getHours()}:{match.dateTime.getMinutes()}
+            {match.dateTime && match.dateTime.getHours()}:
+            {match.dateTime && match.dateTime.getMinutes()}
           </div>
         </Col>
         <Col span={12}>
