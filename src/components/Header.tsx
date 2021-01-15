@@ -26,7 +26,7 @@ const Header = (): JSX.Element => {
     setPhoneNumber(value);
   };
 
-  const signInWithPhoneNumber = () => {
+  const signInWithPhoneNumber = async () => {
     if (!appVerifier) {
       appVerifier = new firebase.auth.RecaptchaVerifier("sign-in-button", {
         size: "invisible",
@@ -40,20 +40,16 @@ const Header = (): JSX.Element => {
         const code = window.prompt("코드를 입력해주세요.") || "";
         confirmationResult
           .confirm(code)
-          .then(function (result) {
+          .then(async function (result) {
             const { user } = result;
-            const isNewUser = result.additionalUserInfo?.isNewUser;
-
+            const db = firebase.firestore();
+            const doc = await db.collection("users").doc(user?.uid).get();
+            const isNewUser = !doc.exists;
+            await hideModal();
             if (isNewUser) {
-              history.push({
-                pathname: "/signup",
-                state: {
-                  user: user,
-                },
-              });
+              history.push("/signup");
             } else {
               setUser(user);
-              hideModal();
             }
           })
           .catch((e) => {
@@ -98,11 +94,7 @@ const Header = (): JSX.Element => {
               SIGNIN
             </button>
           ) : (
-            <button
-              onClick={signOut}
-              id="sign-out-button"
-              className="headerButton"
-            >
+            <button onClick={signOut} className="headerButton">
               SIGNOUT
             </button>
           )}

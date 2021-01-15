@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Row,
   Col,
@@ -11,15 +11,72 @@ import {
 } from "antd";
 import "antd/dist/antd.css";
 import "./Signup.css";
+import { Moment } from "moment";
+import firebase from "firebase";
+import { CheckboxValueType } from "antd/lib/checkbox/Group";
+import { Player, Gender } from "../types";
+import { useHistory } from "react-router-dom";
 
 const { Option } = Select;
+const Options = [
+  { label: "스포티", value: "sporty" },
+  { label: "취미", value: "hobby" },
+  { label: "초급", value: "beginner" },
+];
 
 const Signup = (): JSX.Element => {
-  const options = [
-    { label: "스포티", value: "sporty" },
-    { label: "취미", value: "hobby" },
-    { label: "초급", value: "beginner" },
-  ];
+  const history = useHistory();
+  const [name, setName] = useState("");
+  const [birthDate, setBirthDate] = useState<Moment | null>(null);
+  const [gender, setGender] = useState<Gender>("남성");
+  const [purpose, setPurpose] = useState<string[]>([]);
+
+  const changeName = (e: React.FormEvent<HTMLInputElement>) => {
+    setName(e.currentTarget.value);
+  };
+
+  const changePurpose = (checkedValue: CheckboxValueType[]) => {
+    setPurpose(checkedValue as string[]);
+  };
+
+  const signUp = () => {
+    if (name.length < 1) {
+      window.alert("이름을 입력해주세요.");
+      return;
+    }
+
+    if (!birthDate) {
+      window.alert("생일을 입력해주세요.");
+      return;
+    }
+
+    const currentUser = firebase.auth().currentUser;
+    if (!currentUser) {
+      window.alert("인증절차를 진행후 회원가입을 진행해주세요.");
+      return;
+    }
+
+    const user: Player = {
+      name,
+      gender,
+      phoneNumber: currentUser.phoneNumber || "",
+      birthDate: birthDate?.toDate(),
+      matchesPlayed: 0,
+      purpose,
+    };
+
+    const db = firebase.firestore();
+    db.collection("users")
+      .doc(currentUser.uid)
+      .set(user)
+      .then(function () {
+        window.alert("회원가입을 축하합니다!");
+        history.push("/");
+      })
+      .catch(function (error) {
+        window.alert(error);
+      });
+  };
 
   return (
     <div className="signUp">
@@ -31,7 +88,11 @@ const Signup = (): JSX.Element => {
             이름
           </Col>
           <Col span={18}>
-            <Input placeholder="이름을 입력해주세요." />
+            <Input
+              onChange={changeName}
+              value={name}
+              placeholder="이름을 입력해주세요."
+            />
           </Col>
         </Row>
         <Row align="middle" className="Row">
@@ -39,7 +100,11 @@ const Signup = (): JSX.Element => {
             생년월일
           </Col>
           <Col span={18}>
-            <DatePicker />
+            <DatePicker
+              data-testid="birthDate"
+              onChange={setBirthDate}
+              value={birthDate}
+            />
           </Col>
         </Row>
       </section>
@@ -51,7 +116,12 @@ const Signup = (): JSX.Element => {
             성별
           </Col>
           <Col span={18}>
-            <Select defaultValue="남성" className="signUpSelect">
+            <Select
+              value={gender}
+              onChange={setGender}
+              className="signUpSelect"
+              data-testid="signUpSelect"
+            >
               <Option value="남성">남성</Option>
               <Option value="여성">여성</Option>
             </Select>
@@ -63,12 +133,18 @@ const Signup = (): JSX.Element => {
           </Col>
           <Col span={18}>
             <div className="signUpSubtitle"> 중복선택 가능합니다.</div>
-            <Checkbox.Group options={options} defaultValue={["sporty"]} />
+            <Checkbox.Group
+              options={Options}
+              onChange={changePurpose}
+              value={purpose}
+            />
           </Col>
         </Row>
       </section>
       <div className="signUpButtonContainer">
-        <Button type="primary">가입하기</Button>
+        <Button type="primary" onClick={signUp}>
+          가입하기
+        </Button>
       </div>
     </div>
   );
