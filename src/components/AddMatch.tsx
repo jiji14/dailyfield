@@ -8,6 +8,7 @@ import {
   Select,
   Button,
   Checkbox,
+  InputNumber,
 } from "antd";
 import "antd/dist/antd.css";
 import "./Signup.css";
@@ -17,17 +18,13 @@ import { Gender, Level, GameType, Match } from "../types";
 import { useHistory } from "react-router-dom";
 
 const { Option } = Select;
-const timeOption = [8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22];
-
-const countOption = [10, 15, 18, 20]; // 참석가능 인원 (단위 : 명)
 
 const AddMatch = (): JSX.Element => {
   const history = useHistory();
 
   const [gameDate, setGameDate] = useState<Moment | null>(null);
-  const [time, setTime] = useState(8);
   const [place, setPlace] = useState("");
-  const [memberCount, setMemberCount] = useState(10);
+  const [memberCount, setMemberCount] = useState(18);
   const [teamCount, setTeamCount] = useState(2);
   const [gender, setGender] = useState<Gender>("남성");
   const [level, setLevel] = useState<Level>("초급");
@@ -50,6 +47,10 @@ const AddMatch = (): JSX.Element => {
     setManager(e.currentTarget.value);
   };
 
+  const changeMemberCount = (value: number) => {
+    setMemberCount(value);
+  };
+
   const addMatch = () => {
     if (!gameDate) {
       window.alert("매치 일시를 선택해주세요.");
@@ -60,11 +61,8 @@ const AddMatch = (): JSX.Element => {
       return;
     }
 
-    const date = gameDate.toDate();
-    date.setHours(time, 0, 0);
-
     const match: Match = {
-      dateTime: date,
+      dateTime: gameDate.toDate(),
       place,
       memberCount,
       teamCount,
@@ -101,30 +99,10 @@ const AddMatch = (): JSX.Element => {
           <Col span={18}>
             <DatePicker
               data-testid="gameDate"
+              showTime={true}
               onChange={setGameDate}
               value={gameDate}
             />
-          </Col>
-        </Row>
-        <Row align="middle" className="Row">
-          <Col span={6} className="signUpSubtitle">
-            시간
-          </Col>
-          <Col span={18}>
-            <Select
-              value={time}
-              onChange={setTime}
-              className="signUpSelect"
-              data-testid="timeSelect"
-            >
-              {timeOption.map((time) => {
-                return (
-                  <Option key={time} value={time}>
-                    {time + "시"}
-                  </Option>
-                );
-              })}
-            </Select>
           </Col>
         </Row>
         <Row align="middle" className="Row">
@@ -144,20 +122,15 @@ const AddMatch = (): JSX.Element => {
             인원
           </Col>
           <Col span={6}>
-            <Select
+            <InputNumber
+              min={1}
+              max={30}
               value={memberCount}
-              onChange={setMemberCount}
-              className="signUpSelect"
-              data-testid="memberCountSelect"
-            >
-              {countOption.map((count) => {
-                return (
-                  <Option key={"member" + count} value={count}>
-                    {count + "명"}
-                  </Option>
-                );
-              })}
-            </Select>
+              placeholder="멤버수를 입력해주세요."
+              onChange={(value) => {
+                changeMemberCount(value as number);
+              }}
+            />
           </Col>
           <Col span={6} className="signUpSubtitle">
             종류
