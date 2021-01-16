@@ -86,11 +86,7 @@ const Header = (): JSX.Element => {
         <Col span={4}></Col>
         <Col span={4} className="signin">
           {!user ? (
-            <button
-              onClick={showModal}
-              id="sign-in-button"
-              className="headerButton"
-            >
+            <button onClick={showModal} className="headerButton">
               SIGNIN
             </button>
           ) : (
