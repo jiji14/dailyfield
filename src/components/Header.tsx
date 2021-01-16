@@ -33,44 +33,34 @@ const Header = (): JSX.Element => {
       });
     }
 
-    firebase
-      .auth()
-      .signInWithPhoneNumber(phoneNumber, appVerifier)
-      .then(function (confirmationResult) {
-        const code = window.prompt("코드를 입력해주세요.") || "";
-        confirmationResult
-          .confirm(code)
-          .then(async function (result) {
-            const { user } = result;
-            const db = firebase.firestore();
-            const doc = await db.collection("users").doc(user?.uid).get();
-            const isNewUser = !doc.exists;
-            await hideModal();
-            if (isNewUser) {
-              history.push("/signup");
-            } else {
-              setUser(user);
-            }
-          })
-          .catch((e) => {
-            window.alert(e);
-          });
-      })
-      .catch(function (error) {
-        window.alert(error);
-      });
+    try {
+      const confirmationResult = await firebase
+        .auth()
+        .signInWithPhoneNumber(phoneNumber, appVerifier);
+      const code = window.prompt("코드를 입력해주세요.") || "";
+      const result = await confirmationResult.confirm(code);
+      const { user } = result;
+      const db = firebase.firestore();
+      const doc = await db.collection("users").doc(user?.uid).get();
+      const isNewUser = await !doc.exists;
+      await hideModal();
+      if (isNewUser) {
+        await history.push("/signup");
+      } else {
+        await setUser(user);
+      }
+    } catch (error) {
+      window.alert(error);
+    }
   };
 
-  const signOut = () => {
-    firebase
-      .auth()
-      .signOut()
-      .then(function () {
-        setUser(null);
-      })
-      .catch(function (error) {
-        window.alert(error);
-      });
+  const signOut = async () => {
+    try {
+      await firebase.auth().signOut();
+      await setUser(null);
+    } catch (error) {
+      window.alert(error);
+    }
   };
 
   return (
