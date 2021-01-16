@@ -3,6 +3,7 @@ import Signup from "./Signup";
 import firebase from "firebase";
 import { useHistory } from "react-router-dom";
 import userEvent from "@testing-library/user-event";
+import { fireAntEvent } from "../setupTests";
 
 describe("Test", () => {
   beforeEach(() => {
@@ -22,35 +23,13 @@ describe("Test", () => {
 
   test("Signup", async () => {
     render(<Signup />);
-    const name = screen.getByPlaceholderText("이름을 입력해주세요.");
-    fireEvent.change(name, { target: { value: "지정" } });
-
-    await act(async () => {
-      const birthDate = screen.getByTestId("birthDate");
-      fireEvent.mouseDown(birthDate);
-    });
-    await act(async () => {
-      const today = screen.getByText("Today");
-      fireEvent.click(today);
-    });
-
-    await act(async () => {
-      fireEvent.mouseDown(screen.getByTestId("signUpSelect").firstElementChild);
-      // https://github.com/ant-design/ant-design/issues/22074#issuecomment-611352984
-    });
-
-    await act(async () => {
-      const women = screen.getByTitle("여성");
-      fireEvent.click(women);
-    });
-
+    await fireAntEvent.actAndInput("이름을 입력해주세요.", "지정");
+    await fireAntEvent.actAndSetDate(screen.getByTestId("birthDate"), "Today");
+    await fireAntEvent.actAndSelect(screen.getByTestId("signUpSelect"), "여성");
     const sporty = screen.getByDisplayValue("sporty");
     userEvent.click(sporty);
+    await fireAntEvent.actAndClick("가입하기");
 
-    await act(async () => {
-      const signupButton = screen.getByText(/가입하기/i);
-      fireEvent.click(signupButton);
-    });
     const user = firebase.firestore().collection("user").doc("id").set.mock
       .calls[0][0];
     expect(user.name).toBe("지정"); // 이름이 "지정"이 맞는지 확인

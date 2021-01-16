@@ -30,16 +30,17 @@ jest.mock("react-router-dom", () => ({
 }));
 
 export const fireAntEvent = {
-  actAntdSelect: async function (id: HTMLElement, type: string): void {
+  actAndSelect: async function (id: HTMLElement, type: string): void {
     await act(async () => {
       fireEvent.mouseDown(id.firstElementChild);
+      // https://github.com/ant-design/ant-design/issues/22074#issuecomment-611352984
     });
     await act(async () => {
       const gender = screen.getByTitle(type);
       fireEvent.click(gender);
     });
   },
-  actAntdSetDate: async function (id: HTMLElement, date: string): void {
+  actAndSetDate: async function (id: HTMLElement, date: string): void {
     await act(async () => {
       fireEvent.mouseDown(id);
     });
@@ -47,16 +48,22 @@ export const fireAntEvent = {
       fireEvent.click(screen.getByText(date));
     });
   },
-  actAntdInput: async function (placeholder: string, text: string): void {
+  actAndInput: async function (placeholder: string, text: string): void {
     await act(async () => {
       const input = screen.getByPlaceholderText(placeholder);
       fireEvent.change(input, { target: { value: text } });
     });
   },
-  actAntdCheckbox: async function (id: string): void {
+  actAndCheckbox: async function (id: string): void {
     await act(async () => {
       const checkbox = screen.getByTestId(id);
       fireEvent.click(checkbox);
+    });
+  },
+  actAndClick: async function (text: string): void {
+    await act(async () => {
+      const button = screen.getByText(text);
+      fireEvent.click(button);
     });
   },
 };

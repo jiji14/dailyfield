@@ -1,6 +1,7 @@
 import { act, fireEvent, render, screen } from "@testing-library/react";
 import Header from "./Header";
 import firebase from "firebase";
+import { fireAntEvent } from "../setupTests";
 
 describe("Test", () => {
   test("Sign In", async () => {
@@ -26,19 +27,12 @@ describe("Test", () => {
     window.alert = () => "";
 
     render(<Header />);
-
-    fireEvent.click(screen.getByText("SIGNIN"));
-
-    const input = screen.getByPlaceholderText("핸드폰번호");
-    fireEvent.change(input, { target: { value: "+1 650-555-3434" } });
-
+    await fireAntEvent.actAndClick("SIGNIN");
+    await fireAntEvent.actAndInput("핸드폰번호", "+1 650-555-3434");
     const signinButton = screen.getByText(/로그인/i);
     expect(signinButton).toBeInTheDocument();
 
-    await act(async () => {
-      fireEvent.click(screen.getByText(/로그인/i));
-    });
-
+    await fireAntEvent.actAndClick("로그인");
     const signoutButton = screen.getByText(/SIGNOUT/i);
     expect(signoutButton).toBeInTheDocument();
   });
@@ -50,11 +44,7 @@ describe("Test", () => {
     });
 
     render(<Header />);
-
-    await act(async () => {
-      fireEvent.click(screen.getByText("SIGNOUT"));
-    });
-
+    await fireAntEvent.actAndClick("SIGNOUT");
     const signoutButton = screen.getByText("SIGNIN");
     expect(signoutButton).toBeInTheDocument();
   });

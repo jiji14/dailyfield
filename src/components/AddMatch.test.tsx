@@ -21,35 +21,28 @@ describe("Test", () => {
   test("Add Match", async () => {
     render(<AddMatch />);
 
-    await fireAntEvent.actAntdSetDate(screen.getByTestId("gameDate"), "Now");
-    await fireAntEvent.actAntdInput("경기장을 입력해주세요.", "용산 더베이스");
-    await fireAntEvent.actAntdInput("멤버수를 입력해주세요.", "20");
-    await fireAntEvent.actAntdSelect(
+    await fireAntEvent.actAndSetDate(screen.getByTestId("gameDate"), "Now");
+    await fireAntEvent.actAndInput("경기장을 입력해주세요.", "용산 더베이스");
+    await fireAntEvent.actAndInput("멤버수를 입력해주세요.", "20");
+    await fireAntEvent.actAndSelect(
       screen.getByTestId("teamCountSelect"),
       "3파전"
     );
-    await fireAntEvent.actAntdSelect(
-      screen.getByTestId("genderSelect"),
-      "혼성"
-    );
-    await fireAntEvent.actAntdSelect(screen.getByTestId("levelSelect"), "중급");
-    await fireAntEvent.actAntdInput(
+    await fireAntEvent.actAndSelect(screen.getByTestId("genderSelect"), "혼성");
+    await fireAntEvent.actAndSelect(screen.getByTestId("levelSelect"), "중급");
+    await fireAntEvent.actAndInput(
       "링크를 입력해주세요.",
       "www.dailyfield.info"
     );
-    await fireAntEvent.actAntdSelect(
+    await fireAntEvent.actAndSelect(
       screen.getByTestId("gameTypeSelect"),
       "매치만"
     );
-    await fireAntEvent.actAntdSelect(screen.getByTestId("feeSelect"), "4만원");
-    await fireAntEvent.actAntdCheckbox("canPark");
-    await fireAntEvent.actAntdCheckbox("canRentShoes");
-    await fireAntEvent.actAntdInput("매니저를 입력해주세요.", "배성진");
-
-    await act(async () => {
-      const addButton = screen.getByText(/등록하기/i);
-      fireEvent.click(addButton);
-    });
+    await fireAntEvent.actAndSelect(screen.getByTestId("feeSelect"), "4만원");
+    await fireAntEvent.actAndCheckbox("canPark");
+    await fireAntEvent.actAndCheckbox("canRentShoes");
+    await fireAntEvent.actAndInput("매니저를 입력해주세요.", "배성진");
+    await fireAntEvent.actAndClick("등록하기");
 
     const match = firebase.firestore().collection("matches").add.mock
       .calls[0][0];
