@@ -8,6 +8,7 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 import Signup from "./components/Signup";
 import Header from "./components/Header";
 import MatchForm from "./components/AddMatch";
+import Main from "./components/Main";
 
 // Required for side-effects
 require("firebase/firestore");
@@ -24,9 +25,9 @@ ReactDOM.render(
     <BrowserRouter>
       <Header />
       <Switch>
-        <Route exact path="/" component={App} />
+        <Route exact path="/" component={Main} />
+        <Route exact path="/match/add" component={MatchForm} />
         <Route path="/signup" component={Signup} />
-        <Route path="/match/add" component={MatchForm} />
       </Switch>
     </BrowserRouter>
   </StrictMode>,
