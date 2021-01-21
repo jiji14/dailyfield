@@ -38,16 +38,15 @@ const Header = (): JSX.Element => {
         .auth()
         .signInWithPhoneNumber(phoneNumber, appVerifier);
       const code = window.prompt("코드를 입력해주세요.") || "";
-      const result = await confirmationResult.confirm(code);
-      const { user } = result;
+      const { user } = await confirmationResult.confirm(code);
       const db = firebase.firestore();
       const doc = await db.collection("users").doc(user?.uid).get();
-      const isNewUser = await !doc.exists;
-      await hideModal();
+      const isNewUser = !doc.exists;
+      hideModal();
       if (isNewUser) {
-        await history.push("/signup");
+        history.push("/signup");
       } else {
-        await setUser(user);
+        setUser(user);
       }
     } catch (error) {
       window.alert(error);
@@ -57,7 +56,7 @@ const Header = (): JSX.Element => {
   const signOut = async () => {
     try {
       await firebase.auth().signOut();
-      await setUser(null);
+      setUser(null);
     } catch (error) {
       window.alert(error);
     }

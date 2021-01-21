@@ -68,8 +68,8 @@ const Signup = (): JSX.Element => {
     try {
       const db = firebase.firestore();
       await db.collection("users").doc(currentUser.uid).set(user);
-      await window.alert("회원가입을 축하합니다!");
-      await history.push("/");
+      window.alert("회원가입을 축하합니다!");
+      history.push("/");
     } catch (error) {
       window.alert(error);
     }

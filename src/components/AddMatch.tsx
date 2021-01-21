@@ -79,8 +79,8 @@ const AddMatch = (): JSX.Element => {
     try {
       const db = firebase.firestore();
       await db.collection("matches").add(match);
-      await window.alert("매치가 등록되었습니다!");
-      await history.push("/");
+      window.alert("매치가 등록되었습니다!");
+      history.push("/");
     } catch (error) {
       window.alert(error);
     }
