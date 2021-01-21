@@ -7,6 +7,14 @@ describe("Test", () => {
     ((firebase.auth as unknown) as jest.Mock).mockReturnValue({
       currentUser: {},
     });
+
+    ((firebase.firestore as unknown) as jest.Mock).mockReturnValue({
+      collection: jest.fn().mockReturnValue({
+        orderBy: jest.fn().mockReturnValue({
+          get: jest.fn().mockResolvedValue({}),
+        }),
+      }),
+    });
   });
 
   test("renders Main", () => {
