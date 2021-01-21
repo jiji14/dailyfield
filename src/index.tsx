@@ -1,7 +1,6 @@
 import { StrictMode } from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
-import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import firebase from "firebase";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
@@ -25,9 +24,9 @@ ReactDOM.render(
     <BrowserRouter>
       <Header />
       <Switch>
-        <Route exact path="/" component={Main} />
         <Route exact path="/match/add" component={MatchForm} />
         <Route path="/signup" component={Signup} />
+        <Route path="/" component={Main} />
       </Switch>
     </BrowserRouter>
   </StrictMode>,
