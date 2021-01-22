@@ -51,7 +51,7 @@ const AddMatch = (): JSX.Element => {
     setMemberCount(value);
   };
 
-  const addMatch = () => {
+  const addMatch = async () => {
     if (!gameDate) {
       window.alert("매치 일시를 선택해주세요.");
       return;
@@ -75,16 +75,15 @@ const AddMatch = (): JSX.Element => {
       canRentShoes,
       manager,
     };
-    const db = firebase.firestore();
-    db.collection("matches")
-      .add(match)
-      .then(function () {
-        window.alert("매치가 등록되었습니다!");
-        history.push("/");
-      })
-      .catch(function (error) {
-        window.alert(error);
-      });
+
+    try {
+      const db = firebase.firestore();
+      await db.collection("matches").add(match);
+      window.alert("매치가 등록되었습니다!");
+      history.push("/");
+    } catch (error) {
+      window.alert(error);
+    }
   };
 
   return (

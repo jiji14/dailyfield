@@ -39,7 +39,7 @@ const Signup = (): JSX.Element => {
     setPurpose(checkedValue as string[]);
   };
 
-  const signUp = () => {
+  const signUp = async () => {
     if (name.length < 1) {
       window.alert("이름을 입력해주세요.");
       return;
@@ -65,17 +65,14 @@ const Signup = (): JSX.Element => {
       purpose,
     };
 
-    const db = firebase.firestore();
-    db.collection("users")
-      .doc(currentUser.uid)
-      .set(user)
-      .then(function () {
-        window.alert("회원가입을 축하합니다!");
-        history.push("/");
-      })
-      .catch(function (error) {
-        window.alert(error);
-      });
+    try {
+      const db = firebase.firestore();
+      await db.collection("users").doc(currentUser.uid).set(user);
+      window.alert("회원가입을 축하합니다!");
+      history.push("/");
+    } catch (error) {
+      window.alert(error);
+    }
   };
 
   return (
