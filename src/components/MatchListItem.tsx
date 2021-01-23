@@ -2,10 +2,10 @@ import React, { useEffect, useState } from "react";
 import { Row, Col, Divider } from "antd";
 import Label from "./Label";
 import "antd/dist/antd.css";
-import "./MatchList.css";
+import "./MatchListItem.css";
 import { Match } from "../types";
 
-const MatchList = (matchProps: { match: Match }): JSX.Element => {
+const MatchListItem = (matchProps: { match: Match }): JSX.Element => {
   const { match } = matchProps;
 
   return (
@@ -36,4 +36,4 @@ const MatchList = (matchProps: { match: Match }): JSX.Element => {
   );
 };
 
-export default MatchList;
+export default MatchListItem;
