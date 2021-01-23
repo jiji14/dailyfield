@@ -7,12 +7,12 @@ import MatchListItem from "./MatchListItem";
 import { Match } from "../types";
 
 const Main = (): JSX.Element => {
-  const [matchlists, setMatchlists] = useState<Match[]>([]);
+  const [matches, setMatches] = useState<Match[]>([]);
   useEffect(() => {
-    getMatchData();
+    getMatches();
   }, []);
 
-  const getMatchData = async () => {
+  const getMatches = async () => {
     const lists = [] as Match[];
     const db = firebase.firestore();
     const querySnapshot = await db
@@ -27,7 +27,7 @@ const Main = (): JSX.Element => {
       }
       lists.push(tempDate as Match);
     });
-    setMatchlists(lists);
+    setMatches(lists);
   };
 
   return (
@@ -35,7 +35,7 @@ const Main = (): JSX.Element => {
       <h2>매치목록</h2>
       <Divider className="divider" />
       <section className="signUpContainer">
-        {matchlists.map((match, idx) => {
+        {matches.map((match, idx) => {
           return <MatchListItem key={"match" + idx} match={match} />;
         })}
       </section>
