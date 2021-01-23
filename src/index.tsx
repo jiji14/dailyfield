@@ -24,7 +24,7 @@ ReactDOM.render(
     <BrowserRouter>
       <Header />
       <Switch>
-        <Route exact path="/match/add" component={MatchForm} />
+        <Route path="/match/add" component={MatchForm} />
         <Route path="/signup" component={Signup} />
         <Route path="/" component={Main} />
       </Switch>
