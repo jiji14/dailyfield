@@ -13,21 +13,17 @@ const Main = (): JSX.Element => {
   }, []);
 
   const getMatches = async () => {
-    const lists = [] as Match[];
     const db = firebase.firestore();
     const querySnapshot = await db
       .collection("matches")
       .orderBy("dateTime", "desc")
       .get();
-    querySnapshot.forEach(function (doc) {
-      const tempDate = doc.data();
-      if (tempDate?.dateTime) {
-        const date = new Date(tempDate?.dateTime.seconds);
-        tempDate["dateTime"] = date;
-      }
-      lists.push(tempDate as Match);
+    const matches: Match[] = querySnapshot.docs.map((doc) => {
+      const data = doc.data();
+      data.dateTime = data.dateTime.toDate();
+      return data as Match;
     });
-    setMatches(lists);
+    setMatches(matches);
   };
 
   return (
