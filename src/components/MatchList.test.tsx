@@ -1,7 +1,6 @@
-import { act, render, screen, waitFor } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import MatchList from "./MatchList";
 import firebase from "firebase";
-import { Match } from "../types";
 
 describe("Test", () => {
   beforeEach(() => {
