@@ -1,13 +1,13 @@
 import { StrictMode } from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
-import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import firebase from "firebase";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import Signup from "./components/Signup";
 import Header from "./components/Header";
 import MatchForm from "./components/AddMatch";
+import MatchList from "./components/MatchList";
 
 // Required for side-effects
 require("firebase/firestore");
@@ -24,9 +24,9 @@ ReactDOM.render(
     <BrowserRouter>
       <Header />
       <Switch>
-        <Route exact path="/" component={App} />
-        <Route path="/signup" component={Signup} />
         <Route path="/match/add" component={MatchForm} />
+        <Route path="/signup" component={Signup} />
+        <Route path="/" component={MatchList} />
       </Switch>
     </BrowserRouter>
   </StrictMode>,

@@ -1,0 +1,24 @@
+.date {
+  color: var(--grey-color);
+  font-size: 22px;
+  margin-bottom: 10px;
+}
+.time {
+  font-size: 18px;
+}
+.place {
+  font-size: 14px;
+  margin-bottom: 4px;
+}
+.infoContainer {
+  display: flex;
+  font-size: 10px;
+  color: var(--grey-color);
+}
+.info {
+  margin-right: 4px;
+}
+.alignRight {
+  display: flex;
+  justify-content: flex-end;
+}

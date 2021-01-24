@@ -1,50 +1,42 @@
-import React from "react";
-import { Row, Col, Divider } from "antd";
-import Label from "./Label";
+import React, { useState, useEffect } from "react";
 import "antd/dist/antd.css";
 import "./MatchList.css";
+import { Divider } from "antd";
+import firebase from "firebase";
+import MatchListItem from "./MatchListItem";
 import { Match } from "../types";
 
-const match: Match = {
-  dateTime: new Date(),
-  place: "용산 더베이스",
-  memberCount: 15,
-  teamCount: 3,
-  gender: "여성",
-  level: "초급",
-  link: "naver.com",
-  gameType: "gx",
-  fee: 20000,
-  canPark: true,
-  canRentShoes: false,
-  manager: "배성진",
-};
+const Main = (): JSX.Element => {
+  const [matches, setMatches] = useState<Match[]>([]);
+  useEffect(() => {
+    getMatches();
+  }, []);
 
-const MatchList = (): JSX.Element => {
+  const getMatches = async () => {
+    const db = firebase.firestore();
+    const querySnapshot = await db
+      .collection("matches")
+      .orderBy("dateTime", "desc")
+      .get();
+    const matches: Match[] = querySnapshot.docs.map((doc) => {
+      const data = doc.data();
+      data.dateTime = data.dateTime.toDate();
+      return data as Match;
+    });
+    setMatches(matches);
+  };
+
   return (
-    <>
-      <Row align="middle">
-        <Col span={6}>
-          <div className="time">
-            {match.dateTime && match.dateTime.getHours()}:
-            {match.dateTime && match.dateTime.getMinutes()}
-          </div>
-        </Col>
-        <Col span={12}>
-          <div className="place">{match.place}</div>
-          <div className="infoContainer">
-            <div className="info">{match.gender}</div>
-            <div className="info">{match.memberCount}명</div>
-            <div className="info">{match.level}</div>
-          </div>
-        </Col>
-        <Col span={6} className="alignRight">
-          <Label type="primary">신청가능</Label>
-        </Col>
-      </Row>
+    <div className="matchList">
+      <h2>매치목록</h2>
       <Divider className="divider" />
-    </>
+      <section className="matchListContainer">
+        {matches.map((match, idx) => {
+          return <MatchListItem key={"match" + idx} match={match} />;
+        })}
+      </section>
+    </div>
   );
 };
 
-export default MatchList;
+export default Main;
