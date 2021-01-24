@@ -1,4 +1,3 @@
-import React, { useEffect, useState } from "react";
 import { Row, Col, Divider } from "antd";
 import Label from "./Label";
 import "antd/dist/antd.css";

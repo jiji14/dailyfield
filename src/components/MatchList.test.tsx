@@ -1,5 +1,5 @@
 import { act, render, screen, waitFor } from "@testing-library/react";
-import Main from "./Main";
+import MatchList from "./MatchList";
 import firebase from "firebase";
 import { Match } from "../types";
 
@@ -37,8 +37,8 @@ describe("Test", () => {
     });
   });
 
-  test("renders Main", async () => {
-    render(<Main />);
+  test("renders Matches", async () => {
+    render(<MatchList />);
     await waitFor(() => {
       expect(screen.getByText(/용산 더베이스/i)).toBeInTheDocument();
       expect(screen.getByText(/15명/i)).toBeInTheDocument();

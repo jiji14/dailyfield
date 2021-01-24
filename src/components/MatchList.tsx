@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "antd/dist/antd.css";
-import "./Main.css";
+import "./MatchList.css";
 import { Divider } from "antd";
 import firebase from "firebase";
 import MatchListItem from "./MatchListItem";
@@ -27,10 +27,10 @@ const Main = (): JSX.Element => {
   };
 
   return (
-    <div className="signUp">
+    <div className="matchList">
       <h2>매치목록</h2>
       <Divider className="divider" />
-      <section className="signUpContainer">
+      <section className="matchListContainer">
         {matches.map((match, idx) => {
           return <MatchListItem key={"match" + idx} match={match} />;
         })}
