@@ -1,4 +1,4 @@
-import { act, fireEvent, render, screen } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import Signup from "./Signup";
 import firebase from "firebase";
 import { useHistory } from "react-router-dom";
