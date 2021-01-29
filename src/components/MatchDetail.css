@@ -14,16 +14,22 @@
   margin-bottom: 4px;
   border-bottom: 2px solid var(--orange-color);
 }
-.card {
+.chip {
   padding: 5px 10px;
   background: #c4c4c4;
   box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.25);
   border-radius: 4px;
   margin-bottom: 8px;
 }
-.Row {
+.row {
   margin-bottom: 20px;
 }
 .details {
-  padding: 10px;
+  margin-bottom: 10px;
+}
+.subLi {
+  list-style: none;
+}
+.iconUl {
+  list-style-image: url("https://img.icons8.com/officexs/16/000000/pin.png");
 }
