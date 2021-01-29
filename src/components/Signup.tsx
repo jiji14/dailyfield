@@ -80,7 +80,7 @@ const Signup = (): JSX.Element => {
       <section className="signUpContainer">
         <h3>필수사항</h3>
         <Divider className="divider" />
-        <Row align="middle" className="Row">
+        <Row align="middle" className="row">
           <Col span={6} className="signUpSubtitle">
             이름
           </Col>
@@ -92,7 +92,7 @@ const Signup = (): JSX.Element => {
             />
           </Col>
         </Row>
-        <Row align="middle" className="Row">
+        <Row align="middle" className="row">
           <Col span={6} className="signUpSubtitle">
             생년월일
           </Col>
@@ -108,7 +108,7 @@ const Signup = (): JSX.Element => {
       <section className="signUpContainer">
         <h3>선택사항</h3>
         <Divider className="divider" />
-        <Row align="middle" className="Row">
+        <Row align="middle" className="row">
           <Col span={6} className="signUpSubtitle">
             성별
           </Col>
@@ -124,7 +124,7 @@ const Signup = (): JSX.Element => {
             </Select>
           </Col>
         </Row>
-        <Row align="middle" className="Row">
+        <Row align="middle" className="row">
           <Col span={6} className="signUpSubtitle">
             테마
           </Col>

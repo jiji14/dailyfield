@@ -91,7 +91,7 @@ const AddMatch = (): JSX.Element => {
       <h2>매치등록</h2>
       <Divider className="divider" />
       <section className="signUpContainer">
-        <Row align="middle" className="Row">
+        <Row align="middle" className="row">
           <Col span={6} className="signUpSubtitle">
             날짜
           </Col>
@@ -104,7 +104,7 @@ const AddMatch = (): JSX.Element => {
             />
           </Col>
         </Row>
-        <Row align="middle" className="Row">
+        <Row align="middle" className="row">
           <Col span={6} className="signUpSubtitle">
             경기장
           </Col>
@@ -116,7 +116,7 @@ const AddMatch = (): JSX.Element => {
             />
           </Col>
         </Row>
-        <Row align="middle" className="Row">
+        <Row align="middle" className="row">
           <Col span={6} className="signUpSubtitle">
             인원
           </Col>
@@ -146,7 +146,7 @@ const AddMatch = (): JSX.Element => {
             </Select>
           </Col>
         </Row>
-        <Row align="middle" className="Row">
+        <Row align="middle" className="row">
           <Col span={6} className="signUpSubtitle">
             성별
           </Col>
@@ -178,7 +178,7 @@ const AddMatch = (): JSX.Element => {
             </Select>
           </Col>
         </Row>
-        <Row align="middle" className="Row">
+        <Row align="middle" className="row">
           <Col span={6} className="signUpSubtitle">
             링크
           </Col>
@@ -190,7 +190,7 @@ const AddMatch = (): JSX.Element => {
             />
           </Col>
         </Row>
-        <Row align="middle" className="Row">
+        <Row align="middle" className="row">
           <Col span={6} className="signUpSubtitle">
             종류
           </Col>
@@ -223,7 +223,7 @@ const AddMatch = (): JSX.Element => {
             </Select>
           </Col>
         </Row>
-        <Row align="middle" className="Row">
+        <Row align="middle" className="row">
           <Col span={6} className="signUpSubtitle">
             주차
           </Col>
@@ -255,7 +255,7 @@ const AddMatch = (): JSX.Element => {
             </Checkbox>
           </Col>
         </Row>
-        <Row align="middle" className="Row">
+        <Row align="middle" className="row">
           <Col span={6} className="signUpSubtitle">
             매니저
           </Col>
