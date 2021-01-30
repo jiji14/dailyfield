@@ -23,6 +23,7 @@ jest.mock("firebase");
 
 const mockHistory = {
   push: jest.fn(),
+  location: { pathname: "" },
 };
 
 jest.mock("react-router-dom", () => ({

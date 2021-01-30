@@ -1,27 +1,40 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Divider, Button, Tag } from "antd";
 import "antd/dist/antd.css";
 import "./MatchDetail.css";
 import { Match } from "../types";
 import Label from "./Label";
-
-const match: Match = {
-  dateTime: new Date(),
-  place: "용산",
-  memberCount: 15,
-  teamCount: 3,
-  gender: "여성",
-  level: "초급",
-  link: "www.naver.com",
-  gameType: "gx+match",
-  fee: 20000,
-  canPark: true,
-  canRentShoes: false,
-  manager: "배성진",
-};
+import { useHistory } from "react-router-dom";
+import firebase from "firebase";
 
 const MatchDetail = (): JSX.Element => {
-  return (
+  const history = useHistory();
+  const [match, setMatch] = useState<Match | null>(null);
+
+  useEffect(() => {
+    getMatch();
+  }, []);
+
+  const getMatch = async () => {
+    const matchId = history.location.pathname.split("/")[2];
+    const db = firebase.firestore();
+    const doc = await db.collection("matches").doc(matchId).get();
+    if (!doc.exists) {
+      window.alert("잘못된 접근입니다. 목록페이지로 돌아갑니다.");
+      history.push("/");
+      return;
+    }
+    const match = doc.data();
+    if (match) {
+      match.dateTime = match.dateTime.toDate();
+      match.id = doc.id;
+      setMatch(match as Match);
+    }
+  };
+
+  return !match ? (
+    <div></div>
+  ) : (
     <div className="matchDetail">
       <a href="/">목록으로 돌아가기</a>
       <Divider className="divider" />
