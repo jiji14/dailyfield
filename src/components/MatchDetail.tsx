@@ -4,7 +4,6 @@ import "antd/dist/antd.css";
 import "./MatchDetail.css";
 import { Match } from "../types";
 import Label from "./Label";
-import { useHistory } from "react-router-dom";
 
 const match: Match = {
   dateTime: new Date(),
@@ -22,17 +21,9 @@ const match: Match = {
 };
 
 const MatchDetail = (): JSX.Element => {
-  const history = useHistory();
-
   return (
     <div className="matchDetail">
-      <a
-        onClick={() => {
-          history.push("/");
-        }}
-      >
-        목록으로 돌아가기
-      </a>
+      <a href="/">목록으로 돌아가기</a>
       <Divider className="divider" />
       <div className="container">
         <div>{match.dateTime?.toDateString()}</div>
@@ -40,7 +31,7 @@ const MatchDetail = (): JSX.Element => {
       </div>
       <div className="container">
         <div>{match.place}</div>
-        <a href={match.link} target="_blank">
+        <a href={match.link} target="_blank" rel="noreferrer">
           구장 정보보기
         </a>
       </div>
