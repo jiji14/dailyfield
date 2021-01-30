@@ -46,8 +46,8 @@ describe("Test", () => {
       expect(screen.getByText(/15명/i)).toBeInTheDocument();
       expect(screen.getByText(/여성/i)).toBeInTheDocument();
       expect(screen.getByText(/초급/i)).toBeInTheDocument();
-      fireAntEvent.actAndClick("신청가능");
-      expect(useHistory().push.mock.calls[0][0]).toBe("/match/test12345");
     });
+    await fireAntEvent.actAndClick("신청가능");
+    expect(useHistory().push.mock.calls[0][0]).toBe("/match/test12345");
   });
 });
