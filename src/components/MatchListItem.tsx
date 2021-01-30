@@ -3,14 +3,21 @@ import Label from "./Label";
 import "antd/dist/antd.css";
 import "./MatchListItem.css";
 import { Match } from "../types";
+import { useHistory } from "react-router-dom";
 
 const MatchListItem = (matchProps: { match: Match }): JSX.Element => {
   const { match } = matchProps;
+  const history = useHistory();
 
   return (
     match && (
       <>
-        <Row align="middle">
+        <Row
+          align="middle"
+          onClick={() => {
+            history.push(`/match/${match.id}`);
+          }}
+        >
           <Col span={6}>
             <div className="time">
               {match.dateTime && match.dateTime.getHours()}:

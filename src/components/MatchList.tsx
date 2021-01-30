@@ -21,6 +21,7 @@ const Main = (): JSX.Element => {
     const matches: Match[] = querySnapshot.docs.map((doc) => {
       const data = doc.data();
       data.dateTime = data.dateTime.toDate();
+      data.id = doc.id;
       return data as Match;
     });
     setMatches(matches);

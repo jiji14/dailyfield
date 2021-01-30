@@ -1,0 +1,40 @@
+.matchDetail {
+  max-width: 1024px;
+  margin: 0 auto;
+  padding: 40px 10px;
+}
+.container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+.tagContainer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.title {
+  font-size: 16px;
+  width: fit-content;
+  margin-bottom: 4px;
+  border-bottom: 2px solid var(--orange-color);
+}
+.chip {
+  padding: 4px 8px;
+  font-size: 16px;
+  color: var(--grey-color);
+  margin-bottom: 8px;
+}
+.row {
+  margin-bottom: 20px;
+}
+.details {
+  margin-bottom: 10px;
+}
+.subLi {
+  list-style: none;
+}
+.iconUl {
+  list-style-image: url("https://img.icons8.com/officexs/16/000000/pin.png");
+}

@@ -4,6 +4,7 @@ export type GameType = "gx" | "match" | "gx+match";
 export type Status = "예약신청" | "취소신청" | "확정";
 
 export interface Match {
+  id?: string;
   dateTime: Date | null;
   place: string;
   memberCount: number;

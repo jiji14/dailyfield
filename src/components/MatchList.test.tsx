@@ -1,6 +1,8 @@
 import { render, screen, waitFor } from "@testing-library/react";
 import MatchList from "./MatchList";
 import firebase from "firebase";
+import { useHistory } from "react-router-dom";
+import { fireAntEvent } from "../setupTests";
 
 describe("Test", () => {
   beforeEach(() => {
@@ -28,6 +30,7 @@ describe("Test", () => {
                   canRentShoes: true,
                   manager: "배성진",
                 }),
+                id: "test12345",
               },
             ],
           }),
@@ -38,11 +41,13 @@ describe("Test", () => {
 
   test("renders Matches", async () => {
     render(<MatchList />);
-    await waitFor(() => {
+    await waitFor(async () => {
       expect(screen.getByText(/용산 더베이스/i)).toBeInTheDocument();
       expect(screen.getByText(/15명/i)).toBeInTheDocument();
       expect(screen.getByText(/여성/i)).toBeInTheDocument();
       expect(screen.getByText(/초급/i)).toBeInTheDocument();
     });
+    await fireAntEvent.actAndClick("신청가능");
+    expect(useHistory().push.mock.calls[0][0]).toBe("/match/test12345");
   });
 });
