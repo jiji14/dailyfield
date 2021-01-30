@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { Divider, Button, Tag } from "antd";
 import "antd/dist/antd.css";
 import "./MatchDetail.css";
@@ -11,11 +11,7 @@ const MatchDetail = (): JSX.Element => {
   const history = useHistory();
   const [match, setMatch] = useState<Match | null>(null);
 
-  useEffect(() => {
-    getMatch();
-  }, []);
-
-  const getMatch = async () => {
+  const getMatch = useCallback(async () => {
     const matchId = history.location.pathname.split("/")[2];
     const db = firebase.firestore();
     const doc = await db.collection("matches").doc(matchId).get();
@@ -30,7 +26,11 @@ const MatchDetail = (): JSX.Element => {
       match.id = doc.id;
       setMatch(match as Match);
     }
-  };
+  }, [history]);
+
+  useEffect(() => {
+    getMatch();
+  }, [getMatch]);
 
   return !match ? (
     <div></div>
