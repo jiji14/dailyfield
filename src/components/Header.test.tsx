@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import Header from "./Header";
 import firebase from "firebase";
 import { fireAntEvent } from "../setupTests";
@@ -7,7 +7,7 @@ describe("Test", () => {
   test("Sign In", async () => {
     ((firebase.auth as unknown) as jest.Mock).mockReturnValue({
       currentUser: null,
-      onAuthStateChanged: jest.fn().mockResolvedValue({
+      onAuthStateChanged: jest.fn().mockReturnValue({
         user: null,
       }),
       signInWithPhoneNumber: jest.fn().mockResolvedValue({
@@ -42,7 +42,7 @@ describe("Test", () => {
 
   test("Sign Out", async () => {
     ((firebase.auth as unknown) as jest.Mock).mockReturnValue({
-      onAuthStateChanged: jest.fn().mockResolvedValue({
+      onAuthStateChanged: jest.fn().mockReturnValue({
         user: {},
       }),
       currentUser: {},
@@ -53,5 +53,33 @@ describe("Test", () => {
     await fireAntEvent.actAndClick("SIGNOUT");
     const signoutButton = screen.getByText("SIGNIN");
     expect(signoutButton).toBeInTheDocument();
+  });
+
+  test("Sign In Status", async () => {
+    ((firebase.auth as unknown) as jest.Mock).mockReturnValue({
+      onAuthStateChanged: jest.fn().mockReturnValue({
+        user: {},
+      }),
+    });
+
+    render(<Header />);
+    await waitFor(async () => {
+      const signoutButton = screen.getByText("SIGNOUT");
+      expect(signoutButton).toBeInTheDocument();
+    });
+  });
+
+  test("Sign Out Status", async () => {
+    ((firebase.auth as unknown) as jest.Mock).mockReturnValue({
+      onAuthStateChanged: jest.fn().mockReturnValue({
+        user: null,
+      }),
+    });
+
+    render(<Header />);
+    await waitFor(async () => {
+      const signoutButton = screen.getByText("SIGNIN");
+      expect(signoutButton).toBeInTheDocument();
+    });
   });
 });
