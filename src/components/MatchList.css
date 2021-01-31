@@ -11,3 +11,9 @@
 .matchListContainer {
   margin-bottom: 20px;
 }
+
+.dateTitle {
+  font-size: 20px;
+  padding: 8px 0;
+  color: var(--grey-color);
+}
