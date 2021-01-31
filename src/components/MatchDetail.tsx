@@ -13,24 +13,23 @@ const MatchDetail = (): JSX.Element => {
   const { id } = useParams<{ id: string }>();
 
   useEffect(() => {
+    async function getMatch() {
+      const db = firebase.firestore();
+      const doc = await db.collection("matches").doc(id).get();
+      if (!doc.exists) {
+        window.alert("잘못된 접근입니다. 목록페이지로 돌아갑니다.");
+        history.push("/");
+        return;
+      }
+      const match = doc.data();
+      if (match) {
+        match.dateTime = match.dateTime.toDate();
+        match.id = doc.id;
+        setMatch(match as Match);
+      }
+    }
     getMatch();
-  }, [id]);
-
-  const getMatch = async () => {
-    const db = firebase.firestore();
-    const doc = await db.collection("matches").doc(id).get();
-    if (!doc.exists) {
-      window.alert("잘못된 접근입니다. 목록페이지로 돌아갑니다.");
-      history.push("/");
-      return;
-    }
-    const match = doc.data();
-    if (match) {
-      match.dateTime = match.dateTime.toDate();
-      match.id = doc.id;
-      setMatch(match as Match);
-    }
-  };
+  }, [history, id]);
 
   return !match ? (
     <div></div>
