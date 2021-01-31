@@ -9,7 +9,11 @@ const MatchList = (): JSX.Element => {
   const [matches, setMatches] = useState<Match[]>([]);
   const [matchDate, setMatchDate] = useState<string[]>([]);
 
-  const getMatches = useCallback(async () => {
+  useEffect(() => {
+    getMatches();
+  }, []);
+
+  const getMatches = async () => {
     const db = firebase.firestore();
     const querySnapshot = await db
       .collection("matches")
@@ -20,21 +24,15 @@ const MatchList = (): JSX.Element => {
     const matches: Match[] = querySnapshot.docs.map((doc) => {
       const data = doc.data();
       data.dateTime = data.dateTime.toDate();
-      const day = data.dateTime.getDate();
-      const month = data.dateTime.getMonth() + 1;
-      const year = data.dateTime.getFullYear();
+      const matchDate = data.dateTime.toLocaleDateString("ko-KR");
       const dayOfWeek = getDayOfWeek(data.dateTime.getDay());
-      matchDateArray.push(year + "-" + month + "-" + day + " " + dayOfWeek);
+      matchDateArray.push(matchDate + " " + dayOfWeek);
       data.id = doc.id;
       return data as Match;
     });
     setMatchDate(matchDateArray);
     setMatches(matches);
-  }, []);
-
-  useEffect(() => {
-    getMatches();
-  }, [getMatches]);
+  };
 
   const getDayOfWeek = (dayOfWeek: number) => {
     switch (dayOfWeek) {
@@ -64,9 +62,9 @@ const MatchList = (): JSX.Element => {
         {matches.map((match, idx) => {
           if (matchDate[idx] !== matchDate[idx - 1]) {
             return (
-              <div>
+              <div key={"match" + idx}>
                 <div className="dateTitle">{matchDate[idx]}</div>
-                <MatchListItem key={"match" + idx} match={match} />
+                <MatchListItem match={match} />
               </div>
             );
           } else {
