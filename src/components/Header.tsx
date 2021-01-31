@@ -14,9 +14,7 @@ const Header = (): JSX.Element => {
   const [user, setUser] = useState(firebase.auth().currentUser);
 
   useEffect(() => {
-    firebase.auth().onAuthStateChanged(function (user) {
-      setUser(user);
-    });
+    firebase.auth().onAuthStateChanged(setUser);
   }, []);
 
   const showModal = () => {
