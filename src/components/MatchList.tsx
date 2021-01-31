@@ -21,9 +21,14 @@ const MatchList = (): JSX.Element => {
       const matches: Match[] = querySnapshot.docs.map((doc) => {
         const data = doc.data();
         data.dateTime = data.dateTime.toDate();
-        const matchDate = data.dateTime.toLocaleDateString("ko-KR");
-        const dayOfWeek = getDayOfWeek(data.dateTime.getDay());
-        matchDateArray.push(matchDate + " " + dayOfWeek);
+        const options = {
+          weekday: "long",
+          year: "numeric",
+          month: "numeric",
+          day: "numeric",
+        };
+        const matchDate = data.dateTime.toLocaleDateString("ko-KR", options);
+        matchDateArray.push(matchDate);
         data.id = doc.id;
         return data as Match;
       });
@@ -32,27 +37,6 @@ const MatchList = (): JSX.Element => {
     }
     getMatches();
   }, []);
-
-  const getDayOfWeek = (dayOfWeek: number) => {
-    switch (dayOfWeek) {
-      case 1:
-        return "월요일";
-      case 2:
-        return "화요일";
-      case 3:
-        return "수요일";
-      case 4:
-        return "목요일";
-      case 5:
-        return "금요일";
-      case 6:
-        return "토요일";
-      case 0:
-        return "일요일";
-      default:
-        return null;
-    }
-  };
 
   return (
     <div className="matchList">
