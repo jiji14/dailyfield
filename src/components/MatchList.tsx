@@ -10,29 +10,28 @@ const MatchList = (): JSX.Element => {
   const [matchDate, setMatchDate] = useState<string[]>([]);
 
   useEffect(() => {
+    async function getMatches() {
+      const db = firebase.firestore();
+      const querySnapshot = await db
+        .collection("matches")
+        .orderBy("dateTime", "desc")
+        .get();
+
+      const matchDateArray: Array<string> = [];
+      const matches: Match[] = querySnapshot.docs.map((doc) => {
+        const data = doc.data();
+        data.dateTime = data.dateTime.toDate();
+        const matchDate = data.dateTime.toLocaleDateString("ko-KR");
+        const dayOfWeek = getDayOfWeek(data.dateTime.getDay());
+        matchDateArray.push(matchDate + " " + dayOfWeek);
+        data.id = doc.id;
+        return data as Match;
+      });
+      setMatchDate(matchDateArray);
+      setMatches(matches);
+    }
     getMatches();
   }, []);
-
-  const getMatches = async () => {
-    const db = firebase.firestore();
-    const querySnapshot = await db
-      .collection("matches")
-      .orderBy("dateTime", "desc")
-      .get();
-
-    const matchDateArray: Array<string> = [];
-    const matches: Match[] = querySnapshot.docs.map((doc) => {
-      const data = doc.data();
-      data.dateTime = data.dateTime.toDate();
-      const matchDate = data.dateTime.toLocaleDateString("ko-KR");
-      const dayOfWeek = getDayOfWeek(data.dateTime.getDay());
-      matchDateArray.push(matchDate + " " + dayOfWeek);
-      data.id = doc.id;
-      return data as Match;
-    });
-    setMatchDate(matchDateArray);
-    setMatches(matches);
-  };
 
   const getDayOfWeek = (dayOfWeek: number) => {
     switch (dayOfWeek) {
