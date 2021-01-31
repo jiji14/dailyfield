@@ -1,20 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import "antd/dist/antd.css";
 import "./MatchList.css";
-import { Divider } from "antd";
 import firebase from "firebase";
 import MatchListItem from "./MatchListItem";
 import { Match } from "../types";
 
-const Main = (): JSX.Element => {
+const MatchList = (): JSX.Element => {
   const [matches, setMatches] = useState<Match[]>([]);
   const [matchDate, setMatchDate] = useState<string[]>([]);
 
-  useEffect(() => {
-    getMatches();
-  }, []);
-
-  const getMatches = async () => {
+  const getMatches = useCallback(async () => {
     const db = firebase.firestore();
     const querySnapshot = await db
       .collection("matches")
@@ -35,7 +30,11 @@ const Main = (): JSX.Element => {
     });
     setMatchDate(matchDateArray);
     setMatches(matches);
-  };
+  }, []);
+
+  useEffect(() => {
+    getMatches();
+  }, [getMatches]);
 
   const getDayOfWeek = (dayOfWeek: number) => {
     switch (dayOfWeek) {
@@ -79,4 +78,4 @@ const Main = (): JSX.Element => {
   );
 };
 
-export default Main;
+export default MatchList;
