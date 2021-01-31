@@ -1,20 +1,24 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import { Divider, Button, Tag } from "antd";
 import "antd/dist/antd.css";
 import "./MatchDetail.css";
 import { Match } from "../types";
 import Label from "./Label";
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import firebase from "firebase";
 
 const MatchDetail = (): JSX.Element => {
   const history = useHistory();
   const [match, setMatch] = useState<Match | null>(null);
+  const { id } = useParams<{ id: string }>();
 
-  const getMatch = useCallback(async () => {
-    const matchId = history.location.pathname.split("/")[2];
+  useEffect(() => {
+    getMatch();
+  }, [id]);
+
+  const getMatch = async () => {
     const db = firebase.firestore();
-    const doc = await db.collection("matches").doc(matchId).get();
+    const doc = await db.collection("matches").doc(id).get();
     if (!doc.exists) {
       window.alert("잘못된 접근입니다. 목록페이지로 돌아갑니다.");
       history.push("/");
@@ -26,11 +30,7 @@ const MatchDetail = (): JSX.Element => {
       match.id = doc.id;
       setMatch(match as Match);
     }
-  }, [history]);
-
-  useEffect(() => {
-    getMatch();
-  }, [getMatch]);
+  };
 
   return !match ? (
     <div></div>
