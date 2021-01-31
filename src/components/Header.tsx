@@ -15,7 +15,7 @@ const Header = (): JSX.Element => {
 
   useEffect(() => {
     firebase.auth().onAuthStateChanged(function (user) {
-      if (user) setUser(user);
+      setUser(user);
     });
   }, []);
 
