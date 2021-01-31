@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import "antd/dist/antd.css";
 import "./MatchList.css";
 import firebase from "firebase";
