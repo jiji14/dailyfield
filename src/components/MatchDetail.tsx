@@ -10,26 +10,62 @@ import firebase from "firebase";
 const MatchDetail = (): JSX.Element => {
   const history = useHistory();
   const [match, setMatch] = useState<Match | null>(null);
+  const [user, setUser] = useState(firebase.auth().currentUser);
+  const [reservationStatus, setReservationStatus] = useState("available");
   const { id } = useParams<{ id: string }>();
+
+  useEffect(() => {
+    firebase.auth().onAuthStateChanged(setUser);
+  }, []);
 
   useEffect(() => {
     async function getMatch() {
       const db = firebase.firestore();
       const doc = await db.collection("matches").doc(id).get();
+
       if (!doc.exists) {
         window.alert("잘못된 접근입니다. 목록페이지로 돌아갑니다.");
         history.push("/");
         return;
       }
+
       const match = doc.data();
+
       if (match) {
         match.dateTime = match.dateTime.toDate();
         match.id = doc.id;
         setMatch(match as Match);
+
+        const matchDoc = await db
+          .collection("matches")
+          .doc(match?.id)
+          .collection("reservation")
+          .where("status", "==", "done")
+          .get();
+
+        if (matchDoc?.size >= match?.memberCount) {
+          setReservationStatus("closed");
+        }
+
+        if (!user) return;
+
+        const reservationDoc = await db
+          .collection("matches")
+          .doc(match?.id)
+          .collection("reservation")
+          .doc(user?.uid)
+          .get();
+
+        if (reservationDoc.exists) {
+          const data = reservationDoc.data();
+          if (data?.status) {
+            setReservationStatus(data.status);
+          }
+        }
       }
     }
     getMatch();
-  }, [history, id]);
+  }, [history, id, user]);
 
   return !match ? (
     <div></div>
@@ -38,8 +74,15 @@ const MatchDetail = (): JSX.Element => {
       <a href="/">목록으로 돌아가기</a>
       <Divider className="divider" />
       <div className="container">
-        <div>{match.dateTime?.toDateString()}</div>
-        <Label type="progress">마감</Label>
+        <div>
+          {match.dateTime?.toLocaleDateString("ko-KR", {
+            weekday: "long",
+            year: "numeric",
+            month: "numeric",
+            day: "numeric",
+          })}
+        </div>
+        <Label type="progress">{reservationStatus}</Label>
       </div>
       <div className="container">
         <div>{match.place}</div>
@@ -142,7 +185,12 @@ const MatchDetail = (): JSX.Element => {
       </section>
       <Divider className="divider" />
       <div className="signUpButtonContainer">
-        <Button type="primary">예약하기</Button>
+        {reservationStatus !== "closed" &&
+          (reservationStatus === "available" ? (
+            <Button type="primary">예약하기</Button>
+          ) : (
+            <Button type="primary">예약취소</Button>
+          ))}
       </div>
     </div>
   );
