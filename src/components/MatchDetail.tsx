@@ -32,7 +32,7 @@ const MatchDetail = (): JSX.Element => {
       const match = doc.data();
 
       if (match) {
-        match.dateTime = match.dateTime.toDate();
+        // match.dateTime = match.dateTime.toDate();
         match.id = doc.id;
         setMatch(match as Match);
 
@@ -67,6 +67,93 @@ const MatchDetail = (): JSX.Element => {
     getMatch();
   }, [history, id, user]);
 
+  const reserveMatch = async () => {
+    if (!user) {
+      window.alert("예약은 로그인 후에 가능합니다.");
+      return;
+    }
+
+    if (window.confirm("해당 매치를 예약신청하시겠습니까?")) {
+      const uid = user.uid;
+      const db = firebase.firestore();
+      await db
+        .collection("matches")
+        .doc(match?.id)
+        .collection("reservation")
+        .doc(uid)
+        .set({ status: "pending" });
+
+      window.alert(
+        "예약이 완료되었습니다. 참가비 입금 확인 후 예약이 확정됩니다."
+      );
+      window.location.reload();
+    }
+  };
+
+  const cancelMatch = async () => {
+    if (!user) {
+      window.alert("예약취소는 로그인 후에 가능합니다.");
+      return;
+    }
+    if (window.confirm("예약취소를 진행하시겠습니까?")) {
+      const uid = user.uid;
+      const db = firebase.firestore();
+      await db
+        .collection("matches")
+        .doc(match?.id)
+        .collection("reservation")
+        .doc(uid)
+        .set({ status: "cancel" });
+
+      window.alert(
+        "예약취소가 완료되었습니다. 환불 규정에 따라 환불 처리가 진행된 후 취소가 확정됩니다."
+      );
+      window.location.reload();
+    }
+  };
+
+  const renderReservationStatus = () => {
+    switch (reservationStatus) {
+      case "available":
+        return <Label type="primary">신청가능</Label>;
+      case "pending":
+        return <Label type="progress">신청중</Label>;
+      case "closed":
+        return <Label type="secondary">마감</Label>;
+      case "done":
+        return <Label type="success">신청완료</Label>;
+      case "cancel":
+        return <Label type="progress">취소중</Label>;
+      default:
+        return null;
+    }
+  };
+
+  const renderButton = () => {
+    switch (reservationStatus) {
+      case "available":
+        return (
+          <Button type="primary" onClick={reserveMatch}>
+            예약하기
+          </Button>
+        );
+      case "done":
+        return (
+          <Button type="primary" onClick={cancelMatch}>
+            예약취소
+          </Button>
+        );
+      case "pending":
+        return (
+          <Button type="primary" onClick={cancelMatch}>
+            예약취소
+          </Button>
+        );
+      default:
+        return null;
+    }
+  };
+
   return !match ? (
     <div></div>
   ) : (
@@ -74,15 +161,15 @@ const MatchDetail = (): JSX.Element => {
       <a href="/">목록으로 돌아가기</a>
       <Divider className="divider" />
       <div className="container">
-        <div>
+        {/* <div>
           {match.dateTime?.toLocaleDateString("ko-KR", {
             weekday: "long",
             year: "numeric",
             month: "numeric",
             day: "numeric",
           })}
-        </div>
-        <Label type="progress">{reservationStatus}</Label>
+        </div> */}
+        {renderReservationStatus()}
       </div>
       <div className="container">
         <div>{match.place}</div>
@@ -184,14 +271,7 @@ const MatchDetail = (): JSX.Element => {
         </ul>
       </section>
       <Divider className="divider" />
-      <div className="signUpButtonContainer">
-        {reservationStatus !== "closed" &&
-          (reservationStatus === "available" ? (
-            <Button type="primary">예약하기</Button>
-          ) : (
-            <Button type="primary">예약취소</Button>
-          ))}
-      </div>
+      <div className="signUpButtonContainer">{renderButton()}</div>
     </div>
   );
 };
