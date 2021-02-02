@@ -67,4 +67,10 @@ export const fireAntEvent = {
       fireEvent.click(button);
     });
   },
+  actAndClickByTestId: async function (testId: string): void {
+    await act(async () => {
+      const button = screen.getByTestId(testId);
+      fireEvent.click(button);
+    });
+  },
 };
