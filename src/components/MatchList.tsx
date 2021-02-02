@@ -1,14 +1,28 @@
 import React, { useState, useEffect } from "react";
 import "antd/dist/antd.css";
 import "./MatchList.css";
-import { Divider } from "antd";
+import { Divider, Button } from "antd";
 import firebase from "firebase";
 import MatchListItem from "./MatchListItem";
 import { Match } from "../types";
+import { useHistory } from "react-router-dom";
 
 const Main = (): JSX.Element => {
+  const history = useHistory();
   const [matches, setMatches] = useState<Match[]>([]);
+  const [isAdmin, setIsAdmin] = useState(false);
+
   useEffect(() => {
+    async function getUser(uid: string) {
+      const db = firebase.firestore();
+      const doc = await db.collection("users").doc(uid).get();
+      if (doc.exists) setIsAdmin(doc.data()?.isAdmin);
+    }
+    firebase.auth().onAuthStateChanged(function (user) {
+      if (user) {
+        getUser(user.uid);
+      }
+    });
     getMatches();
   }, []);
 
@@ -29,7 +43,19 @@ const Main = (): JSX.Element => {
 
   return (
     <div className="matchList">
-      <h2>매치목록</h2>
+      <div className="matchTitleContainer">
+        <h2>매치목록</h2>
+        {isAdmin && (
+          <Button
+            type="primary"
+            onClick={() => {
+              history.push("/match/add");
+            }}
+          >
+            매치등록
+          </Button>
+        )}
+      </div>
       <Divider className="divider" />
       <section className="matchListContainer">
         {matches.map((match, idx) => {
