@@ -28,8 +28,11 @@ describe("Test", () => {
 
     render(<Header />);
     await fireAntEvent.actAndClick("SIGNIN");
-    await fireAntEvent.actAndInput("핸드폰번호", "+1 650-555-3434");
-    const signinButton = screen.getByText(/로그인/i);
+    await fireAntEvent.actAndInput(
+      "- 없이 숫자만 입력해주세요. (ex)01012345678",
+      "01090143492"
+    );
+    const signinButton = screen.getByTestId("sign-in-button");
     expect(signinButton).toBeInTheDocument();
 
     await fireAntEvent.actAndClick("로그인");
