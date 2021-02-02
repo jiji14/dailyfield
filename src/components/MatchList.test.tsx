@@ -6,12 +6,26 @@ import { fireAntEvent } from "../setupTests";
 
 describe("Test", () => {
   beforeEach(() => {
+    const fakeUser = {};
+    const callback = jest.fn();
+
     ((firebase.auth as unknown) as jest.Mock).mockReturnValue({
       currentUser: {},
+      onAuthStateChanged: (callback) => {
+        callback(fakeUser);
+      },
     });
 
     ((firebase.firestore as unknown) as jest.Mock).mockReturnValue({
       collection: jest.fn().mockReturnValue({
+        doc: jest.fn().mockReturnValue({
+          get: jest.fn().mockResolvedValue({
+            exists: {},
+            data: jest.fn().mockReturnValue({
+              isAdmin: true,
+            }),
+          }),
+        }),
         orderBy: jest.fn().mockReturnValue({
           get: jest.fn().mockResolvedValue({
             docs: [
@@ -49,5 +63,13 @@ describe("Test", () => {
     });
     await fireAntEvent.actAndClick("신청가능");
     expect(useHistory().push.mock.calls[0][0]).toBe("/match/test12345");
+  });
+
+  test("click AddMatch", async () => {
+    render(<MatchList />);
+    await waitFor(async () => {
+      await fireAntEvent.actAndClick("매치등록");
+    });
+    expect(useHistory().push.mock.calls[0][0]).toBe("/match/add");
   });
 });
