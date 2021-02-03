@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, fireEvent } from "@testing-library/react";
 import Header from "./Header";
 import firebase from "firebase";
 import { fireAntEvent } from "../setupTests";
@@ -32,8 +32,6 @@ describe("Test", () => {
       "- 없이 숫자만 입력해주세요. (ex)01012345678",
       "01090143492"
     );
-    const signinButton = screen.getByTestId("sign-in-button");
-    expect(signinButton).toBeInTheDocument();
 
     await fireAntEvent.actAndClick("로그인");
     const signoutButton = screen.getByText(/SIGNOUT/i);
