@@ -47,6 +47,7 @@ describe("Test", () => {
             }),
             doc: jest.fn().mockReturnValue({
               set: jest.fn().mockResolvedValue(null),
+              delete: jest.fn().mockResolvedValue(null),
               get: jest.fn().mockResolvedValue({
                 exists: {},
                 data: jest.fn().mockReturnValue({
