@@ -29,7 +29,9 @@ const Header = (): JSX.Element => {
   const signInWithPhoneNumber = async () => {
     const regExp = /^01(?:0|1|[6-9])(?:\d{7}|\d{8})$/;
     if (!regExp.test(phoneNumber)) {
-      window.alert("올바른 번호가 아닙니다. 다시한번 확인해주세요.");
+      window.alert(
+        "올바른 번호가 아닙니다. 다시한번 확인해주세요. (ex)01012345678"
+      );
       return;
     }
 
