@@ -50,7 +50,7 @@ describe("Test", () => {
               get: jest.fn().mockResolvedValue({
                 exists: {},
                 data: jest.fn().mockReturnValue({
-                  status: "pending",
+                  status: "예약신청",
                 }),
               }),
             }),
