@@ -53,9 +53,9 @@ const MatchDetail = (): JSX.Element => {
 
         const reservationDoc = await db
           .collection("matches")
-          .doc(match?.id)
+          .doc(match.id)
           .collection("reservation")
-          .doc(user?.uid)
+          .doc(user.uid)
           .get();
 
         if (reservationDoc.exists) {
@@ -76,7 +76,7 @@ const MatchDetail = (): JSX.Element => {
     }
 
     if (window.confirm("해당 매치를 예약신청하시겠습니까?")) {
-      const uid = user.uid;
+      const { uid } = user;
       const db = firebase.firestore();
       await db
         .collection("matches")
@@ -98,7 +98,7 @@ const MatchDetail = (): JSX.Element => {
       return;
     }
     if (window.confirm("예약취소를 진행하시겠습니까?")) {
-      const uid = user.uid;
+      const { uid } = user;
       const db = firebase.firestore();
       await db
         .collection("matches")
