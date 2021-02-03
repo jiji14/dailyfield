@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Divider, Button, Tag } from "antd";
 import "antd/dist/antd.css";
 import "./MatchDetail.css";
-import { Match } from "../types";
+import { Match, Status } from "../types";
 import Label from "./Label";
 import { useHistory, useParams } from "react-router-dom";
 import firebase from "firebase";
@@ -11,7 +11,9 @@ const MatchDetail = (): JSX.Element => {
   const history = useHistory();
   const [match, setMatch] = useState<Match | null>(null);
   const [user, setUser] = useState(firebase.auth().currentUser);
-  const [reservationStatus, setReservationStatus] = useState("available");
+  const [reservationStatus, setReservationStatus] = useState<Status>(
+    "신청가능"
+  );
   const { id } = useParams<{ id: string }>();
 
   useEffect(() => {
@@ -44,7 +46,7 @@ const MatchDetail = (): JSX.Element => {
           .get();
 
         if (matchDoc?.size >= match?.memberCount) {
-          setReservationStatus("closed");
+          setReservationStatus("마감");
         }
 
         if (!user) return;
@@ -81,7 +83,7 @@ const MatchDetail = (): JSX.Element => {
         .doc(match?.id)
         .collection("reservation")
         .doc(uid)
-        .set({ status: "pending" });
+        .set({ status: "예약신청" });
 
       window.alert(
         "예약이 완료되었습니다. 참가비 입금 확인 후 예약이 확정됩니다."
@@ -103,7 +105,7 @@ const MatchDetail = (): JSX.Element => {
         .doc(match?.id)
         .collection("reservation")
         .doc(uid)
-        .set({ status: "cancel" });
+        .set({ status: "취소신청" });
 
       window.alert(
         "예약취소가 완료되었습니다. 환불 규정에 따라 환불 처리가 진행된 후 취소가 확정됩니다."
@@ -114,15 +116,15 @@ const MatchDetail = (): JSX.Element => {
 
   const renderReservationStatus = () => {
     switch (reservationStatus) {
-      case "available":
+      case "신청가능":
         return <Label type="primary">신청가능</Label>;
-      case "pending":
+      case "예약신청":
         return <Label type="progress">신청중</Label>;
-      case "closed":
+      case "마감":
         return <Label type="secondary">마감</Label>;
-      case "done":
-        return <Label type="success">신청완료</Label>;
-      case "cancel":
+      case "확정":
+        return <Label type="success">예약확정</Label>;
+      case "취소신청":
         return <Label type="progress">취소중</Label>;
       default:
         return null;
@@ -131,19 +133,19 @@ const MatchDetail = (): JSX.Element => {
 
   const renderButton = () => {
     switch (reservationStatus) {
-      case "available":
+      case "신청가능":
         return (
           <Button type="primary" onClick={reserveMatch}>
             예약하기
           </Button>
         );
-      case "done":
+      case "확정":
         return (
           <Button type="primary" onClick={cancelMatch}>
             예약취소
           </Button>
         );
-      case "pending":
+      case "예약신청":
         return (
           <Button type="primary" onClick={cancelMatch}>
             예약취소
