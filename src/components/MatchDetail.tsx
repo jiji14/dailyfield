@@ -100,16 +100,25 @@ const MatchDetail = (): JSX.Element => {
     if (window.confirm("예약취소를 진행하시겠습니까?")) {
       const { uid } = user;
       const db = firebase.firestore();
-      await db
-        .collection("matches")
-        .doc(match?.id)
-        .collection("reservation")
-        .doc(uid)
-        .set({ status: "취소신청" });
-
-      window.alert(
-        "예약취소가 완료되었습니다. 환불 규정에 따라 환불 처리가 진행된 후 취소가 확정됩니다."
-      );
+      if (reservationStatus === "예약신청") {
+        await db
+          .collection("matches")
+          .doc(match?.id)
+          .collection("reservation")
+          .doc(uid)
+          .delete();
+        window.alert("예약취소가 완료되었습니다.");
+      } else {
+        await db
+          .collection("matches")
+          .doc(match?.id)
+          .collection("reservation")
+          .doc(uid)
+          .set({ status: "취소신청" });
+        window.alert(
+          "취소신청이 완료되었습니다. 환불 규정에 따라 환불 처리가 진행된 후 취소가 확정됩니다."
+        );
+      }
       window.location.reload();
     }
   };
