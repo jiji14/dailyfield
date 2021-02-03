@@ -86,7 +86,7 @@ const MatchDetail = (): JSX.Element => {
         .set({ status: "예약신청" });
 
       window.alert(
-        "예약이 완료되었습니다. 참가비 입금 확인 후 예약이 확정됩니다."
+        "예약신청이 완료되었습니다. 참가비 입금 확인 후 예약이 확정됩니다."
       );
       window.location.reload();
     }
