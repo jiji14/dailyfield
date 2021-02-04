@@ -5,37 +5,35 @@ import { fireAntEvent } from "../setupTests";
 
 describe("Test", () => {
   beforeEach(() => {
-    const fakeUser = {};
-    const callback = jest.fn();
     ((firebase.auth as unknown) as jest.Mock).mockReturnValue({
       currentUser: {},
-      onAuthStateChanged: (callback) => {
-        callback(fakeUser);
-      },
+      onAuthStateChanged: jest.fn(),
     });
   });
 
-  test("예약중인 경우", async () => {
-    await ((firebase.firestore as unknown) as jest.Mock).mockReturnValue({
+  test("예약 신청중인경우 신청중이고 예약취소 버튼 보이는지 테스트", async () => {
+    ((firebase.firestore as unknown) as jest.Mock).mockReturnValue({
       collection: jest.fn().mockReturnValue({
         doc: jest.fn().mockReturnValue({
           get: jest.fn().mockResolvedValue({
-            exists: {},
-            data: jest.fn().mockReturnValue({
-              dateTime: {
-                toDate: jest.fn().mockReturnValue(new Date("2021-01-01")),
-              },
-              place: "용산 더베이스",
-              memberCount: 15,
-              teamCount: 3,
-              gender: "여성",
-              level: "초급",
-              link: "www.naver.com",
-              gameType: "match",
-              fee: 20000,
-              canPark: true,
-              canRentShoes: true,
-              manager: "배성진",
+            exists: true,
+            data: jest.fn().mockImplementation(() => {
+              return {
+                dateTime: {
+                  toDate: jest.fn().mockReturnValue(new Date("2021-01-01")),
+                },
+                place: "용산 더베이스",
+                memberCount: 150,
+                teamCount: 3,
+                gender: "여성",
+                level: "초급",
+                link: "www.naver.com",
+                gameType: "match",
+                fee: 20000,
+                canPark: true,
+                canRentShoes: true,
+                manager: "배성진",
+              };
             }),
             id: "test12345",
           }),
@@ -62,49 +60,39 @@ describe("Test", () => {
     render(<MatchDetail />);
 
     await waitFor(async () => {
-      //더미데이터 제대로 나오는지 확인
-      expect(screen.getByText(/초급레벨/i)).toBeInTheDocument();
-      expect(screen.getByText(/풋살화 대여 가능/i)).toBeInTheDocument();
-      expect(screen.getByText(/주차 가능/i)).toBeInTheDocument();
-      expect(screen.getByText(/20,000원/i)).toBeInTheDocument();
-      expect(screen.getByText("신청중")).toBeInTheDocument();
-      expect(screen.getByText("예약취소")).toBeInTheDocument();
+      expect(screen.getByText("신청중")).toBeInTheDocument(); // 예약이 신청중인지 확인
+      expect(screen.getByText("예약취소")).toBeInTheDocument(); // 신청중이면 예약취소가 보여야함
     });
 
     window.alert = () => "";
     window.confirm = () => "";
     window.location = { reload: jest.fn() };
-
     await fireAntEvent.actAndClick("예약취소");
-    const match = firebase
-      .firestore()
-      .collection("matches")
-      .doc("id")
-      .collection("reservation")
-      .doc("uid").set.mock.calls;
   });
 
-  test("예약 마감", async () => {
+  test("예약이 선수 다 차서 마감이면 마감인지 테스트", async () => {
     ((firebase.firestore as unknown) as jest.Mock).mockReturnValue({
       collection: jest.fn().mockReturnValue({
         doc: jest.fn().mockReturnValue({
           get: jest.fn().mockResolvedValue({
-            exists: {},
-            data: jest.fn().mockReturnValue({
-              dateTime: {
-                toDate: jest.fn().mockReturnValue(new Date("2021-01-01")),
-              },
-              place: "용산 더베이스",
-              memberCount: 15,
-              teamCount: 3,
-              gender: "여성",
-              level: "초급",
-              link: "www.naver.com",
-              gameType: "match",
-              fee: 20000,
-              canPark: true,
-              canRentShoes: true,
-              manager: "배성진",
+            exists: true,
+            data: jest.fn().mockImplementation(() => {
+              return {
+                dateTime: {
+                  toDate: jest.fn().mockReturnValue(new Date("2021-01-01")),
+                },
+                place: "용산 더베이스",
+                memberCount: 15,
+                teamCount: 3,
+                gender: "여성",
+                level: "초급",
+                link: "www.naver.com",
+                gameType: "match",
+                fee: 20000,
+                canPark: true,
+                canRentShoes: true,
+                manager: "배성진",
+              };
             }),
             id: "test12345",
           }),
@@ -127,36 +115,33 @@ describe("Test", () => {
     render(<MatchDetail />);
 
     await waitFor(async () => {
-      //더미데이터 제대로 나오는지 확인
-      expect(screen.getByText(/초급레벨/i)).toBeInTheDocument();
-      expect(screen.getByText(/풋살화 대여 가능/i)).toBeInTheDocument();
-      expect(screen.getByText(/주차 가능/i)).toBeInTheDocument();
-      expect(screen.getByText(/20,000원/i)).toBeInTheDocument();
-      expect(screen.getByText("마감")).toBeInTheDocument();
+      expect(screen.getByText("마감")).toBeInTheDocument(); //예약이 마감인지 확인
     });
   });
 
-  test("예약 가능 - 예약하기", async () => {
+  test("예약 가능한 상태이면 예약하기 테스트", async () => {
     ((firebase.firestore as unknown) as jest.Mock).mockReturnValue({
       collection: jest.fn().mockReturnValue({
         doc: jest.fn().mockReturnValue({
           get: jest.fn().mockResolvedValue({
-            exists: {},
-            data: jest.fn().mockReturnValue({
-              dateTime: {
-                toDate: jest.fn().mockReturnValue(new Date("2021-01-01")),
-              },
-              place: "용산 더베이스",
-              memberCount: 15,
-              teamCount: 3,
-              gender: "여성",
-              level: "초급",
-              link: "www.naver.com",
-              gameType: "match",
-              fee: 20000,
-              canPark: true,
-              canRentShoes: true,
-              manager: "배성진",
+            exists: true,
+            data: jest.fn().mockImplementation(() => {
+              return {
+                dateTime: {
+                  toDate: jest.fn().mockReturnValue(new Date("2021-01-01")),
+                },
+                place: "용산 더베이스",
+                memberCount: 15,
+                teamCount: 3,
+                gender: "여성",
+                level: "초급",
+                link: "www.naver.com",
+                gameType: "match",
+                fee: 20000,
+                canPark: true,
+                canRentShoes: true,
+                manager: "배성진",
+              };
             }),
             id: "test12345",
           }),
@@ -169,7 +154,7 @@ describe("Test", () => {
             doc: jest.fn().mockReturnValue({
               set: jest.fn().mockResolvedValue(null),
               get: jest.fn().mockResolvedValue({
-                exists: null,
+                exists: false,
               }),
             }),
           }),
@@ -184,19 +169,9 @@ describe("Test", () => {
     render(<MatchDetail />);
 
     await waitFor(async () => {
-      //더미데이터 제대로 나오는지 확인
-      expect(screen.getByText(/초급레벨/i)).toBeInTheDocument();
-      expect(screen.getByText(/풋살화 대여 가능/i)).toBeInTheDocument();
-      expect(screen.getByText(/주차 가능/i)).toBeInTheDocument();
-      expect(screen.getByText(/20,000원/i)).toBeInTheDocument();
-      expect(screen.getByText("신청가능")).toBeInTheDocument();
+      expect(screen.getByText("신청가능")).toBeInTheDocument(); //예약이 신청가능인지 확인
+      expect(screen.getByText("예약하기")).toBeInTheDocument(); // 신청가능이면 예약하기가 보여야함
     });
     await fireAntEvent.actAndClick("예약하기");
-    const match = firebase
-      .firestore()
-      .collection("matches")
-      .doc("id")
-      .collection("reservation")
-      .doc("uid").set.mock.calls;
   });
 });
