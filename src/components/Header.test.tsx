@@ -52,14 +52,12 @@ describe("Test", () => {
   });
 
   test("Sign In Status", async () => {
-    const fakeUser = {};
-    const callback = jest.fn();
+    const fakeUser = {} as firebase.User;
     ((firebase.auth as unknown) as jest.Mock).mockReturnValue({
-      onAuthStateChanged: (callback) => {
+      onAuthStateChanged: (callback: (user: firebase.User) => void) => {
         callback(fakeUser);
       },
     });
-
     render(<Header />);
     await waitFor(async () => {
       const signoutButton = screen.getByText("SIGNOUT");
