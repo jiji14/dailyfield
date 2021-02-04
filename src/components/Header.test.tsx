@@ -7,7 +7,7 @@ describe("Test", () => {
   test("Sign In", async () => {
     ((firebase.auth as unknown) as jest.Mock).mockReturnValue({
       currentUser: null,
-      onAuthStateChanged: () => jest.fn(),
+      onAuthStateChanged: jest.fn(),
       signInWithPhoneNumber: jest.fn().mockResolvedValue({
         confirm: jest.fn().mockResolvedValue({
           additionalUserInfo: { isNewUser: false },
@@ -40,7 +40,7 @@ describe("Test", () => {
 
   test("Sign Out", async () => {
     ((firebase.auth as unknown) as jest.Mock).mockReturnValue({
-      onAuthStateChanged: () => jest.fn(),
+      onAuthStateChanged: jest.fn(),
       currentUser: {},
       signOut: jest.fn().mockResolvedValue(null),
     });
@@ -67,7 +67,7 @@ describe("Test", () => {
 
   test("Sign Out Status", async () => {
     ((firebase.auth as unknown) as jest.Mock).mockReturnValue({
-      onAuthStateChanged: () => jest.fn(),
+      onAuthStateChanged: jest.fn(),
       currentUser: null,
     });
 
