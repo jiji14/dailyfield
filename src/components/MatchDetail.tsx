@@ -24,7 +24,6 @@ const MatchDetail = (): JSX.Element => {
     async function getMatch() {
       const db = firebase.firestore();
       const doc = await db.collection("matches").doc(id).get();
-
       if (!doc.exists) {
         window.alert("잘못된 접근입니다. 목록페이지로 돌아갑니다.");
         history.push("/");
@@ -34,7 +33,7 @@ const MatchDetail = (): JSX.Element => {
       const match = doc.data();
 
       if (match) {
-        // match.dateTime = match.dateTime.toDate();
+        match.dateTime = match.dateTime.toDate();
         match.id = doc.id;
         setMatch(match as Match);
 
@@ -172,14 +171,14 @@ const MatchDetail = (): JSX.Element => {
       <a href="/">목록으로 돌아가기</a>
       <Divider className="divider" />
       <div className="container">
-        {/* <div>
+        <div>
           {match.dateTime?.toLocaleDateString("ko-KR", {
             weekday: "long",
             year: "numeric",
             month: "numeric",
             day: "numeric",
           })}
-        </div> */}
+        </div>
         {renderReservationStatus()}
       </div>
       <div className="container">
