@@ -6,8 +6,9 @@ import MatchListItem from "./MatchListItem";
 import { Match } from "../types";
 
 const MatchList = (): JSX.Element => {
-  const [matches, setMatches] = useState<Match[]>([]);
-  const [matchDate, setMatchDate] = useState<string[]>([]);
+  const [dateKeyToMatches, setDateKeyToMatches] = useState<
+    Map<string, Match[]>
+  >(new Map());
 
   useEffect(() => {
     async function getMatches() {
@@ -17,10 +18,12 @@ const MatchList = (): JSX.Element => {
         .orderBy("dateTime", "desc")
         .get();
 
-      const matchDateArray: Array<string> = [];
-      const matches: Match[] = querySnapshot.docs.map((doc) => {
+      const dateKeyToMatches: Map<string, Match[]> = new Map();
+
+      querySnapshot.docs.forEach((doc) => {
         const data = doc.data();
         data.dateTime = data.dateTime.toDate();
+        data.id = doc.id;
         const options = {
           weekday: "long",
           year: "numeric",
@@ -28,33 +31,32 @@ const MatchList = (): JSX.Element => {
           day: "numeric",
         };
         const matchDate = data.dateTime.toLocaleDateString("ko-KR", options);
-        matchDateArray.push(matchDate);
-        data.id = doc.id;
-        return data as Match;
+        if (!dateKeyToMatches.has(matchDate))
+          dateKeyToMatches.set(matchDate, []);
+        dateKeyToMatches.get(matchDate)?.push(data as Match);
       });
-      setMatchDate(matchDateArray);
-      setMatches(matches);
+      setDateKeyToMatches(dateKeyToMatches);
     }
     getMatches();
   }, []);
 
+  const renderMatchList = () => {
+    return [...dateKeyToMatches].map(([dateKey, matches]) => {
+      return (
+        <div key={dateKey}>
+          <div className="dateTitle">{dateKey}</div>
+          {matches.map((match: Match, idx: number) => {
+            return <MatchListItem match={match} key={"match" + idx} />;
+          })}
+        </div>
+      );
+    });
+  };
+
   return (
     <div className="matchList">
       <h2>매치목록</h2>
-      <section className="matchListContainer">
-        {matches.map((match, idx) => {
-          if (matchDate[idx] !== matchDate[idx - 1]) {
-            return (
-              <div key={"match" + idx}>
-                <div className="dateTitle">{matchDate[idx]}</div>
-                <MatchListItem match={match} />
-              </div>
-            );
-          } else {
-            return <MatchListItem key={"match" + idx} match={match} />;
-          }
-        })}
-      </section>
+      <section className="matchListContainer">{renderMatchList()}</section>
     </div>
   );
 };
