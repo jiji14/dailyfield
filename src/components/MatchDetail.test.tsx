@@ -66,6 +66,7 @@ describe("Test", () => {
 
     window.alert = () => "";
     window.confirm = () => true;
+    delete window.location; //jest Not implemented: navigation (except hash changes) 에러 해결
     window.location = { reload: jest.fn() };
     await fireAntEvent.actAndClick("예약취소");
     const { status } = firebase
@@ -171,6 +172,7 @@ describe("Test", () => {
 
     window.alert = () => "";
     window.confirm = () => true;
+    delete window.location; //jest Not implemented: navigation (except hash changes) 에러 해결
     window.location = { reload: jest.fn() };
 
     render(<MatchDetail />);
