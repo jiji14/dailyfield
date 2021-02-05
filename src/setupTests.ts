@@ -25,9 +25,11 @@ const mockHistory = {
   push: jest.fn(),
 };
 
+const mockLink = jest.fn();
 jest.mock("react-router-dom", () => ({
   useHistory: () => mockHistory,
   useParams: () => jest.fn(),
+  Link: () => mockLink,
 }));
 
 export const fireAntEvent = {
