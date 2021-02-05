@@ -32,3 +32,7 @@
   box-shadow: none;
   border: none;
 }
+.phoneNumber {
+  width: 100%;
+  margin-bottom: 20px;
+}

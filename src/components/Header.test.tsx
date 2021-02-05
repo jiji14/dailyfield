@@ -18,7 +18,7 @@ describe("Test", () => {
     ((firebase.firestore as unknown) as jest.Mock).mockReturnValue({
       collection: jest.fn().mockReturnValue({
         doc: jest.fn().mockReturnValue({
-          get: jest.fn().mockResolvedValue({ exists: {} }),
+          get: jest.fn().mockResolvedValue({ exists: true }),
         }),
       }),
     });
@@ -29,11 +29,14 @@ describe("Test", () => {
 
     render(<Header />);
     await fireAntEvent.actAndClick("SIGNIN");
-    await fireAntEvent.actAndInput("핸드폰번호", "+1 650-555-3434");
-    const signinButton = screen.getByText(/로그인/i);
-    expect(signinButton).toBeInTheDocument();
+    await fireAntEvent.actAndInput(
+      "- 없이 숫자만 입력해주세요. (ex)01012345678",
+      "01090143492"
+    );
 
     await fireAntEvent.actAndClick("로그인");
+    const phoneNumber = firebase.auth().signInWithPhoneNumber.mock.calls[0][0];
+    expect(phoneNumber).toBe("+821090143492");
     const signoutButton = screen.getByText(/SIGNOUT/i);
     expect(signoutButton).toBeInTheDocument();
   });
