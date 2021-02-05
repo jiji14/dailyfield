@@ -66,6 +66,8 @@ describe("Test", () => {
 
     window.alert = () => "";
     window.confirm = () => true;
+    //https://remarkablemark.org/blog/2018/11/17/mock-window-location/ 참고
+    delete window.location; //jest Not implemented: navigation (except hash changes) 에러 해결
     window.location = { reload: jest.fn() };
     await fireAntEvent.actAndClick("예약취소");
     const { status } = firebase
@@ -171,6 +173,7 @@ describe("Test", () => {
 
     window.alert = () => "";
     window.confirm = () => true;
+    delete window.location; //jest Not implemented: navigation (except hash changes) 에러 해결
     window.location = { reload: jest.fn() };
 
     render(<MatchDetail />);
