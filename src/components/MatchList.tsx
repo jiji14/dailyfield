@@ -1,43 +1,64 @@
 import React, { useState, useEffect } from "react";
 import "antd/dist/antd.css";
 import "./MatchList.css";
-import { Divider } from "antd";
 import firebase from "firebase";
 import MatchListItem from "./MatchListItem";
 import { Match } from "../types";
 
-const Main = (): JSX.Element => {
-  const [matches, setMatches] = useState<Match[]>([]);
+const MatchList = (): JSX.Element => {
+  const [dateKeyToMatches, setDateKeyToMatches] = useState<
+    Map<string, Match[]>
+  >(new Map());
+
   useEffect(() => {
+    async function getMatches() {
+      const db = firebase.firestore();
+      const querySnapshot = await db
+        .collection("matches")
+        .orderBy("dateTime", "desc")
+        .get();
+
+      const dateKeyToMatches: Map<string, Match[]> = new Map();
+
+      querySnapshot.docs.forEach((doc) => {
+        const data = doc.data();
+        data.dateTime = data.dateTime.toDate();
+        data.id = doc.id;
+        const options = {
+          weekday: "long",
+          year: "numeric",
+          month: "numeric",
+          day: "numeric",
+        };
+        const matchDate = data.dateTime.toLocaleDateString("ko-KR", options);
+        if (!dateKeyToMatches.has(matchDate))
+          dateKeyToMatches.set(matchDate, []);
+        dateKeyToMatches.get(matchDate)?.push(data as Match);
+      });
+      setDateKeyToMatches(dateKeyToMatches);
+    }
     getMatches();
   }, []);
 
-  const getMatches = async () => {
-    const db = firebase.firestore();
-    const querySnapshot = await db
-      .collection("matches")
-      .orderBy("dateTime", "desc")
-      .get();
-    const matches: Match[] = querySnapshot.docs.map((doc) => {
-      const data = doc.data();
-      data.dateTime = data.dateTime.toDate();
-      data.id = doc.id;
-      return data as Match;
+  const renderMatchList = () => {
+    return [...dateKeyToMatches].map(([dateKey, matches]) => {
+      return (
+        <div key={dateKey}>
+          <div className="dateTitle">{dateKey}</div>
+          {matches.map((match, idx) => {
+            return <MatchListItem match={match} key={"match" + idx} />;
+          })}
+        </div>
+      );
     });
-    setMatches(matches);
   };
 
   return (
     <div className="matchList">
       <h2>매치목록</h2>
-      <Divider className="divider" />
-      <section className="matchListContainer">
-        {matches.map((match, idx) => {
-          return <MatchListItem key={"match" + idx} match={match} />;
-        })}
-      </section>
+      <section className="matchListContainer">{renderMatchList()}</section>
     </div>
   );
 };
 
-export default Main;
+export default MatchList;
