@@ -41,7 +41,7 @@ const MatchDetail = (): JSX.Element => {
           .collection("matches")
           .doc(match.id)
           .collection("reservation")
-          .where("status", "==", "done")
+          .where("status", "==", "확정")
           .get();
 
         if (matchDoc?.size >= match.memberCount) {
