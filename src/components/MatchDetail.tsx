@@ -171,13 +171,21 @@ const MatchDetail = (): JSX.Element => {
       <a href="/">목록으로 돌아가기</a>
       <Divider className="divider" />
       <div className="container">
-        <div>
-          {match.dateTime?.toLocaleDateString("ko-KR", {
-            weekday: "long",
-            year: "numeric",
-            month: "numeric",
-            day: "numeric",
-          })}
+        <div className="dateContainer">
+          <span>
+            {match.dateTime?.toLocaleDateString("ko-KR", {
+              weekday: "long",
+              year: "numeric",
+              month: "numeric",
+              day: "numeric",
+            })}
+          </span>
+          <span>
+            {match.dateTime?.toLocaleTimeString([], {
+              hour: "2-digit",
+              minute: "2-digit",
+            })}
+          </span>
         </div>
         {renderReservationStatus()}
       </div>
