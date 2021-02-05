@@ -6,9 +6,12 @@ import { fireAntEvent } from "../setupTests";
 
 describe("Test", () => {
   beforeEach(() => {
+    const fakeUser = {} as firebase.User;
     ((firebase.auth as unknown) as jest.Mock).mockReturnValue({
       currentUser: {},
-      onAuthStateChanged: jest.fn(),
+      onAuthStateChanged: (callback: (user: firebase.User) => void) => {
+        callback(fakeUser);
+      },
     });
 
     ((firebase.firestore as unknown) as jest.Mock).mockReturnValue({
