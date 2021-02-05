@@ -1,7 +1,7 @@
 export type Gender = "남성" | "여성" | "혼성";
 export type Level = "초급" | "중급" | "고급";
 export type GameType = "gx" | "match" | "gx+match";
-export type Status = "예약신청" | "취소신청" | "확정";
+export type Status = "신청가능" | "예약신청" | "취소신청" | "확정" | "마감";
 
 export interface Match {
   id?: string;
