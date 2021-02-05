@@ -14,6 +14,7 @@ const MatchListItem = (matchProps: { match: Match }): JSX.Element => {
       <>
         <Row
           align="middle"
+          className="matchlistRow"
           onClick={() => {
             history.push(`/match/${match.id}`);
           }}
