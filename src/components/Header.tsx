@@ -3,7 +3,7 @@ import { Row, Col, Modal } from "antd";
 import "antd/dist/antd.css";
 import "./Header.css";
 import firebase from "firebase";
-import { useHistory } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 
 let appVerifier: firebase.auth.ApplicationVerifier | null = null;
 
@@ -80,11 +80,15 @@ const Header = (): JSX.Element => {
   return (
     <div className="headerContainer">
       <Row className="menubar">
-        <Col span={8} className="logo">
-          DAILY FIELD
+        <Col span={8}>
+          <Link to="/" className="logo">
+            DAILY FIELD
+          </Link>
         </Col>
         <Col span={8} className="menu">
-          <div className="menuFirstItem selectedMenu">MATCH</div>
+          <Link to="/" className="selectedMenu">
+            MATCH
+          </Link>
           <div>ABOUT</div>
         </Col>
         <Col span={4}></Col>
