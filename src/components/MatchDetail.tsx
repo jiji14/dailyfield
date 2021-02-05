@@ -86,7 +86,7 @@ const MatchDetail = (): JSX.Element => {
       window.alert(
         "예약신청이 완료되었습니다. 참가비 입금 확인 후 예약이 확정됩니다."
       );
-      window.location.reload();
+      getNewMatchStatus(uid);
     }
   };
 
@@ -106,6 +106,7 @@ const MatchDetail = (): JSX.Element => {
           .doc(uid)
           .delete();
         window.alert("예약취소가 완료되었습니다.");
+        setReservationStatus("신청가능");
       } else {
         await db
           .collection("matches")
@@ -116,8 +117,25 @@ const MatchDetail = (): JSX.Element => {
         window.alert(
           "취소신청이 완료되었습니다. 환불 규정에 따라 환불 처리가 진행된 후 취소가 확정됩니다."
         );
+        getNewMatchStatus(uid);
       }
-      window.location.reload();
+    }
+  };
+
+  const getNewMatchStatus = async (uid: string) => {
+    const db = firebase.firestore();
+    const reservationDoc = await db
+      .collection("matches")
+      .doc(match?.id)
+      .collection("reservation")
+      .doc(uid)
+      .get();
+
+    if (reservationDoc.exists) {
+      const data = reservationDoc.data();
+      if (data?.status) {
+        setReservationStatus(data.status);
+      }
     }
   };
 
