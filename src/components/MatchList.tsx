@@ -45,7 +45,7 @@ const MatchList = (): JSX.Element => {
       return (
         <div key={dateKey}>
           <div className="dateTitle">{dateKey}</div>
-          {matches.map((match: Match, idx: number) => {
+          {matches.map((match, idx) => {
             return <MatchListItem match={match} key={"match" + idx} />;
           })}
         </div>
