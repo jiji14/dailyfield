@@ -68,6 +68,13 @@ describe("Test", () => {
     window.confirm = () => "";
     window.location = { reload: jest.fn() };
     await fireAntEvent.actAndClick("예약취소");
+    const status = firebase
+      .firestore()
+      .collection("matches")
+      .doc("id")
+      .collection("reservation")
+      .doc("uid").delete.mock.calls;
+    console.log(status); // 빈배열 [] 나옴
   });
 
   test("예약이 선수 다 차서 마감이면 마감인지 테스트", async () => {
@@ -173,5 +180,12 @@ describe("Test", () => {
       expect(screen.getByText("예약하기")).toBeInTheDocument(); // 신청가능이면 예약하기가 보여야함
     });
     await fireAntEvent.actAndClick("예약하기");
+    const status = firebase
+      .firestore()
+      .collection("matches")
+      .doc("id")
+      .collection("reservation")
+      .doc("uid").set.mock.calls;
+    console.log(status); // 빈배열 [] 나옴
   });
 });
