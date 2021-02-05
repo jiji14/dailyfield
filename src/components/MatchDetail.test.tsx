@@ -66,7 +66,6 @@ describe("Test", () => {
 
     window.alert = () => "";
     window.confirm = () => true;
-    window.location = { reload: jest.fn() };
     await fireAntEvent.actAndClick("예약취소");
     const { status } = firebase
       .firestore()
@@ -171,7 +170,6 @@ describe("Test", () => {
 
     window.alert = () => "";
     window.confirm = () => true;
-    window.location = { reload: jest.fn() };
 
     render(<MatchDetail />);
 
