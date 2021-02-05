@@ -88,8 +88,9 @@ const AddMatch = (): JSX.Element => {
 
   return (
     <div className="signUp">
-      <h2>매치등록</h2>
+      <a href="/">목록으로 돌아가기</a>
       <Divider className="divider" />
+      <h2>매치등록</h2>
       <section className="signUpContainer">
         <Row align="middle" className="row">
           <Col span={6} className="signUpSubtitle">
