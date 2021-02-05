@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Row, Col, Modal } from "antd";
 import "antd/dist/antd.css";
 import "./Header.css";
@@ -12,6 +12,10 @@ const Header = (): JSX.Element => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [phoneNumber, setPhoneNumber] = useState("");
   const [user, setUser] = useState(firebase.auth().currentUser);
+
+  useEffect(() => {
+    firebase.auth().onAuthStateChanged(setUser);
+  }, []);
 
   const showModal = () => {
     setIsModalVisible(true);
