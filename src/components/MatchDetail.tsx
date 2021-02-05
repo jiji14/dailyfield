@@ -39,12 +39,12 @@ const MatchDetail = (): JSX.Element => {
 
         const matchDoc = await db
           .collection("matches")
-          .doc(match?.id)
+          .doc(match.id)
           .collection("reservation")
           .where("status", "==", "done")
           .get();
 
-        if (matchDoc?.size >= match?.memberCount) {
+        if (matchDoc?.size >= match.memberCount) {
           setReservationStatus("마감");
         }
 
