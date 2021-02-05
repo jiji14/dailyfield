@@ -11,7 +11,7 @@ describe("Test", () => {
     });
   });
 
-  test("예약 신청중인경우 신청중이고 예약취소 버튼 보이는지 테스트", async () => {
+  test("예약중인경우 신청중이고 예약취소 버튼 보이는지 테스트", async () => {
     ((firebase.firestore as unknown) as jest.Mock).mockReturnValue({
       collection: jest.fn().mockReturnValue({
         doc: jest.fn().mockReturnValue({
@@ -49,7 +49,7 @@ describe("Test", () => {
               get: jest.fn().mockResolvedValue({
                 exists: {},
                 data: jest.fn().mockReturnValue({
-                  status: "예약신청",
+                  status: "확정",
                 }),
               }),
             }),
@@ -60,21 +60,21 @@ describe("Test", () => {
     render(<MatchDetail />);
 
     await waitFor(async () => {
-      expect(screen.getByText("신청중")).toBeInTheDocument(); // 예약이 신청중인지 확인
+      expect(screen.getByText("예약확정")).toBeInTheDocument(); // 예약이 신청중인지 확인
       expect(screen.getByText("예약취소")).toBeInTheDocument(); // 신청중이면 예약취소가 보여야함
     });
 
     window.alert = () => "";
-    window.confirm = () => "";
+    window.confirm = () => true;
     window.location = { reload: jest.fn() };
     await fireAntEvent.actAndClick("예약취소");
-    const status = firebase
+    const { status } = firebase
       .firestore()
       .collection("matches")
       .doc("id")
       .collection("reservation")
-      .doc("uid").delete.mock.calls;
-    console.log(status); // 빈배열 [] 나옴
+      .doc("uid").set.mock.calls[0][0];
+    expect(status).toBe("취소신청"); // 예약취소 후 status가 취소신청으로 바뀌었는지 확인
   });
 
   test("예약이 선수 다 차서 마감이면 마감인지 테스트", async () => {
@@ -170,7 +170,7 @@ describe("Test", () => {
     });
 
     window.alert = () => "";
-    window.confirm = () => "";
+    window.confirm = () => true;
     window.location = { reload: jest.fn() };
 
     render(<MatchDetail />);
@@ -180,12 +180,12 @@ describe("Test", () => {
       expect(screen.getByText("예약하기")).toBeInTheDocument(); // 신청가능이면 예약하기가 보여야함
     });
     await fireAntEvent.actAndClick("예약하기");
-    const status = firebase
+    const { status } = firebase
       .firestore()
       .collection("matches")
       .doc("id")
       .collection("reservation")
-      .doc("uid").set.mock.calls;
-    console.log(status); // 빈배열 [] 나옴
+      .doc("uid").set.mock.calls[0][0];
+    expect(status).toBe("예약신청"); // 예약하기 후 status가 예약신청으로 바뀌었는지 확인
   });
 });
