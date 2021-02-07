@@ -15,7 +15,7 @@ import "./Signup.css";
 import { Moment } from "moment";
 import firebase from "firebase";
 import { Gender, Level, GameType, Match } from "../types";
-import { useHistory } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 
 const { Option } = Select;
 
@@ -88,7 +88,7 @@ const AddMatch = (): JSX.Element => {
 
   return (
     <div className="signUp">
-      <a href="/">목록으로 돌아가기</a>
+      <Link to="/">목록으로 돌아가기</Link>
       <Divider className="divider" />
       <h2>매치등록</h2>
       <section className="signUpContainer">

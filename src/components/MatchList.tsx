@@ -5,10 +5,9 @@ import firebase from "firebase";
 import MatchListItem from "./MatchListItem";
 import { Match } from "../types";
 import { Button } from "antd";
-import { useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const MatchList = (): JSX.Element => {
-  const history = useHistory();
   const [dateKeyToMatches, setDateKeyToMatches] = useState<
     Map<string, Match[]>
   >(new Map());
@@ -47,12 +46,6 @@ const MatchList = (): JSX.Element => {
       setDateKeyToMatches(dateKeyToMatches);
     }
 
-    async function getUser(uid: string) {
-      const db = firebase.firestore();
-      const doc = await db.collection("users").doc(uid).get();
-      if (doc.exists) setIsAdmin(doc.data()?.isAdmin);
-    }
-
     getMatches();
   }, []);
 
@@ -86,14 +79,9 @@ const MatchList = (): JSX.Element => {
       <div className="matchlistTitle">
         <h2>매치목록</h2>
         {isAdmin && (
-          <Button
-            type="primary"
-            onClick={() => {
-              history.push("/match/add");
-            }}
-          >
-            매치등록
-          </Button>
+          <Link to="/match/add">
+            <Button type="primary">매치등록</Button>
+          </Link>
         )}
       </div>
       <section className="matchListContainer">{renderMatchList()}</section>
