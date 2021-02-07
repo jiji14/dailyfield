@@ -68,3 +68,11 @@ export const fireAntEvent = {
     });
   },
 };
+
+export function mockWindowLocationReload(): void {
+  //Error: Not implemented: navigation (except hash changes) 발생
+  //현재 해결할 수 있는 방법은 delete 한 다음에 다시 reload 생성하는 것
+  //https://remarkablemark.org/blog/2018/11/17/mock-window-location/ 참고
+  delete window.location;
+  window.location = { reload: jest.fn() };
+}
