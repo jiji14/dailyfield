@@ -12,7 +12,12 @@ const MatchList = (): JSX.Element => {
   const [dateKeyToMatches, setDateKeyToMatches] = useState<
     Map<string, Match[]>
   >(new Map());
+  const [user, setUser] = useState(firebase.auth().currentUser);
   const [isAdmin, setIsAdmin] = useState(false);
+
+  useEffect(() => {
+    firebase.auth().onAuthStateChanged(setUser);
+  }, []);
 
   useEffect(() => {
     async function getMatches() {
@@ -48,13 +53,20 @@ const MatchList = (): JSX.Element => {
       if (doc.exists) setIsAdmin(doc.data()?.isAdmin);
     }
 
-    firebase.auth().onAuthStateChanged(function (user) {
-      if (user) {
-        getUser(user.uid);
-      }
-    });
     getMatches();
   }, []);
+
+  useEffect(() => {
+    async function getUser() {
+      if (!user) return;
+
+      const db = firebase.firestore();
+      const doc = await db.collection("users").doc(user.uid).get();
+      if (doc.exists) setIsAdmin(doc.data()?.isAdmin);
+    }
+
+    getUser();
+  }, [user]);
 
   const renderMatchList = () => {
     return [...dateKeyToMatches].map(([dateKey, matches]) => {
