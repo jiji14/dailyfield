@@ -6,7 +6,7 @@ import "@testing-library/jest-dom";
 // We need to import firebase to mock it below.
 // eslint-disable-next-line no-unused-vars
 import firebase from "firebase";
-import * as router from "react-router-dom";
+import "react-router-dom";
 import { act, fireEvent, screen } from "@testing-library/react";
 
 global.matchMedia =
@@ -25,10 +25,11 @@ const mockHistory = {
   push: jest.fn(),
 };
 
-const useHistorySpy = jest.spyOn(router, "useHistory");
-useHistorySpy.mockReturnValue(mockHistory);
-const useParamsSpy = jest.spyOn(router, "useParams");
-useParamsSpy.mockReturnValue({ id: "1" });
+jest.mock("react-router-dom", () => ({
+  useHistory: () => mockHistory,
+  useParams: () => jest.fn(),
+  Link: () => <div></div>,
+}));
 
 export const fireAntEvent = {
   actAndSelect: async function (id: HTMLElement, type: string): void {
