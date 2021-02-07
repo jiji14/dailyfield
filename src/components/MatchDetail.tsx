@@ -172,20 +172,7 @@ const MatchDetail = (): JSX.Element => {
       <Divider className="divider" />
       <div className="container">
         <div className="dateContainer">
-          <span>
-            {match.dateTime?.toLocaleDateString("ko-KR", {
-              weekday: "long",
-              year: "numeric",
-              month: "numeric",
-              day: "numeric",
-            })}
-          </span>
-          <span>
-            {match.dateTime?.toLocaleTimeString([], {
-              hour: "2-digit",
-              minute: "2-digit",
-            })}
-          </span>
+          {match.dateTime?.toLocaleString("ko-KR")}
         </div>
         {renderReservationStatus()}
       </div>
