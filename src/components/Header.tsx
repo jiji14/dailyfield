@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Row, Col, Modal, Button } from "antd";
+import { Row, Col, Modal } from "antd";
 import "antd/dist/antd.css";
 import "./Header.css";
 import firebase from "firebase";
