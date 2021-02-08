@@ -20,8 +20,10 @@ const MatchListItem = (matchProps: { match: Match }): JSX.Element => {
         >
           <Col span={6}>
             <div className="time">
-              {match.dateTime && match.dateTime.getHours()}:
-              {match.dateTime && match.dateTime.getMinutes()}
+              {match.dateTime?.toLocaleTimeString("ko-KR", {
+                hour: "2-digit",
+                minute: "2-digit",
+              })}
             </div>
           </Col>
           <Col span={12}>
