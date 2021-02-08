@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Row, Col, Modal } from "antd";
+import { Row, Col, Modal, Button } from "antd";
 import "antd/dist/antd.css";
 import "./Header.css";
 import firebase from "firebase";
@@ -12,6 +12,7 @@ const Header = (): JSX.Element => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [phoneNumber, setPhoneNumber] = useState("");
   const [user, setUser] = useState(firebase.auth().currentUser);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     firebase.auth().onAuthStateChanged(setUser);
@@ -38,7 +39,7 @@ const Header = (): JSX.Element => {
       );
       return;
     }
-
+    setLoading(true);
     const proccessedPhoneNumber =
       "+82" + phoneNumber.substring(1, phoneNumber.length);
 
@@ -66,6 +67,7 @@ const Header = (): JSX.Element => {
     } catch (error) {
       window.alert(error);
     }
+    setLoading(false);
   };
 
   const signOut = async () => {
@@ -120,6 +122,19 @@ const Header = (): JSX.Element => {
         onCancel={hideModal}
         cancelText="취소"
         okText="로그인"
+        footer={[
+          <Button key="back" onClick={hideModal}>
+            취소
+          </Button>,
+          <Button
+            key="submit"
+            type="primary"
+            loading={loading}
+            onClick={signInWithPhoneNumber}
+          >
+            로그인
+          </Button>,
+        ]}
       >
         <h3>핸드폰번호</h3>
         <input
