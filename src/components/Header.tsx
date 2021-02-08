@@ -85,7 +85,14 @@ const Header = (): JSX.Element => {
         </Col>
         <Col span={8} className="menu">
           <div className="menuFirstItem selectedMenu">MATCH</div>
-          <div>ABOUT</div>
+          <a
+            className="dm"
+            href="http://pf.kakao.com/_vQNPK"
+            target="_blank"
+            rel="noreferrer"
+          >
+            DM
+          </a>
         </Col>
         <Col span={4}></Col>
         <Col span={4} className="signin">
