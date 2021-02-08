@@ -122,19 +122,7 @@ const Header = (): JSX.Element => {
         onCancel={hideModal}
         cancelText="취소"
         okText="로그인"
-        footer={[
-          <Button key="back" onClick={hideModal}>
-            취소
-          </Button>,
-          <Button
-            key="submit"
-            type="primary"
-            loading={loading}
-            onClick={signInWithPhoneNumber}
-          >
-            로그인
-          </Button>,
-        ]}
+        confirmLoading={loading}
       >
         <h3>핸드폰번호</h3>
         <input
