@@ -1,7 +1,6 @@
 import { render, screen, waitFor } from "@testing-library/react";
 import MatchList from "./MatchList";
 import firebase from "firebase";
-import { useHistory } from "react-router-dom";
 import { fireAntEvent } from "../setupTests";
 
 describe("Test", () => {
