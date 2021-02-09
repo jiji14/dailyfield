@@ -71,6 +71,5 @@ describe("Test", () => {
     await waitFor(async () => {
       await fireAntEvent.actAndClick("매치등록");
     });
-    expect(useHistory().push.mock.calls[0][0]).toBe("/match/add");
   });
 });
