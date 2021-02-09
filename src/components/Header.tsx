@@ -12,6 +12,7 @@ const Header = (): JSX.Element => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [phoneNumber, setPhoneNumber] = useState("");
   const [user, setUser] = useState(firebase.auth().currentUser);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     firebase.auth().onAuthStateChanged(setUser);
@@ -38,7 +39,7 @@ const Header = (): JSX.Element => {
       );
       return;
     }
-
+    setLoading(true);
     const proccessedPhoneNumber =
       "+82" + phoneNumber.substring(1, phoneNumber.length);
 
@@ -66,6 +67,7 @@ const Header = (): JSX.Element => {
     } catch (error) {
       window.alert(error);
     }
+    setLoading(false);
   };
 
   const signOut = async () => {
@@ -120,6 +122,7 @@ const Header = (): JSX.Element => {
         onCancel={hideModal}
         cancelText="취소"
         okText="로그인"
+        confirmLoading={loading}
       >
         <h3>핸드폰번호</h3>
         <input
