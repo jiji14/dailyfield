@@ -4,7 +4,7 @@ import "antd/dist/antd.css";
 import "./MatchDetail.css";
 import { Match, Status } from "../types";
 import Label from "./Label";
-import { useHistory, useParams } from "react-router-dom";
+import { Link, useHistory, useParams } from "react-router-dom";
 import firebase from "firebase";
 
 const MatchDetail = (): JSX.Element => {
@@ -168,7 +168,7 @@ const MatchDetail = (): JSX.Element => {
     <div></div>
   ) : (
     <div className="matchDetail">
-      <a href="/">목록으로 돌아가기</a>
+      <Link to="/">목록으로 돌아가기</Link>
       <Divider className="divider" />
       <div className="container">
         <div className="dateContainer">
