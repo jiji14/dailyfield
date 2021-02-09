@@ -51,8 +51,10 @@ const MatchList = (): JSX.Element => {
 
   useEffect(() => {
     async function getUser() {
-      if (!user) return;
-
+      if (!user) {
+        setIsAdmin(false);
+        return;
+      }
       const db = firebase.firestore();
       const doc = await db.collection("users").doc(user.uid).get();
       if (doc.exists) setIsAdmin(doc.data()?.isAdmin);
