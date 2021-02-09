@@ -69,7 +69,13 @@ const MatchList = (): JSX.Element => {
         <div key={dateKey}>
           <div className="dateTitle">{dateKey}</div>
           {matches.map((match, idx) => {
-            return <MatchListItem match={match} key={"match" + idx} />;
+            return (
+              <MatchListItem
+                match={match}
+                key={"match" + idx}
+                isAdmin={isAdmin}
+              />
+            );
           })}
         </div>
       );
