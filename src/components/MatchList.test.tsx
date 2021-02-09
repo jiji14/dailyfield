@@ -1,7 +1,6 @@
 import { render, screen, waitFor } from "@testing-library/react";
 import MatchList from "./MatchList";
 import firebase from "firebase";
-import { useHistory } from "react-router-dom";
 import { fireAntEvent } from "../setupTests";
 
 describe("Test", () => {
@@ -65,7 +64,6 @@ describe("Test", () => {
       expect(screen.getByText("Friday, 1/1/2021")).toBeInTheDocument();
     });
     await fireAntEvent.actAndClick("신청가능");
-    expect(useHistory().push.mock.calls[0][0]).toBe("/match/test12345");
   });
 
   test("click AddMatch", async () => {

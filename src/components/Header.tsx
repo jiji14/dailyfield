@@ -3,7 +3,7 @@ import { Row, Col, Modal } from "antd";
 import "antd/dist/antd.css";
 import "./Header.css";
 import firebase from "firebase";
-import { useHistory } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 
 let appVerifier: firebase.auth.ApplicationVerifier | null = null;
 
@@ -12,6 +12,7 @@ const Header = (): JSX.Element => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [phoneNumber, setPhoneNumber] = useState("");
   const [user, setUser] = useState(firebase.auth().currentUser);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     firebase.auth().onAuthStateChanged(setUser);
@@ -38,7 +39,7 @@ const Header = (): JSX.Element => {
       );
       return;
     }
-
+    setLoading(true);
     const proccessedPhoneNumber =
       "+82" + phoneNumber.substring(1, phoneNumber.length);
 
@@ -66,6 +67,7 @@ const Header = (): JSX.Element => {
     } catch (error) {
       window.alert(error);
     }
+    setLoading(false);
   };
 
   const signOut = async () => {
@@ -80,12 +82,21 @@ const Header = (): JSX.Element => {
   return (
     <div className="headerContainer">
       <Row className="menubar">
-        <Col span={8} className="logo">
-          DAILY FIELD
+        <Col span={8}>
+          <Link to="/" className="logo">
+            DAILY FIELD
+          </Link>
         </Col>
         <Col span={8} className="menu">
           <div className="menuFirstItem selectedMenu">MATCH</div>
-          <div>ABOUT</div>
+          <a
+            className="dm"
+            href="http://pf.kakao.com/_vQNPK"
+            target="_blank"
+            rel="noreferrer"
+          >
+            DM
+          </a>
         </Col>
         <Col span={4}></Col>
         <Col span={4} className="signin">
@@ -113,6 +124,7 @@ const Header = (): JSX.Element => {
         onCancel={hideModal}
         cancelText="취소"
         okText="로그인"
+        confirmLoading={loading}
       >
         <h3>핸드폰번호</h3>
         <input

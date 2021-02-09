@@ -1,7 +1,7 @@
 import { render, screen, waitFor } from "@testing-library/react";
 import MatchDetail from "./MatchDetail";
 import firebase from "firebase";
-import { fireAntEvent } from "../setupTests";
+import { fireAntEvent, mockWindowLocationReload } from "../setupTests";
 
 describe("Test", () => {
   beforeEach(() => {
@@ -66,8 +66,8 @@ describe("Test", () => {
 
     window.alert = () => "";
     window.confirm = () => true;
-    delete window.location; //jest Not implemented: navigation (except hash changes) 에러 해결
-    window.location = { reload: jest.fn() };
+    mockWindowLocationReload();
+
     await fireAntEvent.actAndClick("예약취소");
     const { status } = firebase
       .firestore()
@@ -172,8 +172,7 @@ describe("Test", () => {
 
     window.alert = () => "";
     window.confirm = () => true;
-    delete window.location; //jest Not implemented: navigation (except hash changes) 에러 해결
-    window.location = { reload: jest.fn() };
+    mockWindowLocationReload();
 
     render(<MatchDetail />);
 
