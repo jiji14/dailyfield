@@ -9,6 +9,7 @@ import Header from "./components/Header";
 import MatchForm from "./components/AddMatch";
 import MatchList from "./components/MatchList";
 import MatchDetail from "./components/MatchDetail";
+import Admin from "./components/Admin";
 
 // Required for side-effects
 require("firebase/firestore");
@@ -26,6 +27,7 @@ ReactDOM.render(
       <Header />
       <Switch>
         <Route path="/match/add" component={MatchForm} />
+        <Route path="/match/:id/admin" component={Admin} />
         <Route path="/match/:id" component={MatchDetail} />
         <Route path="/signup" component={Signup} />
         <Route path="/" component={MatchList} />
