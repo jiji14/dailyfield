@@ -22,6 +22,21 @@ describe("Test", () => {
               isAdmin: true,
             }),
           }),
+          collection: jest.fn().mockReturnValue({
+            where: jest.fn().mockReturnValue({
+              get: jest.fn().mockResolvedValue({
+                size: 10,
+              }),
+            }),
+            doc: jest.fn().mockReturnValue({
+              get: jest.fn().mockResolvedValue({
+                exists: {},
+                data: jest.fn().mockReturnValue({
+                  status: "확정",
+                }),
+              }),
+            }),
+          }),
         }),
         orderBy: jest.fn().mockReturnValue({
           get: jest.fn().mockResolvedValue({
@@ -63,7 +78,7 @@ describe("Test", () => {
       //jest 테스트환경 브라우저에서는 toLocaleDateString(ko-KR) 지원하지 않아서 테스트에서 영어로 확인해야됨.
       //expect(screen.getByText("Friday, 1/1/2021")).toBeInTheDocument();
     });
-    await fireAntEvent.actAndClick("신청가능");
+    expect(screen.getByText(/예약확정/i)).toBeInTheDocument();
   });
 
   test("click AddMatch", async () => {
