@@ -5,12 +5,15 @@ import "./MatchListItem.css";
 import { Match } from "../types";
 import { Link } from "react-router-dom";
 
-const MatchListItem = (matchProps: { match: Match }): JSX.Element => {
-  const { match } = matchProps;
+const MatchListItem = (matchProps: {
+  match: Match;
+  isAdmin: boolean;
+}): JSX.Element => {
+  const { match, isAdmin } = matchProps;
 
   return (
     match && (
-      <Link to={`/match/${match.id}`}>
+      <Link to={isAdmin ? `/match/${match.id}/admin` : `/match/${match.id}`}>
         <Row align="middle">
           <Col span={6}>
             <div className="time">

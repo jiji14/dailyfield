@@ -4,11 +4,19 @@ import "./MatchList.css";
 import firebase from "firebase";
 import MatchListItem from "./MatchListItem";
 import { Match } from "../types";
+import { Button } from "antd";
+import { Link } from "react-router-dom";
 
 const MatchList = (): JSX.Element => {
   const [dateKeyToMatches, setDateKeyToMatches] = useState<
     Map<string, Match[]>
   >(new Map());
+  const [user, setUser] = useState(firebase.auth().currentUser);
+  const [isAdmin, setIsAdmin] = useState(false);
+
+  useEffect(() => {
+    firebase.auth().onAuthStateChanged(setUser);
+  }, []);
 
   useEffect(() => {
     async function getMatches() {
@@ -37,8 +45,23 @@ const MatchList = (): JSX.Element => {
       });
       setDateKeyToMatches(dateKeyToMatches);
     }
+
     getMatches();
   }, []);
+
+  useEffect(() => {
+    async function getUser() {
+      if (!user) {
+        setIsAdmin(false);
+        return;
+      }
+      const db = firebase.firestore();
+      const doc = await db.collection("users").doc(user.uid).get();
+      if (doc.exists) setIsAdmin(doc.data()?.isAdmin);
+    }
+
+    getUser();
+  }, [user]);
 
   const renderMatchList = () => {
     return [...dateKeyToMatches].map(([dateKey, matches]) => {
@@ -46,7 +69,13 @@ const MatchList = (): JSX.Element => {
         <div key={dateKey}>
           <div className="dateTitle">{dateKey}</div>
           {matches.map((match, idx) => {
-            return <MatchListItem match={match} key={"match" + idx} />;
+            return (
+              <MatchListItem
+                match={match}
+                key={"match" + idx}
+                isAdmin={isAdmin}
+              />
+            );
           })}
         </div>
       );
@@ -55,7 +84,14 @@ const MatchList = (): JSX.Element => {
 
   return (
     <div className="matchList">
-      <h2>매치목록</h2>
+      <div className="matchlistTitle">
+        <h2>매치목록</h2>
+        {isAdmin && (
+          <Link to="/match/add">
+            <Button type="primary">매치등록</Button>
+          </Link>
+        )}
+      </div>
       <section className="matchListContainer">{renderMatchList()}</section>
     </div>
   );
