@@ -88,7 +88,9 @@ const Header = (): JSX.Element => {
           </Link>
         </Col>
         <Col span={8} className="menu">
-          <div className="menuFirstItem selectedMenu">MATCH</div>
+          <Link to="/">
+            <div className="menuFirstItem selectedMenu">MATCH</div>
+          </Link>
           <a
             className="dm"
             href="http://pf.kakao.com/_vQNPK"
