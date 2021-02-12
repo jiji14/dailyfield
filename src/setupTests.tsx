@@ -27,7 +27,7 @@ const mockHistory = {
 
 jest.mock("react-router-dom", () => ({
   useHistory: () => mockHistory,
-  useParams: () => jest.fn(),
+  useParams: () => ({ id: "test12345" }),
   Link: ({ children }: { children: JSX.Element }) => children,
 }));
 
