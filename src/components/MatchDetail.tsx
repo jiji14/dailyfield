@@ -202,7 +202,11 @@ const MatchDetail = (): JSX.Element => {
           주차 {match.canPark ? "가능" : "불가능"}
         </Tag>
       </div>
-      <p className="details">* 여성매치시 인원부족시 혼성매치로 진행됩니다.</p>
+      {match.gender === "여성" && (
+        <p className="details">
+          * 여성매치시 인원부족시 혼성매치로 진행됩니다.
+        </p>
+      )}
       <section>
         <h3 className="title">참가비</h3>
         <p className="details">
@@ -267,9 +271,21 @@ const MatchDetail = (): JSX.Element => {
           </li>
           <li>국민은행 472501-04-011482 배성진</li>
         </ul>
+        {match.canPark && (
+          <>
+            <h3 className="title">주차 안내</h3>
+            <ul>
+              <li>
+                주차는 상황에 따라 변동될 수 있으니 예약후 개별 메세지
+                부탁드립니다.
+              </li>
+            </ul>
+          </>
+        )}
         <ul className="iconUl">
           <li>축구도 이제 고급스포츠! 혼자와도 재밌게 운동하자!</li>
           <li>새로운 커뮤니티의 시작♡ 데일리필드⚽</li>
+          <li>카카오채널 pf.kakao.com/_vQNPK</li>
           <li>인스타팔로우 @daily_field</li>
           <li>블로그♡ blog.naver.com/piterq</li>
           <li>스페셜 영상 youtu.be/08zp7lrtOpc</li>
