@@ -13,20 +13,19 @@ const PlayerListItem = (playerProps: {
   const [player, setPlayer] = useState<Player | null>(null);
 
   useEffect(() => {
-    async function getPlayer() {
+    (async () => {
       const db = firebase.firestore();
       const doc = await db.collection("users").doc(id).get();
       if (!doc.exists) return;
 
       const user = doc.data();
-      if (user) {
-        user.birthDate = user.birthDate.toDate();
-        user.id = doc.id;
-        user.status = status;
-        setPlayer(user as Player);
-      }
-    }
-    getPlayer();
+      if (!user) return;
+
+      user.birthDate = user.birthDate.toDate();
+      user.id = doc.id;
+      user.status = status;
+      setPlayer(user as Player);
+    })();
   }, [id, status]);
 
   return player ? (
