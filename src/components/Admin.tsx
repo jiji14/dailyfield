@@ -38,8 +38,8 @@ const Admin = (): JSX.Element => {
         .get();
       const players: Map<string, string> = new Map();
       querySnapshot.docs.forEach((doc) => {
-        const id = doc.id;
-        const status = doc.data().status;
+        const { id } = doc;
+        const { status } = doc.data();
         players.set(id, status);
       });
       setPlayers(players);
