@@ -6,7 +6,7 @@ import "./MatchListItem.css";
 import { Match, Status } from "../types";
 import { Link } from "react-router-dom";
 import firebase from "firebase";
-import { checkIfMatchIsDone, checkMatchStatusForUser } from "../globalFunction";
+import { getReservationStatus } from "../globalFunction";
 
 const MatchListItem = (matchProps: {
   match: Match;
@@ -24,13 +24,7 @@ const MatchListItem = (matchProps: {
 
   useEffect(() => {
     (async () => {
-      if (!match) return;
-      const matchStatusIfDoneOrNot = await checkIfMatchIsDone(match);
-      setReservationStatus(matchStatusIfDoneOrNot);
-
-      if (!user) return;
-      const matchStatusForUser = await checkMatchStatusForUser(match, user.uid);
-      if (matchStatusForUser) setReservationStatus(matchStatusForUser);
+      setReservationStatus(await getReservationStatus(match, user));
     })();
   }, [match, user]);
 

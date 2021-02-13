@@ -6,7 +6,7 @@ import { Match, Status } from "../types";
 import Label from "./Label";
 import { Link, useHistory, useParams } from "react-router-dom";
 import firebase from "firebase";
-import { checkIfMatchIsDone, checkMatchStatusForUser } from "../globalFunction";
+import { getReservationStatus } from "../globalFunction";
 
 const MatchDetail = (): JSX.Element => {
   const history = useHistory();
@@ -41,13 +41,7 @@ const MatchDetail = (): JSX.Element => {
 
   useEffect(() => {
     (async () => {
-      if (!match) return;
-      const matchStatusIfDoneOrNot = await checkIfMatchIsDone(match);
-      setReservationStatus(matchStatusIfDoneOrNot);
-
-      if (!user) return;
-      const matchStatusForUser = await checkMatchStatusForUser(match, user.uid);
-      if (matchStatusForUser) setReservationStatus(matchStatusForUser);
+      setReservationStatus(await getReservationStatus(match, user));
     })();
   }, [match, user]);
 
