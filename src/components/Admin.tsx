@@ -10,7 +10,9 @@ const Admin = (): JSX.Element => {
   const history = useHistory();
   const { id } = useParams<{ id: string }>();
   const [user, setUser] = useState(firebase.auth().currentUser);
-  const [players, setPlayers] = useState<Map<string, string>>(new Map());
+  const [idToPlayers, setIdToPlayers] = useState<Map<string, string>>(
+    new Map()
+  );
 
   useEffect(() => {
     firebase.auth().onAuthStateChanged(setUser);
@@ -36,18 +38,18 @@ const Admin = (): JSX.Element => {
         .doc(id)
         .collection("reservation")
         .get();
-      const players: Map<string, string> = new Map();
+      const idToPlayers: Map<string, string> = new Map();
       querySnapshot.docs.forEach((doc) => {
         const { id } = doc;
         const { status } = doc.data();
-        players.set(id, status);
+        idToPlayers.set(id, status);
       });
-      setPlayers(players);
+      setIdToPlayers(idToPlayers);
     })();
   }, [id]);
 
-  const renderPlayerlists = () => {
-    return [...players].map(([playerKey, status]) => {
+  const renderPlayers = () => {
+    return [...idToPlayers].map(([playerKey, status]) => {
       return <PlayerList key={playerKey} id={playerKey} status={status} />;
     });
   };
@@ -58,8 +60,8 @@ const Admin = (): JSX.Element => {
       <Divider className="divider" />
       <h2>회원목록</h2>
       <section className="playerListContainer">
-        {players.size > 0 ? (
-          renderPlayerlists()
+        {idToPlayers.size > 0 ? (
+          renderPlayers()
         ) : (
           <div>현재 예약중인 회원이 없습니다.</div>
         )}
