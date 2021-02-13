@@ -19,8 +19,8 @@ import { useHistory, Link } from "react-router-dom";
 
 const { Option } = Select;
 
-const AddMatch = (matchProps: { id: string }): JSX.Element => {
-  const { id } = matchProps;
+const AddMatch = (props: { id: string }): JSX.Element => {
+  const { id } = props;
   const history = useHistory();
 
   const [gameDate, setGameDate] = useState<Moment | null>(null);
@@ -39,7 +39,6 @@ const AddMatch = (matchProps: { id: string }): JSX.Element => {
   useEffect(() => {
     (async () => {
       if (!id) return;
-
       const db = firebase.firestore();
       const doc = await db.collection("matches").doc(id).get();
       if (!doc.exists) {
@@ -50,7 +49,6 @@ const AddMatch = (matchProps: { id: string }): JSX.Element => {
 
       const match = doc.data();
       if (!match) return;
-
       setGameDate(moment(match.dateTime.toDate()));
       setPlace(match.place);
       setMemberCount(match.memberCount);
