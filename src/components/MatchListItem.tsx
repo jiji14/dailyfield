@@ -6,6 +6,7 @@ import "./MatchListItem.css";
 import { Match, Status } from "../types";
 import { Link } from "react-router-dom";
 import firebase from "firebase";
+import { checkIfMatchIsDone, checkMatchStatusForUser } from "../globalFunction";
 
 const MatchListItem = (matchProps: {
   match: Match;
@@ -24,31 +25,12 @@ const MatchListItem = (matchProps: {
   useEffect(() => {
     (async () => {
       if (!match) return;
-
-      const db = firebase.firestore();
-      const matchDoc = await db
-        .collection("matches")
-        .doc(match.id)
-        .collection("reservation")
-        .where("status", "==", "확정")
-        .get();
-
-      if (matchDoc?.size >= match.memberCount) {
-        setReservationStatus("마감");
-      }
+      const matchStatusIfDoneOrNot = await checkIfMatchIsDone(match);
+      setReservationStatus(matchStatusIfDoneOrNot);
 
       if (!user) return;
-
-      const reservationDoc = await db
-        .collection("matches")
-        .doc(match.id)
-        .collection("reservation")
-        .doc(user.uid)
-        .get();
-
-      if (!reservationDoc.exists) return;
-      const data = reservationDoc.data();
-      if (data?.status) setReservationStatus(data.status);
+      const matchStatusForUser = await checkMatchStatusForUser(match, user.uid);
+      if (matchStatusForUser) setReservationStatus(matchStatusForUser);
     })();
   }, [match, user]);
 

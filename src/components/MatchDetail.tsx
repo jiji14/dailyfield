@@ -6,6 +6,7 @@ import { Match, Status } from "../types";
 import Label from "./Label";
 import { Link, useHistory, useParams } from "react-router-dom";
 import firebase from "firebase";
+import { checkIfMatchIsDone, checkMatchStatusForUser } from "../globalFunction";
 
 const MatchDetail = (): JSX.Element => {
   const history = useHistory();
@@ -21,7 +22,7 @@ const MatchDetail = (): JSX.Element => {
   }, []);
 
   useEffect(() => {
-    async function getMatch() {
+    (async () => {
       const db = firebase.firestore();
       const doc = await db.collection("matches").doc(id).get();
       if (!doc.exists) {
@@ -31,42 +32,24 @@ const MatchDetail = (): JSX.Element => {
       }
 
       const match = doc.data();
-
-      if (match) {
-        match.dateTime = match.dateTime.toDate();
-        match.id = doc.id;
-        setMatch(match as Match);
-
-        const matchDoc = await db
-          .collection("matches")
-          .doc(match.id)
-          .collection("reservation")
-          .where("status", "==", "확정")
-          .get();
-
-        if (matchDoc?.size >= match.memberCount) {
-          setReservationStatus("마감");
-        }
-
-        if (!user) return;
-
-        const reservationDoc = await db
-          .collection("matches")
-          .doc(match.id)
-          .collection("reservation")
-          .doc(user.uid)
-          .get();
-
-        if (reservationDoc.exists) {
-          const data = reservationDoc.data();
-          if (data?.status) {
-            setReservationStatus(data.status);
-          }
-        }
-      }
-    }
-    getMatch();
+      if (!match) return;
+      match.dateTime = match.dateTime.toDate();
+      match.id = doc.id;
+      setMatch(match as Match);
+    })();
   }, [history, id, user]);
+
+  useEffect(() => {
+    (async () => {
+      if (!match) return;
+      const matchStatusIfDoneOrNot = await checkIfMatchIsDone(match);
+      setReservationStatus(matchStatusIfDoneOrNot);
+
+      if (!user) return;
+      const matchStatusForUser = await checkMatchStatusForUser(match, user.uid);
+      if (matchStatusForUser) setReservationStatus(matchStatusForUser);
+    })();
+  }, [match, user]);
 
   const reserveMatch = async () => {
     if (!user) {
