@@ -285,6 +285,7 @@ const MatchDetail = (): JSX.Element => {
         <ul className="iconUl">
           <li>축구도 이제 고급스포츠! 혼자와도 재밌게 운동하자!</li>
           <li>새로운 커뮤니티의 시작♡ 데일리필드⚽</li>
+          <li>카카오채널 pf.kakao.com/_vQNPK</li>
           <li>인스타팔로우 @daily_field</li>
           <li>블로그♡ blog.naver.com/piterq</li>
           <li>스페셜 영상 youtu.be/08zp7lrtOpc</li>
