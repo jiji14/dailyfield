@@ -308,9 +308,7 @@ const AddMatch = (props: { id: string }): JSX.Element => {
         {id ? (
           <>
             <Button type="primary">수정하기</Button>
-            <Button type="primary" danger>
-              삭제하기
-            </Button>
+            <Button danger>삭제하기</Button>
           </>
         ) : (
           <Button type="primary" onClick={addMatch}>
