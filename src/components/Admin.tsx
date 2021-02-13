@@ -7,9 +7,7 @@ const Admin = (): JSX.Element => {
 
   return (
     <div className="admin">
-      <section>
-        <AddMatch id={id} />
-      </section>
+      <AddMatch id={id} />
     </div>
   );
 };
