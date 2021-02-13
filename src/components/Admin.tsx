@@ -35,7 +35,7 @@ const Admin = (): JSX.Element => {
   }, [user, history]);
 
   useEffect(() => {
-    async function getPlayers() {
+    (async () => {
       const db = firebase.firestore();
       const querySnapshot = await db
         .collection("matches")
@@ -49,8 +49,7 @@ const Admin = (): JSX.Element => {
         players.set(id, status);
       });
       setPlayers(players);
-    }
-    getPlayers();
+    })();
   }, [id]);
 
   const renderPlayerlists = () => {
