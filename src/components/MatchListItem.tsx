@@ -22,38 +22,34 @@ const MatchListItem = (matchProps: {
   }, []);
 
   useEffect(() => {
-    async function getMatchStatus() {
-      if (match) {
-        const db = firebase.firestore();
-        const matchDoc = await db
-          .collection("matches")
-          .doc(match.id)
-          .collection("reservation")
-          .where("status", "==", "확정")
-          .get();
+    (async () => {
+      if (!match) return;
 
-        if (matchDoc?.size >= match.memberCount) {
-          setReservationStatus("마감");
-        }
+      const db = firebase.firestore();
+      const matchDoc = await db
+        .collection("matches")
+        .doc(match.id)
+        .collection("reservation")
+        .where("status", "==", "확정")
+        .get();
 
-        if (!user) return;
-
-        const reservationDoc = await db
-          .collection("matches")
-          .doc(match.id)
-          .collection("reservation")
-          .doc(user.uid)
-          .get();
-
-        if (reservationDoc.exists) {
-          const data = reservationDoc.data();
-          if (data?.status) {
-            setReservationStatus(data.status);
-          }
-        }
+      if (matchDoc?.size >= match.memberCount) {
+        setReservationStatus("마감");
       }
-    }
-    getMatchStatus();
+
+      if (!user) return;
+
+      const reservationDoc = await db
+        .collection("matches")
+        .doc(match.id)
+        .collection("reservation")
+        .doc(user.uid)
+        .get();
+
+      if (!reservationDoc.exists) return;
+      const data = reservationDoc.data();
+      if (data?.status) setReservationStatus(data.status);
+    })();
   }, [match, user]);
 
   const renderReservationStatus = () => {
