@@ -81,7 +81,7 @@ describe("Test", () => {
     expect(screen.getByText(/예약확정/i)).toBeInTheDocument();
   });
 
-  test("click AddMatch", async () => {
+  test("check AddMatch Button", async () => {
     render(<MatchList />);
     await waitFor(async () => {
       expect(screen.getByText(/매치등록/i)).toBeInTheDocument();
