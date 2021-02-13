@@ -1,6 +1,7 @@
 import { render, screen, waitFor } from "@testing-library/react";
 import Admin from "./Admin";
 import firebase from "firebase";
+import { useParams } from "react-router-dom";
 
 describe("Test", () => {
   beforeEach(() => {
@@ -34,12 +35,21 @@ describe("Test", () => {
     });
   });
 
-  test("Admin Page", async () => {
+  test("Admin Page - id 있는경우 수정/삭제 버튼 보이기", async () => {
+    useParams.mockReturnValue({ id: "test12345" });
     render(<Admin />);
     await waitFor(async () => {
       expect(screen.getByDisplayValue("이지정")).toBeInTheDocument();
       expect(screen.getByText("수정하기")).toBeInTheDocument();
       expect(screen.getByText("삭제하기")).toBeInTheDocument();
+    });
+  });
+
+  test("Admin Page - id 없는경우 등록 버튼 보이기", async () => {
+    useParams.mockReturnValue({ id: null });
+    render(<Admin />);
+    await waitFor(async () => {
+      expect(screen.getByText("등록하기")).toBeInTheDocument();
     });
   });
 });
