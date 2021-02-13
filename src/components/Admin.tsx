@@ -21,12 +21,9 @@ const Admin = (): JSX.Element => {
       if (!user) return;
       const db = firebase.firestore();
       const doc = await db.collection("users").doc(user.uid).get();
-      if (doc.exists) {
-        if (!doc.data()?.isAdmin) {
-          window.alert("관리자로 로그인해주세요.");
-          history.push("/");
-          return;
-        }
+      if (doc.exists && !doc.data()?.isAdmin) {
+        window.alert("관리자로 로그인해주세요.");
+        history.push("/");
       }
     })();
   }, [user, history]);
