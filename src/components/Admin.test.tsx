@@ -13,6 +13,7 @@ describe("Test", () => {
     });
 
     ((firebase.firestore as unknown) as jest.Mock).mockReturnValue({
+      // users collection, 유저정보 데이터
       collection: jest.fn().mockReturnValue({
         doc: jest.fn().mockReturnValue({
           get: jest.fn().mockResolvedValue({
@@ -30,6 +31,7 @@ describe("Test", () => {
             }),
             id: "test12345",
           }),
+          // matches -> reservation collection, 해당 매치에 대한 예약상태 데이터
           collection: jest.fn().mockReturnValue({
             get: jest.fn().mockResolvedValue({
               docs: [
@@ -50,8 +52,10 @@ describe("Test", () => {
   test("Admin Page", async () => {
     render(<Admin />);
     await waitFor(async () => {
-      expect(screen.getByText("01090143492")).toBeInTheDocument(); //전화번호 양식 제대로 나오는지 확인
-      expect(screen.getByText("신청승인")).toBeInTheDocument(); //예약신청일때 신청승인 버튼 나오는지 확인
+      //전화번호 양식 제대로 나오는지 확인
+      expect(screen.getByText("01090143492")).toBeInTheDocument();
+      //예약신청일때 신청승인 버튼 나오는지 확인
+      expect(screen.getByText("신청승인")).toBeInTheDocument();
     });
   });
 });
