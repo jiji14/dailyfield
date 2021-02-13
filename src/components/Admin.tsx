@@ -38,12 +38,13 @@ const Admin = (): JSX.Element => {
         .doc(id)
         .collection("reservation")
         .get();
-      const idToPlayers: Map<string, string> = new Map();
-      querySnapshot.docs.forEach((doc) => {
-        const { id } = doc;
-        const { status } = doc.data();
-        idToPlayers.set(id, status);
-      });
+      const idToPlayers: Map<string, string> = new Map(
+        querySnapshot.docs.map((doc) => {
+          const { id } = doc;
+          const { status } = doc.data();
+          return [id, status];
+        })
+      );
       setIdToPlayers(idToPlayers);
     })();
   }, [id]);
