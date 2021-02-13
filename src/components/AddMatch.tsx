@@ -37,7 +37,9 @@ const AddMatch = (matchProps: { id: string }): JSX.Element => {
   const [manager, setManager] = useState("배성진");
 
   useEffect(() => {
-    async function getMatch() {
+    (async () => {
+      if (!id) return;
+
       const db = firebase.firestore();
       const doc = await db.collection("matches").doc(id).get();
       if (!doc.exists) {
@@ -47,25 +49,21 @@ const AddMatch = (matchProps: { id: string }): JSX.Element => {
       }
 
       const match = doc.data();
-      if (match) {
-        setGameDate(moment(match.dateTime.toDate()));
-        setPlace(match.place);
-        setMemberCount(match.memberCount);
-        setTeamCount(match.teamCount);
-        setGender(match.gender);
-        setLevel(match.level);
-        setLink(match.link);
-        setGameType(match.gameType);
-        setFee(match.fee);
-        setCanPark(match.canPark);
-        setCanRentShoes(match.canRentShoes);
-        setManager(match.manager);
-      }
-    }
+      if (!match) return;
 
-    if (id) {
-      getMatch();
-    }
+      setGameDate(moment(match.dateTime.toDate()));
+      setPlace(match.place);
+      setMemberCount(match.memberCount);
+      setTeamCount(match.teamCount);
+      setGender(match.gender);
+      setLevel(match.level);
+      setLink(match.link);
+      setGameType(match.gameType);
+      setFee(match.fee);
+      setCanPark(match.canPark);
+      setCanRentShoes(match.canRentShoes);
+      setManager(match.manager);
+    })();
   }, [history, id]);
 
   const changePlace = (e: React.FormEvent<HTMLInputElement>) => {
