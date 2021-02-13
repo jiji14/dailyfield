@@ -28,6 +28,10 @@ const PlayerListItem = (playerProps: {
     })();
   }, [id, status]);
 
+  const internationalToLocalPhoneNumber = () => {
+    return "0" + player?.phoneNumber.substring(3, player.phoneNumber.length);
+  };
+
   return player ? (
     <>
       <Row align="middle">
@@ -37,9 +41,7 @@ const PlayerListItem = (playerProps: {
         <Col span={4} className="playerContainer">
           <div>{player.gender}</div>
         </Col>
-        <Col span={8}>
-          {"0" + player.phoneNumber.substring(3, player.phoneNumber.length)}
-        </Col>
+        <Col span={8}>{internationalToLocalPhoneNumber()}</Col>
         <Col span={8} className="buttonContainer">
           {player.status !== "확정" && (
             <Button type="primary" size="small">
