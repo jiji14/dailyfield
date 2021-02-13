@@ -4,7 +4,7 @@ import "./Admin.css";
 import firebase from "firebase";
 import { Divider } from "antd";
 import { Link, useHistory, useParams } from "react-router-dom";
-import PlayerList from "./PlayerList";
+import PlayerListItem from "./PlayerListItem";
 
 const Admin = (): JSX.Element => {
   const history = useHistory();
@@ -50,7 +50,7 @@ const Admin = (): JSX.Element => {
 
   const renderPlayers = () => {
     return [...idToPlayers].map(([playerKey, status]) => {
-      return <PlayerList key={playerKey} id={playerKey} status={status} />;
+      return <PlayerListItem key={playerKey} id={playerKey} status={status} />;
     });
   };
 

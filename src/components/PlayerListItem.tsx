@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { Row, Col, Divider, Button } from "antd";
 import "antd/dist/antd.css";
-import "./PlayerList.css";
+import "./PlayerListItem.css";
 import firebase from "firebase";
 import { Player } from "../types";
 
-const PlayerList = (playerProps: {
+const PlayerListItem = (playerProps: {
   id: string;
   status: string;
 }): JSX.Element => {
@@ -62,4 +62,4 @@ const PlayerList = (playerProps: {
   );
 };
 
-export default PlayerList;
+export default PlayerListItem;
