@@ -202,7 +202,11 @@ const MatchDetail = (): JSX.Element => {
           주차 {match.canPark ? "가능" : "불가능"}
         </Tag>
       </div>
-      <p className="details">* 여성매치시 인원부족시 혼성매치로 진행됩니다.</p>
+      {match.gender === "여성" && (
+        <p className="details">
+          * 여성매치시 인원부족시 혼성매치로 진행됩니다.
+        </p>
+      )}
       <section>
         <h3 className="title">참가비</h3>
         <p className="details">
