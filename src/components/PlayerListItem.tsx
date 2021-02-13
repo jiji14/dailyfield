@@ -28,8 +28,8 @@ const PlayerListItem = (playerProps: {
     })();
   }, [id, status]);
 
-  const internationalToLocalPhoneNumber = () => {
-    return "0" + player?.phoneNumber.substring(3, player.phoneNumber.length);
+  const internationalToLocalKoreanPhoneNumber = (phoneNumber: string) => {
+    return "0" + phoneNumber.substring(3, phoneNumber.length);
   };
 
   return player ? (
@@ -41,7 +41,9 @@ const PlayerListItem = (playerProps: {
         <Col span={4} className="playerContainer">
           <div>{player.gender}</div>
         </Col>
-        <Col span={8}>{internationalToLocalPhoneNumber()}</Col>
+        <Col span={8}>
+          {internationalToLocalKoreanPhoneNumber(player.phoneNumber)}
+        </Col>
         <Col span={8} className="buttonContainer">
           {player.status !== "확정" && (
             <Button type="primary" size="small">
