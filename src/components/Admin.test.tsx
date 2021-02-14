@@ -83,7 +83,8 @@ describe("Test", () => {
     });
   });
 
-  test("Admin Page", async () => {
+  test("Admin Page - 선수들 잘 나오는지 확인", async () => {
+    useParams.mockReturnValue({ id: "match123" });
     render(<Admin />);
     await waitFor(async () => {
       //전화번호 양식 제대로 나오는지 확인
