@@ -36,7 +36,7 @@ describe("Test", () => {
   });
 
   test("Admin Page - id 있는경우 수정/삭제 버튼 보이기", async () => {
-    useParams.mockReturnValue({ id: "test12345" });
+    useParams.mockReturnValue({ id: "match123" });
     render(<Admin />);
     await waitFor(async () => {
       expect(screen.getByDisplayValue("이지정")).toBeInTheDocument();

@@ -58,7 +58,7 @@ describe("Test", () => {
         }),
       }),
     });
-    useParams.mockReturnValue({ id: "test12345" });
+    useParams.mockReturnValue({ id: "match123" });
     render(<MatchDetail />);
 
     await waitFor(async () => {
@@ -122,7 +122,7 @@ describe("Test", () => {
         }),
       }),
     });
-    useParams.mockReturnValue({ id: "test12345" });
+    useParams.mockReturnValue({ id: "match123" });
     render(<MatchDetail />);
 
     await waitFor(async () => {
@@ -176,7 +176,7 @@ describe("Test", () => {
     window.alert = () => "";
     window.confirm = () => true;
     mockWindowLocationReload();
-    useParams.mockReturnValue({ id: "test12345" });
+    useParams.mockReturnValue({ id: "match123" });
     render(<MatchDetail />);
 
     await waitFor(async () => {
