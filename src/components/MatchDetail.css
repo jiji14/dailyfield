@@ -16,8 +16,9 @@
 }
 .title {
   font-size: 16px;
-  width: fit-content;
   margin-bottom: 4px;
+  /* 보더가 텍스트 with 사이즈에 맞게 설정 */
+  width: max-content;
   border-bottom: 2px solid var(--orange-color);
 }
 .chip {
