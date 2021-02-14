@@ -44,6 +44,15 @@ describe("Test", () => {
     expect(isMatchFull).toBeTruthy();
   });
 
+  test("checkIfMatchIsFull Test - 매치가 full이 아닌지 확인", async () => {
+    const match = {
+      id: "test12345",
+      memberCount: 11,
+    } as Match;
+    const isMatchFull = await checkIfMatchIsFull(match);
+    expect(isMatchFull).toBeFalsy();
+  });
+
   test("checkMatchStatusForUser Test - 유저 예약상태가 확정인지 확인", async () => {
     const match = {
       id: "test12345",
