@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Row,
   Col,
@@ -11,15 +11,16 @@ import {
   InputNumber,
 } from "antd";
 import "antd/dist/antd.css";
-import "./Signup.css";
-import { Moment } from "moment";
+import "./AddMatch.css";
+import moment, { Moment } from "moment";
 import firebase from "firebase";
 import { Gender, Level, GameType, Match } from "../types";
 import { useHistory, Link } from "react-router-dom";
 
 const { Option } = Select;
 
-const AddMatch = (): JSX.Element => {
+const AddMatch = (props: { id: string }): JSX.Element => {
+  const { id } = props;
   const history = useHistory();
 
   const [gameDate, setGameDate] = useState<Moment | null>(null);
@@ -34,6 +35,34 @@ const AddMatch = (): JSX.Element => {
   const [canPark, setCanPark] = useState(true);
   const [canRentShoes, setCanRentShoes] = useState(false);
   const [manager, setManager] = useState("배성진");
+
+  useEffect(() => {
+    (async () => {
+      if (!id) return;
+      const db = firebase.firestore();
+      const doc = await db.collection("matches").doc(id).get();
+      if (!doc.exists) {
+        window.alert("잘못된 접근입니다. 목록페이지로 돌아갑니다.");
+        history.push("/");
+        return;
+      }
+
+      const match = doc.data();
+      if (!match) return;
+      setGameDate(moment(match.dateTime.toDate()));
+      setPlace(match.place);
+      setMemberCount(match.memberCount);
+      setTeamCount(match.teamCount);
+      setGender(match.gender);
+      setLevel(match.level);
+      setLink(match.link);
+      setGameType(match.gameType);
+      setFee(match.fee);
+      setCanPark(match.canPark);
+      setCanRentShoes(match.canRentShoes);
+      setManager(match.manager);
+    })();
+  }, [history, id]);
 
   const changePlace = (e: React.FormEvent<HTMLInputElement>) => {
     setPlace(e.currentTarget.value);
@@ -87,13 +116,17 @@ const AddMatch = (): JSX.Element => {
   };
 
   return (
-    <div className="signUp">
-      <Link to="/">목록으로 돌아가기</Link>
-      <Divider className="divider" />
-      <h2>매치등록</h2>
-      <section className="signUpContainer">
+    <div className="addMatch">
+      {!id && (
+        <>
+          <Link to="/">목록으로 돌아가기</Link>
+          <Divider className="divider" />
+        </>
+      )}
+      {id ? <h2>매치수정</h2> : <h2>매치등록</h2>}
+      <section className="addMatchContainer">
         <Row align="middle" className="row">
-          <Col span={6} className="signUpSubtitle">
+          <Col span={6} className="addMatchSubtitle">
             날짜
           </Col>
           <Col span={18}>
@@ -106,7 +139,7 @@ const AddMatch = (): JSX.Element => {
           </Col>
         </Row>
         <Row align="middle" className="row">
-          <Col span={6} className="signUpSubtitle">
+          <Col span={6} className="addMatchSubtitle">
             경기장
           </Col>
           <Col span={18}>
@@ -118,7 +151,7 @@ const AddMatch = (): JSX.Element => {
           </Col>
         </Row>
         <Row align="middle" className="row">
-          <Col span={6} className="signUpSubtitle">
+          <Col span={6} className="addMatchSubtitle">
             인원
           </Col>
           <Col span={6}>
@@ -132,14 +165,14 @@ const AddMatch = (): JSX.Element => {
               }}
             />
           </Col>
-          <Col span={6} className="signUpSubtitle">
+          <Col span={6} className="addMatchSubtitle">
             종류
           </Col>
           <Col span={6}>
             <Select
               value={teamCount}
               onChange={setTeamCount}
-              className="signUpSelect"
+              className="addMatchSelect"
               data-testid="teamCountSelect"
             >
               <Option value={2}>2파전</Option>
@@ -148,14 +181,14 @@ const AddMatch = (): JSX.Element => {
           </Col>
         </Row>
         <Row align="middle" className="row">
-          <Col span={6} className="signUpSubtitle">
+          <Col span={6} className="addMatchSubtitle">
             성별
           </Col>
           <Col span={6}>
             <Select
               value={gender}
               onChange={setGender}
-              className="signUpSelect"
+              className="addMatchSelect"
               data-testid="genderSelect"
             >
               <Option value="남성">남성</Option>
@@ -163,14 +196,14 @@ const AddMatch = (): JSX.Element => {
               <Option value="혼성">혼성</Option>
             </Select>
           </Col>
-          <Col span={6} className="signUpSubtitle">
+          <Col span={6} className="addMatchSubtitle">
             레벨
           </Col>
           <Col span={6}>
             <Select
               value={level}
               onChange={setLevel}
-              className="signUpSelect"
+              className="addMatchSelect"
               data-testid="levelSelect"
             >
               <Option value="초급">초급</Option>
@@ -180,7 +213,7 @@ const AddMatch = (): JSX.Element => {
           </Col>
         </Row>
         <Row align="middle" className="row">
-          <Col span={6} className="signUpSubtitle">
+          <Col span={6} className="addMatchSubtitle">
             링크
           </Col>
           <Col span={18}>
@@ -192,14 +225,14 @@ const AddMatch = (): JSX.Element => {
           </Col>
         </Row>
         <Row align="middle" className="row">
-          <Col span={6} className="signUpSubtitle">
+          <Col span={6} className="addMatchSubtitle">
             종류
           </Col>
           <Col span={6}>
             <Select
               value={gameType}
               onChange={setGameType}
-              className="signUpSelect"
+              className="addMatchSelect"
               data-testid="gameTypeSelect"
             >
               <Option value="gx">GX만</Option>
@@ -207,14 +240,14 @@ const AddMatch = (): JSX.Element => {
               <Option value="gx+match">GX+매치</Option>
             </Select>
           </Col>
-          <Col span={6} className="signUpSubtitle">
+          <Col span={6} className="addMatchSubtitle">
             참가비
           </Col>
           <Col span={6}>
             <Select
               value={fee}
               onChange={setFee}
-              className="signUpSelect"
+              className="addMatchSelect"
               data-testid="feeSelect"
             >
               <Option value={10000}>1만원</Option>
@@ -225,7 +258,7 @@ const AddMatch = (): JSX.Element => {
           </Col>
         </Row>
         <Row align="middle" className="row">
-          <Col span={6} className="signUpSubtitle">
+          <Col span={6} className="addMatchSubtitle">
             주차
           </Col>
           <Col span={6}>
@@ -240,7 +273,7 @@ const AddMatch = (): JSX.Element => {
               주차 가능
             </Checkbox>
           </Col>
-          <Col span={6} className="signUpSubtitle">
+          <Col span={6} className="addMatchSubtitle">
             풋살화
           </Col>
           <Col span={6}>
@@ -257,7 +290,7 @@ const AddMatch = (): JSX.Element => {
           </Col>
         </Row>
         <Row align="middle" className="row">
-          <Col span={6} className="signUpSubtitle">
+          <Col span={6} className="addMatchSubtitle">
             매니저
           </Col>
           <Col span={18}>
@@ -270,10 +303,18 @@ const AddMatch = (): JSX.Element => {
         </Row>
       </section>
       <Divider className="divider" />
-      <div className="signUpButtonContainer">
-        <Button type="primary" onClick={addMatch}>
-          등록하기
-        </Button>
+
+      <div className="addMatchButtonContainer">
+        {id ? (
+          <>
+            <Button type="primary">수정하기</Button>
+            <Button danger>삭제하기</Button>
+          </>
+        ) : (
+          <Button type="primary" onClick={addMatch}>
+            등록하기
+          </Button>
+        )}
       </div>
     </div>
   );

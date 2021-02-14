@@ -2,6 +2,7 @@ import { render, screen, waitFor } from "@testing-library/react";
 import MatchDetail from "./MatchDetail";
 import firebase from "firebase";
 import { fireAntEvent, mockWindowLocationReload } from "../setupTests";
+import { useParams } from "react-router-dom";
 
 describe("Test", () => {
   beforeEach(() => {
@@ -57,6 +58,7 @@ describe("Test", () => {
         }),
       }),
     });
+    useParams.mockReturnValue({ id: "match123" });
     render(<MatchDetail />);
 
     await waitFor(async () => {
@@ -120,6 +122,7 @@ describe("Test", () => {
         }),
       }),
     });
+    useParams.mockReturnValue({ id: "match123" });
     render(<MatchDetail />);
 
     await waitFor(async () => {
@@ -173,7 +176,7 @@ describe("Test", () => {
     window.alert = () => "";
     window.confirm = () => true;
     mockWindowLocationReload();
-
+    useParams.mockReturnValue({ id: "match123" });
     render(<MatchDetail />);
 
     await waitFor(async () => {

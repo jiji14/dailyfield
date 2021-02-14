@@ -1,0 +1,28 @@
+.addMatch {
+  max-width: 1024px;
+  margin: 0 auto;
+  padding: 40px 10px;
+}
+.addMatchContainer {
+  margin-bottom: 20px;
+}
+.addMatchContainer .row {
+  margin-bottom: 8px;
+}
+.addMatchTitle {
+  font-size: 12px;
+}
+.addMatchSubtitle {
+  color: var(--grey-color);
+}
+.addMatchButtonContainer {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 40px;
+}
+.addMatchButtonContainer > :not(:last-child) {
+  margin-right: 10px;
+}
+.addMatchSelect {
+  width: 120px;
+}

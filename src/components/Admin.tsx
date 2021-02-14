@@ -5,6 +5,7 @@ import firebase from "firebase";
 import { Divider } from "antd";
 import { Link, useHistory, useParams } from "react-router-dom";
 import PlayerListItem from "./PlayerListItem";
+import AddMatch from "./AddMatch";
 
 const Admin = (): JSX.Element => {
   const history = useHistory();
@@ -67,6 +68,7 @@ const Admin = (): JSX.Element => {
           <div>현재 예약중인 회원이 없습니다.</div>
         )}
       </section>
+      <AddMatch id={id} />
     </div>
   );
 };
