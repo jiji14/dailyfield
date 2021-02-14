@@ -64,7 +64,7 @@ describe("Test", () => {
       }),
     });
   });
-  
+
   test("Admin Page - id 있는경우 수정/삭제 버튼 보이기", async () => {
     useParams.mockReturnValue({ id: "match123" });
     render(<Admin />);
@@ -82,7 +82,7 @@ describe("Test", () => {
       expect(screen.getByText("등록하기")).toBeInTheDocument();
     });
   });
-      
+
   test("Admin Page", async () => {
     render(<Admin />);
     await waitFor(async () => {

@@ -6,7 +6,7 @@ import { Divider } from "antd";
 import { Link, useHistory, useParams } from "react-router-dom";
 import PlayerListItem from "./PlayerListItem";
 import AddMatch from "./AddMatch";
-      
+
 const Admin = (): JSX.Element => {
   const history = useHistory();
   const { id } = useParams<{ id: string }>();
