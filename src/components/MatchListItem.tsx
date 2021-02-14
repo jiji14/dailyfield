@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { Row, Col, Divider } from "antd";
-import Label from "./Label";
 import "antd/dist/antd.css";
 import "./MatchListItem.css";
 import { Match, Status } from "../types";
 import { Link } from "react-router-dom";
 import firebase from "firebase";
 import { getReservationStatus } from "../globalFunction";
+import ReservationStatus from "./ReservationStatus";
 
 const MatchListItem = (matchProps: {
   match: Match;
@@ -27,23 +27,6 @@ const MatchListItem = (matchProps: {
       setReservationStatus(await getReservationStatus(match, user));
     })();
   }, [match, user]);
-
-  const renderReservationStatus = () => {
-    switch (reservationStatus) {
-      case "신청가능":
-        return <Label type="primary">신청가능</Label>;
-      case "예약신청":
-        return <Label type="progress">신청중</Label>;
-      case "마감":
-        return <Label type="secondary">마감</Label>;
-      case "확정":
-        return <Label type="success">예약확정</Label>;
-      case "취소신청":
-        return <Label type="progress">취소중</Label>;
-      default:
-        return null;
-    }
-  };
 
   return (
     match && (
@@ -66,7 +49,7 @@ const MatchListItem = (matchProps: {
             </div>
           </Col>
           <Col span={6} className="alignRight">
-            <Label type="primary">{renderReservationStatus()}</Label>
+            <ReservationStatus reservationStatus={reservationStatus} />
           </Col>
         </Row>
         <Divider className="divider" />

@@ -3,10 +3,10 @@ import { Divider, Button, Tag } from "antd";
 import "antd/dist/antd.css";
 import "./MatchDetail.css";
 import { Match, Status } from "../types";
-import Label from "./Label";
 import { Link, useHistory, useParams } from "react-router-dom";
 import firebase from "firebase";
 import { getReservationStatus } from "../globalFunction";
+import ReservationStatus from "./ReservationStatus";
 
 const MatchDetail = (): JSX.Element => {
   const history = useHistory();
@@ -99,23 +99,6 @@ const MatchDetail = (): JSX.Element => {
     }
   };
 
-  const renderReservationStatus = () => {
-    switch (reservationStatus) {
-      case "신청가능":
-        return <Label type="primary">신청가능</Label>;
-      case "예약신청":
-        return <Label type="progress">신청중</Label>;
-      case "마감":
-        return <Label type="secondary">마감</Label>;
-      case "확정":
-        return <Label type="success">예약확정</Label>;
-      case "취소신청":
-        return <Label type="progress">취소중</Label>;
-      default:
-        return null;
-    }
-  };
-
   const renderButton = () => {
     switch (reservationStatus) {
       case "신청가능":
@@ -151,7 +134,7 @@ const MatchDetail = (): JSX.Element => {
         <div className="dateContainer">
           {match.dateTime?.toLocaleString("ko-KR")}
         </div>
-        {renderReservationStatus()}
+        <ReservationStatus reservationStatus={reservationStatus} />
       </div>
       <div className="container">
         <div>{match.place}</div>
