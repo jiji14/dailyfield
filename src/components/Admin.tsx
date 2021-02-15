@@ -2,8 +2,7 @@ import React, { useState, useEffect } from "react";
 import "antd/dist/antd.css";
 import "./Admin.css";
 import firebase from "firebase";
-import { Divider } from "antd";
-import { Link, useHistory, useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import PlayerListItem from "./PlayerListItem";
 import AddMatch from "./AddMatch";
 
@@ -58,8 +57,6 @@ const Admin = (): JSX.Element => {
 
   return (
     <div className="admin">
-      <Link to="/">목록으로 돌아가기</Link>
-      <Divider className="divider" />
       <h2>회원목록</h2>
       <section className="playerListContainer">
         {idToPlayers.size > 0 ? (

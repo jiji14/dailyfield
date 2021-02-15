@@ -15,7 +15,7 @@ import "./AddMatch.css";
 import moment, { Moment } from "moment";
 import firebase from "firebase";
 import { Gender, Level, GameType, Match } from "../types";
-import { useHistory, Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 const { Option } = Select;
 
@@ -117,12 +117,7 @@ const AddMatch = (props: { id: string }): JSX.Element => {
 
   return (
     <div className="addMatch">
-      {!id && (
-        <>
-          <Link to="/">목록으로 돌아가기</Link>
-          <Divider className="divider" />
-        </>
-      )}
+      <Divider className="divider" />
       {id ? <h2>매치수정</h2> : <h2>매치등록</h2>}
       <section className="addMatchContainer">
         <Row align="middle" className="row">
