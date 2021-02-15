@@ -3,14 +3,16 @@ import { Row, Col, Divider, Button } from "antd";
 import "antd/dist/antd.css";
 import "./PlayerListItem.css";
 import firebase from "firebase";
-import { Player } from "../types";
+import { Player, Status } from "../types";
 import { CollectionName } from "../collections";
+import { deleteReservationStatus } from "../globalFunction";
 
 const PlayerListItem = (playerProps: {
-  id: string;
+  matchId: string;
+  playerId: string;
   status: string;
 }): JSX.Element => {
-  const { id, status } = playerProps;
+  const { matchId, playerId, status } = playerProps;
   const [player, setPlayer] = useState<Player | null>(null);
 
   useEffect(() => {
@@ -18,7 +20,7 @@ const PlayerListItem = (playerProps: {
       const db = firebase.firestore();
       const doc = await db
         .collection(CollectionName.usersCollectionName)
-        .doc(id)
+        .doc(playerId)
         .get();
       if (!doc.exists) return;
 
@@ -30,10 +32,61 @@ const PlayerListItem = (playerProps: {
       user.status = status;
       setPlayer(user as Player);
     })();
-  }, [id, status]);
+  }, [playerId, status]);
 
   const internationalToLocalKoreanPhoneNumber = (phoneNumber: string) => {
     return "0" + phoneNumber.substring(3, phoneNumber.length);
+  };
+
+  const confirmRequest = (status: Status | undefined) => {
+    switch (status) {
+      case "예약신청":
+        confirmReservation();
+        return;
+      case "취소신청":
+        confirmCancel();
+        return;
+      default:
+        return;
+    }
+  };
+
+  const confirmReservation = async () => {
+    const confirmReservation = window.confirm("예약신청을 승인하시겠습니까?");
+    if (!confirmReservation) return;
+    const db = firebase.firestore();
+    await db
+      .collection(CollectionName.matchesCollectionName)
+      .doc(matchId)
+      .collection(CollectionName.reservationsCollectionName)
+      .doc(playerId)
+      .set({ status: "확정" });
+    setMatchesPlayed(true, "예약신청이 확정되었습니다.");
+  };
+
+  const confirmCancel = async () => {
+    const confirmCancel = window.confirm("취소신청을 승인하시겠습니까?");
+    if (!confirmCancel) return;
+    await deleteReservationStatus(matchId, playerId);
+    setMatchesPlayed(false, "취소신청이 확정되었습니다.");
+  };
+
+  const setMatchesPlayed = async (
+    isMatchesPlayedUp: boolean,
+    confirmMessage: string
+  ) => {
+    const matchesPlayed = player?.matchesPlayed || 0;
+    const db = firebase.firestore();
+    await db
+      .collection(CollectionName.usersCollectionName)
+      .doc(playerId)
+      .update({
+        matchesPlayed: isMatchesPlayedUp
+          ? matchesPlayed + 1
+          : matchesPlayed - 1,
+      });
+    window.alert(confirmMessage);
+    window.location.reload();
   };
 
   return player ? (
@@ -50,7 +103,13 @@ const PlayerListItem = (playerProps: {
         </Col>
         <Col span={8} className="buttonContainer">
           {player.status !== "확정" && (
-            <Button type="primary" size="small">
+            <Button
+              type="primary"
+              size="small"
+              onClick={() => {
+                confirmRequest(player.status);
+              }}
+            >
               {player.status === "예약신청" ? "신청승인" : "취소승인"}
             </Button>
           )}
