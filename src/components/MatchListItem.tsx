@@ -1,15 +1,32 @@
+import React, { useState, useEffect } from "react";
 import { Row, Col, Divider } from "antd";
-import Label from "./Label";
 import "antd/dist/antd.css";
 import "./MatchListItem.css";
-import { Match } from "../types";
+import { Match, Status } from "../types";
 import { Link } from "react-router-dom";
+import firebase from "firebase";
+import { getReservationStatus } from "../globalFunction";
+import ReservationStatus from "./ReservationStatus";
 
 const MatchListItem = (matchProps: {
   match: Match;
   isAdmin: boolean;
 }): JSX.Element => {
   const { match, isAdmin } = matchProps;
+  const [user, setUser] = useState(firebase.auth().currentUser);
+  const [reservationStatus, setReservationStatus] = useState<Status>(
+    "신청가능"
+  );
+
+  useEffect(() => {
+    firebase.auth().onAuthStateChanged(setUser);
+  }, []);
+
+  useEffect(() => {
+    (async () => {
+      setReservationStatus(await getReservationStatus(match, user));
+    })();
+  }, [match, user]);
 
   return (
     match && (
@@ -32,7 +49,7 @@ const MatchListItem = (matchProps: {
             </div>
           </Col>
           <Col span={6} className="alignRight">
-            <Label type="primary">신청가능</Label>
+            <ReservationStatus reservationStatus={reservationStatus} />
           </Col>
         </Row>
         <Divider className="divider" />
