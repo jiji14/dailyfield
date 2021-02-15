@@ -3,7 +3,7 @@ import { Divider, Button, Tag } from "antd";
 import "antd/dist/antd.css";
 import "./MatchDetail.css";
 import { Match, Status } from "../types";
-import { Link, useHistory, useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import firebase from "firebase";
 import { getReservationStatus } from "../globalFunction";
 import ReservationStatus from "./ReservationStatus";
@@ -132,8 +132,6 @@ const MatchDetail = (): JSX.Element => {
     <div></div>
   ) : (
     <div className="matchDetail">
-      <Link to="/">목록으로 돌아가기</Link>
-      <Divider className="divider" />
       <div className="container">
         <div className="dateContainer">
           {match.dateTime?.toLocaleString("ko-KR")}
