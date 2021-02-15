@@ -15,7 +15,7 @@ import "./AddMatch.css";
 import moment, { Moment } from "moment";
 import firebase from "firebase";
 import { Gender, Level, GameType, Match } from "../types";
-import { useHistory, Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 const { Option } = Select;
 

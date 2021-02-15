@@ -2,8 +2,7 @@ import React, { useState, useEffect } from "react";
 import "antd/dist/antd.css";
 import "./Admin.css";
 import firebase from "firebase";
-import { Divider } from "antd";
-import { Link, useHistory, useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import PlayerListItem from "./PlayerListItem";
 import AddMatch from "./AddMatch";
 

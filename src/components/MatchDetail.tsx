@@ -3,7 +3,7 @@ import { Divider, Button, Tag } from "antd";
 import "antd/dist/antd.css";
 import "./MatchDetail.css";
 import { Match, Status } from "../types";
-import { Link, useHistory, useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import firebase from "firebase";
 import { getReservationStatus } from "../globalFunction";
 import ReservationStatus from "./ReservationStatus";
