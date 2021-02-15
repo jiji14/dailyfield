@@ -39,6 +39,7 @@
       "prettier/react"
     ],
     "rules": {
+      "@typescript-eslint/no-unused-vars": "error",
       "no-console": "warn",
       "react/jsx-uses-react": "off",
       "react/react-in-jsx-scope": "off"
