@@ -3,10 +3,6 @@
 // expect(element).toHaveTextContent(/react/i)
 // learn more: https://github.com/testing-library/jest-dom
 import "@testing-library/jest-dom";
-// We need to import firebase to mock it below.
-// eslint-disable-next-line no-unused-vars
-import firebase from "firebase";
-import "react-router-dom";
 import { act, fireEvent, screen } from "@testing-library/react";
 
 global.matchMedia =
