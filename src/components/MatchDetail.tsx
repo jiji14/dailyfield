@@ -7,6 +7,7 @@ import { Link, useHistory, useParams } from "react-router-dom";
 import firebase from "firebase";
 import { getReservationStatus } from "../globalFunction";
 import ReservationStatus from "./ReservationStatus";
+import { CollectionName } from "../collections";
 
 const MatchDetail = (): JSX.Element => {
   const history = useHistory();
@@ -24,7 +25,10 @@ const MatchDetail = (): JSX.Element => {
   useEffect(() => {
     (async () => {
       const db = firebase.firestore();
-      const doc = await db.collection("matches").doc(id).get();
+      const doc = await db
+        .collection(CollectionName.matchesCollectionName)
+        .doc(id)
+        .get();
       if (!doc.exists) {
         window.alert("잘못된 접근입니다. 목록페이지로 돌아갑니다.");
         history.push("/");
@@ -55,9 +59,9 @@ const MatchDetail = (): JSX.Element => {
       const { uid } = user;
       const db = firebase.firestore();
       await db
-        .collection("matches")
+        .collection(CollectionName.matchesCollectionName)
         .doc(match?.id)
-        .collection("reservations")
+        .collection(CollectionName.reservationsCollectionName)
         .doc(uid)
         .set({ status: "예약신청" });
 
@@ -78,17 +82,17 @@ const MatchDetail = (): JSX.Element => {
       const db = firebase.firestore();
       if (reservationStatus === "예약신청") {
         await db
-          .collection("matches")
+          .collection(CollectionName.matchesCollectionName)
           .doc(match?.id)
-          .collection("reservations")
+          .collection(CollectionName.reservationsCollectionName)
           .doc(uid)
           .delete();
         window.alert("예약취소가 완료되었습니다.");
       } else {
         await db
-          .collection("matches")
+          .collection(CollectionName.matchesCollectionName)
           .doc(match?.id)
-          .collection("reservations")
+          .collection(CollectionName.reservationsCollectionName)
           .doc(uid)
           .set({ status: "취소신청" });
         window.alert(

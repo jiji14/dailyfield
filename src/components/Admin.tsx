@@ -6,6 +6,7 @@ import { Divider } from "antd";
 import { Link, useHistory, useParams } from "react-router-dom";
 import PlayerListItem from "./PlayerListItem";
 import AddMatch from "./AddMatch";
+import { CollectionName } from "../collections";
 
 const Admin = (): JSX.Element => {
   const history = useHistory();
@@ -23,7 +24,10 @@ const Admin = (): JSX.Element => {
     (async () => {
       if (!user) return;
       const db = firebase.firestore();
-      const doc = await db.collection("users").doc(user.uid).get();
+      const doc = await db
+        .collection(CollectionName.usersCollectionName)
+        .doc(user.uid)
+        .get();
       if (doc.exists && !doc.data()?.isAdmin) {
         window.alert("관리자로 로그인해주세요.");
         history.push("/");
@@ -35,9 +39,9 @@ const Admin = (): JSX.Element => {
     (async () => {
       const db = firebase.firestore();
       const querySnapshot = await db
-        .collection("matches")
+        .collection(CollectionName.matchesCollectionName)
         .doc(id)
-        .collection("reservations")
+        .collection(CollectionName.reservationsCollectionName)
         .get();
       const idToPlayers: Map<string, string> = new Map(
         querySnapshot.docs.map((doc) => {

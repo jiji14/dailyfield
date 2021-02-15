@@ -16,6 +16,7 @@ import firebase from "firebase";
 import { CheckboxValueType } from "antd/lib/checkbox/Group";
 import { Player, Gender } from "../types";
 import { useHistory } from "react-router-dom";
+import { CollectionName } from "../collections";
 
 const { Option } = Select;
 const Options = [
@@ -67,7 +68,10 @@ const Signup = (): JSX.Element => {
 
     try {
       const db = firebase.firestore();
-      await db.collection("users").doc(currentUser.uid).set(user);
+      await db
+        .collection(CollectionName.usersCollectionName)
+        .doc(currentUser.uid)
+        .set(user);
       window.alert("회원가입을 축하합니다!");
       history.push("/");
     } catch (error) {

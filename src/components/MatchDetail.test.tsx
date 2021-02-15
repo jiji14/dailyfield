@@ -3,6 +3,7 @@ import MatchDetail from "./MatchDetail";
 import firebase from "firebase";
 import { fireAntEvent, mockWindowLocationReload } from "../setupTests";
 import { useParams } from "react-router-dom";
+import { CollectionName } from "../collections";
 
 describe("Test", () => {
   beforeEach(() => {
@@ -73,9 +74,9 @@ describe("Test", () => {
     await fireAntEvent.actAndClick("예약취소");
     const { status } = firebase
       .firestore()
-      .collection("matches")
+      .collection(CollectionName.matchesCollectionName)
       .doc("id")
-      .collection("reservations")
+      .collection(CollectionName.reservationsCollectionName)
       .doc("uid").set.mock.calls[0][0];
     expect(status).toBe("취소신청"); // 예약취소 후 status가 취소신청으로 바뀌었는지 확인
   });
@@ -186,9 +187,9 @@ describe("Test", () => {
     await fireAntEvent.actAndClick("예약하기");
     const { status } = firebase
       .firestore()
-      .collection("matches")
+      .collection(CollectionName.matchesCollectionName)
       .doc("id")
-      .collection("reservations")
+      .collection(CollectionName.reservationsCollectionName)
       .doc("uid").set.mock.calls[0][0];
     expect(status).toBe("예약신청"); // 예약하기 후 status가 예약신청으로 바뀌었는지 확인
   });
