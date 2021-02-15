@@ -44,3 +44,16 @@ export async function getReservationStatus(
   // 유저에 해당하는 매치 상태가 있으면 그 상태값 리턴하고 없으면 매치가 full인지 아닌지 확인한 상태 리턴
   return matchStatusForUser ?? reservationStatus;
 }
+
+export async function deleteReservationStatus(
+  matchId: string | undefined,
+  uid: string
+): Promise<void> {
+  const db = firebase.firestore();
+  await db
+    .collection(CollectionName.matchesCollectionName)
+    .doc(matchId)
+    .collection(CollectionName.reservationsCollectionName)
+    .doc(uid)
+    .delete();
+}
