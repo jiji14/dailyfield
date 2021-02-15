@@ -10,10 +10,7 @@ export async function checkIfMatchIsFull(match: Match): Promise<boolean> {
     .where("status", "==", "확정")
     .get();
 
-  if (matchDoc?.size >= match.memberCount) {
-    return true;
-  }
-  return false;
+  return matchDoc?.size >= match.memberCount;
 }
 
 export async function checkMatchStatusForUser(
