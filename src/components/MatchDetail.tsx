@@ -5,7 +5,10 @@ import "./MatchDetail.css";
 import { Match, Status } from "../types";
 import { useHistory, useParams } from "react-router-dom";
 import firebase from "firebase";
-import { getReservationStatus } from "../globalFunction";
+import {
+  getReservationStatus,
+  deleteReservationStatus,
+} from "../globalFunction";
 import ReservationStatus from "./ReservationStatus";
 import { CollectionName } from "../collections";
 
@@ -81,12 +84,7 @@ const MatchDetail = (): JSX.Element => {
       const { uid } = user;
       const db = firebase.firestore();
       if (reservationStatus === "예약신청") {
-        await db
-          .collection(CollectionName.matchesCollectionName)
-          .doc(match?.id)
-          .collection(CollectionName.reservationsCollectionName)
-          .doc(uid)
-          .delete();
+        await deleteReservationStatus(match?.id, uid);
         window.alert("예약취소가 완료되었습니다.");
       } else {
         await db
