@@ -58,8 +58,6 @@ const Admin = (): JSX.Element => {
 
   return (
     <div className="admin">
-      <Link to="/">목록으로 돌아가기</Link>
-      <Divider className="divider" />
       <h2>회원목록</h2>
       <section className="playerListContainer">
         {idToPlayers.size > 0 ? (

@@ -128,8 +128,6 @@ const MatchDetail = (): JSX.Element => {
     <div></div>
   ) : (
     <div className="matchDetail">
-      <Link to="/">목록으로 돌아가기</Link>
-      <Divider className="divider" />
       <div className="container">
         <div className="dateContainer">
           {match.dateTime?.toLocaleString("ko-KR")}
