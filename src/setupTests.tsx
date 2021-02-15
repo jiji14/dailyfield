@@ -3,7 +3,6 @@
 // expect(element).toHaveTextContent(/react/i)
 // learn more: https://github.com/testing-library/jest-dom
 import "@testing-library/jest-dom";
-// eslint-disable-next-line no-unused-vars
 import { act, fireEvent, screen } from "@testing-library/react";
 
 global.matchMedia =
