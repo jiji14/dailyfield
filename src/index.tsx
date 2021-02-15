@@ -25,13 +25,15 @@ ReactDOM.render(
   <StrictMode>
     <BrowserRouter>
       <Header />
-      <Switch>
-        <Route path="/match/add" component={MatchForm} />
-        <Route path="/match/:id/admin" component={Admin} />
-        <Route path="/match/:id" component={MatchDetail} />
-        <Route path="/signup" component={Signup} />
-        <Route path="/" component={MatchList} />
-      </Switch>
+      <div className="wrapper">
+        <Switch>
+          <Route path="/match/add" component={MatchForm} />
+          <Route path="/match/:id/admin" component={Admin} />
+          <Route path="/match/:id" component={MatchDetail} />
+          <Route path="/signup" component={Signup} />
+          <Route path="/" component={MatchList} />
+        </Switch>
+      </div>
     </BrowserRouter>
   </StrictMode>,
   document.getElementById("root")
