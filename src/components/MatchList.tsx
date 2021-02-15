@@ -6,6 +6,7 @@ import MatchListItem from "./MatchListItem";
 import { Match } from "../types";
 import { Button } from "antd";
 import { Link } from "react-router-dom";
+import { CollectionName } from "../collections";
 
 const MatchList = (): JSX.Element => {
   const [dateKeyToMatches, setDateKeyToMatches] = useState<
@@ -22,7 +23,7 @@ const MatchList = (): JSX.Element => {
     async function getMatches() {
       const db = firebase.firestore();
       const querySnapshot = await db
-        .collection("matches")
+        .collection(CollectionName.matchesCollectionName)
         .orderBy("dateTime", "desc")
         .get();
 
@@ -56,7 +57,10 @@ const MatchList = (): JSX.Element => {
         return;
       }
       const db = firebase.firestore();
-      const doc = await db.collection("users").doc(user.uid).get();
+      const doc = await db
+        .collection(CollectionName.usersCollectionName)
+        .doc(user.uid)
+        .get();
       if (doc.exists) setIsAdmin(doc.data()?.isAdmin);
     }
 

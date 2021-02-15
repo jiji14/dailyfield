@@ -15,6 +15,7 @@ import "./AddMatch.css";
 import moment, { Moment } from "moment";
 import firebase from "firebase";
 import { Gender, Level, GameType, Match } from "../types";
+import { CollectionName } from "../collections";
 import { useHistory } from "react-router-dom";
 
 const { Option } = Select;
@@ -40,7 +41,10 @@ const AddMatch = (props: { id: string }): JSX.Element => {
     (async () => {
       if (!id) return;
       const db = firebase.firestore();
-      const doc = await db.collection("matches").doc(id).get();
+      const doc = await db
+        .collection(CollectionName.matchesCollectionName)
+        .doc(id)
+        .get();
       if (!doc.exists) {
         window.alert("잘못된 접근입니다. 목록페이지로 돌아갑니다.");
         history.push("/");
@@ -107,7 +111,7 @@ const AddMatch = (props: { id: string }): JSX.Element => {
 
     try {
       const db = firebase.firestore();
-      await db.collection("matches").add(match);
+      await db.collection(CollectionName.matchesCollectionName).add(match);
       window.alert("매치가 등록되었습니다!");
       history.push("/");
     } catch (error) {

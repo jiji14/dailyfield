@@ -3,6 +3,7 @@ import firebase from "firebase";
 import { useHistory } from "react-router-dom";
 import AddMatch from "./AddMatch";
 import { fireAntEvent } from "../setupTests";
+import { CollectionName } from "../collections";
 
 describe("Test", () => {
   beforeEach(() => {
@@ -44,8 +45,9 @@ describe("Test", () => {
     await fireAntEvent.actAndInput("매니저를 입력해주세요.", "배성진");
     await fireAntEvent.actAndClick("등록하기");
 
-    const match = firebase.firestore().collection("matches").add.mock
-      .calls[0][0];
+    const match = firebase
+      .firestore()
+      .collection(CollectionName.matchesCollectionName).add.mock.calls[0][0];
     expect(match.place).toBe("용산 더베이스"); // 장소가 "용산 더베이스"이 맞는지 확인
     expect(match.memberCount).toBe(20); // 인원수가 20이 맞는지 확인
     expect(match.teamCount).toBe(3); // 팀형태가 3파전이 맞는지 확인

@@ -4,6 +4,7 @@ import "antd/dist/antd.css";
 import "./Header.css";
 import firebase from "firebase";
 import { useHistory, Link } from "react-router-dom";
+import { CollectionName } from "../collections";
 
 let appVerifier: firebase.auth.ApplicationVerifier | null = null;
 
@@ -56,7 +57,10 @@ const Header = (): JSX.Element => {
       const code = window.prompt("코드를 입력해주세요.") || "";
       const { user } = await confirmationResult.confirm(code);
       const db = firebase.firestore();
-      const doc = await db.collection("users").doc(user?.uid).get();
+      const doc = await db
+        .collection(CollectionName.usersCollectionName)
+        .doc(user?.uid)
+        .get();
       const isNewUser = !doc.exists;
       hideModal();
       if (isNewUser) {

@@ -4,6 +4,7 @@ import "antd/dist/antd.css";
 import "./PlayerListItem.css";
 import firebase from "firebase";
 import { Player } from "../types";
+import { CollectionName } from "../collections";
 
 const PlayerListItem = (playerProps: {
   id: string;
@@ -15,7 +16,10 @@ const PlayerListItem = (playerProps: {
   useEffect(() => {
     (async () => {
       const db = firebase.firestore();
-      const doc = await db.collection("users").doc(id).get();
+      const doc = await db
+        .collection(CollectionName.usersCollectionName)
+        .doc(id)
+        .get();
       if (!doc.exists) return;
 
       const user = doc.data();

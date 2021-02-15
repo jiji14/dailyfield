@@ -1,12 +1,13 @@
 import { Match, Status } from "./types";
 import firebase from "firebase";
+import { CollectionName } from "./collections";
 
 export async function isMatchFull(match: Match): Promise<boolean> {
   const db = firebase.firestore();
   const matchDoc = await db
-    .collection("matches")
+    .collection(CollectionName.matchesCollectionName)
     .doc(match.id)
-    .collection("reservation")
+    .collection(CollectionName.reservationsCollectionName)
     .where("status", "==", "확정")
     .get();
 
@@ -19,9 +20,9 @@ export async function getMatchStatusForUser(
 ): Promise<Status | undefined> {
   const db = firebase.firestore();
   const reservationDoc = await db
-    .collection("matches")
+    .collection(CollectionName.matchesCollectionName)
     .doc(match.id)
-    .collection("reservation")
+    .collection(CollectionName.reservationsCollectionName)
     .doc(uid)
     .get();
 

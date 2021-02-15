@@ -4,6 +4,7 @@ import firebase from "firebase";
 import { useHistory } from "react-router-dom";
 import userEvent from "@testing-library/user-event";
 import { fireAntEvent } from "../setupTests";
+import { CollectionName } from "../collections";
 
 describe("Test", () => {
   beforeEach(() => {
@@ -30,8 +31,10 @@ describe("Test", () => {
     userEvent.click(sporty);
     await fireAntEvent.actAndClick("가입하기");
 
-    const user = firebase.firestore().collection("user").doc("id").set.mock
-      .calls[0][0];
+    const user = firebase
+      .firestore()
+      .collection(CollectionName.usersCollectionName)
+      .doc("id").set.mock.calls[0][0];
     expect(user.name).toBe("지정"); // 이름이 "지정"이 맞는지 확인
     expect(user.gender).toBe("여성"); // 성별이 여성이 맞는지 확인
     expect(user.purpose).toStrictEqual(["sporty"]); // 선택한 테마가 스포티 맞는지 확인
