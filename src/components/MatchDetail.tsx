@@ -57,7 +57,7 @@ const MatchDetail = (): JSX.Element => {
       await db
         .collection("matches")
         .doc(match?.id)
-        .collection("reservation")
+        .collection("reservations")
         .doc(uid)
         .set({ status: "예약신청" });
 
@@ -80,7 +80,7 @@ const MatchDetail = (): JSX.Element => {
         await db
           .collection("matches")
           .doc(match?.id)
-          .collection("reservation")
+          .collection("reservations")
           .doc(uid)
           .delete();
         window.alert("예약취소가 완료되었습니다.");
@@ -88,7 +88,7 @@ const MatchDetail = (): JSX.Element => {
         await db
           .collection("matches")
           .doc(match?.id)
-          .collection("reservation")
+          .collection("reservations")
           .doc(uid)
           .set({ status: "취소신청" });
         window.alert(

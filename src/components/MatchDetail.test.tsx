@@ -75,7 +75,7 @@ describe("Test", () => {
       .firestore()
       .collection("matches")
       .doc("id")
-      .collection("reservation")
+      .collection("reservations")
       .doc("uid").set.mock.calls[0][0];
     expect(status).toBe("취소신청"); // 예약취소 후 status가 취소신청으로 바뀌었는지 확인
   });
@@ -188,7 +188,7 @@ describe("Test", () => {
       .firestore()
       .collection("matches")
       .doc("id")
-      .collection("reservation")
+      .collection("reservations")
       .doc("uid").set.mock.calls[0][0];
     expect(status).toBe("예약신청"); // 예약하기 후 status가 예약신청으로 바뀌었는지 확인
   });

@@ -6,7 +6,7 @@ export async function isMatchFull(match: Match): Promise<boolean> {
   const matchDoc = await db
     .collection("matches")
     .doc(match.id)
-    .collection("reservation")
+    .collection("reservations")
     .where("status", "==", "확정")
     .get();
 
@@ -21,7 +21,7 @@ export async function getMatchStatusForUser(
   const reservationDoc = await db
     .collection("matches")
     .doc(match.id)
-    .collection("reservation")
+    .collection("reservations")
     .doc(uid)
     .get();
 

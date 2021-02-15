@@ -37,7 +37,7 @@ const Admin = (): JSX.Element => {
       const querySnapshot = await db
         .collection("matches")
         .doc(id)
-        .collection("reservation")
+        .collection("reservations")
         .get();
       const idToPlayers: Map<string, string> = new Map(
         querySnapshot.docs.map((doc) => {
