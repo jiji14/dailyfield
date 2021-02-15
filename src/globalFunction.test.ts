@@ -1,8 +1,8 @@
 import firebase from "firebase";
 import { Match } from "./types";
 import {
-  checkIfMatchIsFull,
-  checkMatchStatusForUser,
+  isMatchFull,
+  getMatchStatusForUser,
   getReservationStatus,
 } from "./globalFunction";
 
@@ -35,30 +35,30 @@ describe("Test", () => {
     });
   });
 
-  test("checkIfMatchIsFull Test - 매치가 full인지 확인", async () => {
+  test("isMatchFull Test - 매치가 full인지 확인", async () => {
     const match = {
       id: "test12345",
       memberCount: 10,
     } as Match;
-    const isMatchFull = await checkIfMatchIsFull(match);
-    expect(isMatchFull).toBeTruthy();
+    const isFull = await isMatchFull(match);
+    expect(isFull).toBeTruthy();
   });
 
-  test("checkIfMatchIsFull Test - 매치가 full이 아닌지 확인", async () => {
+  test("isMatchFull Test - 매치가 full이 아닌지 확인", async () => {
     const match = {
       id: "test12345",
       memberCount: 11,
     } as Match;
-    const isMatchFull = await checkIfMatchIsFull(match);
-    expect(isMatchFull).toBeFalsy();
+    const isFull = await isMatchFull(match);
+    expect(isFull).toBeFalsy();
   });
 
-  test("checkMatchStatusForUser Test - 유저 예약상태가 확정인지 확인", async () => {
+  test("getMatchStatusForUser Test - 유저 예약상태가 확정인지 확인", async () => {
     const match = {
       id: "test12345",
     } as Match;
     const uid = "test12345";
-    const reservationStatus = await checkMatchStatusForUser(match, uid);
+    const reservationStatus = await getMatchStatusForUser(match, uid);
     expect(reservationStatus).toBe("확정");
   });
 

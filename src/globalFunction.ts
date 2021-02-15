@@ -1,7 +1,7 @@
 import { Match, Status } from "./types";
 import firebase from "firebase";
 
-export async function checkIfMatchIsFull(match: Match): Promise<boolean> {
+export async function isMatchFull(match: Match): Promise<boolean> {
   const db = firebase.firestore();
   const matchDoc = await db
     .collection("matches")
@@ -13,7 +13,7 @@ export async function checkIfMatchIsFull(match: Match): Promise<boolean> {
   return matchDoc?.size >= match.memberCount;
 }
 
-export async function checkMatchStatusForUser(
+export async function getMatchStatusForUser(
   match: Match,
   uid: string
 ): Promise<Status | undefined> {
@@ -36,12 +36,10 @@ export async function getReservationStatus(
 ): Promise<Status> {
   // 매치정보가 없으면 "신청가능" 리턴
   if (!match) return "신청가능";
-  const reservationStatus = (await checkIfMatchIsFull(match))
-    ? "마감"
-    : "신청가능";
+  const reservationStatus = (await isMatchFull(match)) ? "마감" : "신청가능";
   // 유저정보가 없으면 매치가 full인지 아닌지 확인한 상태 리턴
   if (!user) return reservationStatus;
-  const matchStatusForUser = await checkMatchStatusForUser(match, user.uid);
+  const matchStatusForUser = await getMatchStatusForUser(match, user.uid);
   // 유저에 해당하는 매치 상태가 있으면 그 상태값 리턴하고 없으면 매치가 full인지 아닌지 확인한 상태 리턴
   return matchStatusForUser ? matchStatusForUser : reservationStatus;
 }
