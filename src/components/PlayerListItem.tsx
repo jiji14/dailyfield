@@ -61,32 +61,28 @@ const PlayerListItem = (playerProps: {
       .collection(CollectionName.reservationsCollectionName)
       .doc(playerId)
       .set({ status: "확정" });
-    setMatchesPlayed(true, "예약신청이 확정되었습니다.");
+    incrementMatchesPlayed(1);
+    window.alert("예약신청이 확정되었습니다.");
+    window.location.reload();
   };
 
   const confirmCancel = async () => {
     const confirmCancel = window.confirm("취소신청을 승인하시겠습니까?");
     if (!confirmCancel) return;
     await deleteReservationStatus(matchId, playerId);
-    setMatchesPlayed(false, "취소신청이 확정되었습니다.");
+    incrementMatchesPlayed(-1);
+    window.alert("취소신청이 확정되었습니다.");
+    window.location.reload();
   };
 
-  const setMatchesPlayed = async (
-    isMatchesPlayedUp: boolean,
-    confirmMessage: string
-  ) => {
+  const incrementMatchesPlayed = async (incrementNumber: number) => {
     const db = firebase.firestore();
     await db
       .collection(CollectionName.usersCollectionName)
       .doc(playerId)
       .update({
-        matchesPlayed: firebase.firestore.FieldValue.increment(
-          isMatchesPlayedUp ? 1 : -1
-        ),
+        matchesPlayed: firebase.firestore.FieldValue.increment(incrementNumber),
       });
-
-    window.alert(confirmMessage);
-    window.location.reload();
   };
 
   return player ? (
