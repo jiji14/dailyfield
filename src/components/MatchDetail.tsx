@@ -80,11 +80,12 @@ const MatchDetail = (): JSX.Element => {
       window.alert("예약취소는 로그인 후에 가능합니다.");
       return;
     }
+    if (!match?.id) return;
     if (window.confirm("예약취소를 진행하시겠습니까?")) {
       const { uid } = user;
       const db = firebase.firestore();
       if (reservationStatus === "예약신청") {
-        await deleteReservationStatus(match?.id, uid);
+        await deleteReservationStatus(match.id, uid);
         window.alert("예약취소가 완료되었습니다.");
       } else {
         await db

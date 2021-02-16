@@ -46,7 +46,7 @@ export async function getReservationStatus(
 }
 
 export async function deleteReservationStatus(
-  matchId: string | undefined,
+  matchId: string,
   uid: string
 ): Promise<void> {
   const db = firebase.firestore();
