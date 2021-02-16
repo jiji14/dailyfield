@@ -3,7 +3,7 @@ import { Row, Col, Divider, Button } from "antd";
 import "antd/dist/antd.css";
 import "./PlayerListItem.css";
 import firebase from "firebase";
-import { Player, Status } from "../types";
+import { Player } from "../types";
 import { CollectionName } from "../collections";
 import {
   deleteReservationStatus,
@@ -41,19 +41,6 @@ const PlayerListItem = (playerProps: {
     return "0" + phoneNumber.substring(3, phoneNumber.length);
   };
 
-  const confirmRequest = (status: Status | undefined) => {
-    switch (status) {
-      case "예약신청":
-        confirmReservation();
-        return;
-      case "취소신청":
-        confirmCancel();
-        return;
-      default:
-        return;
-    }
-  };
-
   const confirmReservation = async () => {
     const confirmReservation = window.confirm("예약신청을 승인하시겠습니까?");
     if (!confirmReservation) return;
@@ -63,7 +50,7 @@ const PlayerListItem = (playerProps: {
     window.location.reload();
   };
 
-  const confirmCancel = async () => {
+  const cancelReservation = async () => {
     const confirmCancel = window.confirm("취소신청을 승인하시겠습니까?");
     if (!confirmCancel) return;
     await deleteReservationStatus(matchId, playerId);
@@ -95,17 +82,16 @@ const PlayerListItem = (playerProps: {
           {internationalToLocalKoreanPhoneNumber(player.phoneNumber)}
         </Col>
         <Col span={8} className="buttonContainer">
-          {player.status !== "확정" && (
-            <Button
-              type="primary"
-              size="small"
-              onClick={() => {
-                confirmRequest(player.status);
-              }}
-            >
-              {player.status === "예약신청" ? "신청승인" : "취소승인"}
-            </Button>
-          )}
+          {player.status !== "확정" &&
+            (player.status === "예약신청" ? (
+              <Button type="primary" size="small" onClick={confirmReservation}>
+                신청승인
+              </Button>
+            ) : (
+              <Button type="primary" size="small" onClick={cancelReservation}>
+                취소승인
+              </Button>
+            ))}
           <Button size="small">
             {player.status === "확정" ? "확정취소" : "거절"}
           </Button>
