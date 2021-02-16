@@ -71,8 +71,14 @@ describe("Test", () => {
       .collection(CollectionName.usersCollectionName)
       .doc("id").update.mock.calls[0][0];
     expect(user.matchesPlayed).toBe(2); // 매치가 2번으로 증가했는지 확인
+    const status = firebase
+      .firestore()
+      .collection(CollectionName.usersCollectionName)
+      .doc("matchId")
+      .collection(CollectionName.reservationsCollectionName)
+      .doc("uid").set.mock.calls[0][0];
+    expect(status.status).toBe("확정"); // 예약상태가 확정으로 바뀌었는지 확인
   });
-
   test("관리자 취소신청 승인", async () => {
     firebase.firestore.FieldValue.increment = jest.fn().mockReturnValue(0);
     render(
