@@ -75,16 +75,16 @@ const PlayerListItem = (playerProps: {
     isMatchesPlayedUp: boolean,
     confirmMessage: string
   ) => {
-    const matchesPlayed = player?.matchesPlayed || 0;
     const db = firebase.firestore();
     await db
       .collection(CollectionName.usersCollectionName)
       .doc(playerId)
       .update({
-        matchesPlayed: isMatchesPlayedUp
-          ? matchesPlayed + 1
-          : matchesPlayed - 1,
+        matchesPlayed: firebase.firestore.FieldValue.increment(
+          isMatchesPlayedUp ? 1 : -1
+        ),
       });
+
     window.alert(confirmMessage);
     window.location.reload();
   };

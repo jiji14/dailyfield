@@ -53,6 +53,7 @@ describe("Test", () => {
   });
 
   test("관리자 예약신청 승인", async () => {
+    firebase.firestore.FieldValue.increment = jest.fn().mockReturnValue(2);
     render(
       <PlayerListItem
         matchId="match123"
@@ -73,6 +74,7 @@ describe("Test", () => {
   });
 
   test("관리자 취소신청 승인", async () => {
+    firebase.firestore.FieldValue.increment = jest.fn().mockReturnValue(0);
     render(
       <PlayerListItem
         matchId="match123"
@@ -85,6 +87,7 @@ describe("Test", () => {
       expect(screen.getByText("취소승인")).toBeInTheDocument();
     });
     await fireAntEvent.actAndClick("취소승인");
+
     const user = firebase
       .firestore()
       .collection(CollectionName.usersCollectionName)
