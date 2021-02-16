@@ -5,7 +5,10 @@ import "./PlayerListItem.css";
 import firebase from "firebase";
 import { Player, Status } from "../types";
 import { CollectionName } from "../collections";
-import { deleteReservationStatus } from "../globalFunction";
+import {
+  deleteReservationStatus,
+  updateReservationStatus,
+} from "../globalFunction";
 
 const PlayerListItem = (playerProps: {
   matchId: string;
@@ -54,14 +57,8 @@ const PlayerListItem = (playerProps: {
   const confirmReservation = async () => {
     const confirmReservation = window.confirm("예약신청을 승인하시겠습니까?");
     if (!confirmReservation) return;
-    const db = firebase.firestore();
-    await db
-      .collection(CollectionName.matchesCollectionName)
-      .doc(matchId)
-      .collection(CollectionName.reservationsCollectionName)
-      .doc(playerId)
-      .set({ status: "확정" });
-    incrementMatchesPlayed(1);
+    await updateReservationStatus(matchId, playerId, "확정");
+    await incrementMatchesPlayed(1);
     window.alert("예약신청이 확정되었습니다.");
     window.location.reload();
   };
@@ -70,7 +67,7 @@ const PlayerListItem = (playerProps: {
     const confirmCancel = window.confirm("취소신청을 승인하시겠습니까?");
     if (!confirmCancel) return;
     await deleteReservationStatus(matchId, playerId);
-    incrementMatchesPlayed(-1);
+    await incrementMatchesPlayed(-1);
     window.alert("취소신청이 확정되었습니다.");
     window.location.reload();
   };
