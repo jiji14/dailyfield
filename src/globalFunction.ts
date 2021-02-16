@@ -57,3 +57,17 @@ export async function deleteReservationStatus(
     .doc(uid)
     .delete();
 }
+
+export async function updateReservationStatus(
+  matchId: string,
+  uid: string,
+  status: Status
+): Promise<void> {
+  const db = firebase.firestore();
+  await db
+    .collection(CollectionName.matchesCollectionName)
+    .doc(matchId)
+    .collection(CollectionName.reservationsCollectionName)
+    .doc(uid)
+    .set({ status: status });
+}
