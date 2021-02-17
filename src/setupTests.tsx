@@ -28,7 +28,7 @@ jest.mock("react-router-dom", () => ({
 }));
 
 jest.mock("./globalFunction", () => ({
-  ...(jest.requireActual("./globalFunction") as NodeModule),
+  ...(jest.requireActual("./globalFunction") as object),
   deleteReservationStatus: jest.fn(),
 }));
 
