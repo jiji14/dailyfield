@@ -3,7 +3,7 @@ import firebase from "firebase";
 import PlayerListItem from "./PlayerListItem";
 import { mockWindowLocationReload, fireAntEvent } from "../setupTests";
 import { CollectionName } from "../collections";
-
+/* eslint @typescript-eslint/no-var-requires: "off" */
 const globalFunction = require("../globalFunction");
 
 describe("Test", () => {
