@@ -3,7 +3,8 @@ import firebase from "firebase";
 import PlayerListItem from "./PlayerListItem";
 import { mockWindowLocationReload, fireAntEvent } from "../setupTests";
 import { CollectionName } from "../collections";
-// import { deleteReservationStatus } from "../globalFunction";
+
+const globalFunction = require("../globalFunction");
 
 describe("Test", () => {
   beforeEach(() => {
@@ -100,7 +101,8 @@ describe("Test", () => {
       .collection(CollectionName.usersCollectionName)
       .doc("id").update.mock.calls[0][0];
     expect(user.matchesPlayed).toBe(0); // 매치가 0번으로 감소했는지 확인
-    // const spy = jest.spyOn(deleteReservationStatus);
-    // expect(spy).toBeCalledTimes(1);
+
+    const spy = jest.spyOn(globalFunction, "deleteReservationStatus");
+    expect(spy).toHaveBeenCalledTimes(1);
   });
 });
