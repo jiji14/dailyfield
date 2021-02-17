@@ -84,10 +84,12 @@ const PlayerListItem = (playerProps: {
         <Col span={8} className="buttonContainer">
           {player.status !== "확정" &&
             (player.status === "예약신청" ? (
+              // 상태가 "예약신청"중인 경우, "신청승인" 버튼 보여주고 클릭하면 예약승인 함
               <Button type="primary" size="small" onClick={confirmReservation}>
                 신청승인
               </Button>
             ) : (
+              // 상태가 "취소신청"중인 경우, "취소승인" 버튼 보여주고 클릭하면 취소승인 함
               <Button type="primary" size="small" onClick={cancelReservation}>
                 취소승인
               </Button>
