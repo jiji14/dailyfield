@@ -27,6 +27,11 @@ jest.mock("react-router-dom", () => ({
   Link: ({ children }: { children: JSX.Element }) => children,
 }));
 
+jest.mock("./globalFunction", () => ({
+  ...(jest.requireActual("./globalFunction") as any),
+  deleteReservationStatus: jest.fn(),
+}));
+
 export const fireAntEvent = {
   actAndSelect: async function (id: HTMLElement, type: string): void {
     await act(async () => {
