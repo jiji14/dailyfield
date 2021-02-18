@@ -5,7 +5,11 @@ import "./MatchDetail.css";
 import { Match, Status } from "../types";
 import { useHistory, useParams } from "react-router-dom";
 import firebase from "firebase";
-import { getReservationStatus } from "../globalFunction";
+import {
+  getReservationStatus,
+  deleteReservationStatus,
+  updateReservationStatus,
+} from "../globalFunction";
 import ReservationStatus from "./ReservationStatus";
 import { CollectionName } from "../collections";
 
@@ -55,16 +59,10 @@ const MatchDetail = (): JSX.Element => {
       return;
     }
 
+    if (!match?.id) return;
     if (window.confirm("해당 매치를 예약신청하시겠습니까?")) {
       const { uid } = user;
-      const db = firebase.firestore();
-      await db
-        .collection(CollectionName.matchesCollectionName)
-        .doc(match?.id)
-        .collection(CollectionName.reservationsCollectionName)
-        .doc(uid)
-        .set({ status: "예약신청" });
-
+      await updateReservationStatus(match.id, uid, "예약신청");
       window.alert(
         "예약신청이 완료되었습니다. 참가비 입금 확인 후 예약이 확정됩니다."
       );
@@ -77,24 +75,14 @@ const MatchDetail = (): JSX.Element => {
       window.alert("예약취소는 로그인 후에 가능합니다.");
       return;
     }
+    if (!match?.id) return;
     if (window.confirm("예약취소를 진행하시겠습니까?")) {
       const { uid } = user;
-      const db = firebase.firestore();
       if (reservationStatus === "예약신청") {
-        await db
-          .collection(CollectionName.matchesCollectionName)
-          .doc(match?.id)
-          .collection(CollectionName.reservationsCollectionName)
-          .doc(uid)
-          .delete();
+        await deleteReservationStatus(match.id, uid);
         window.alert("예약취소가 완료되었습니다.");
       } else {
-        await db
-          .collection(CollectionName.matchesCollectionName)
-          .doc(match?.id)
-          .collection(CollectionName.reservationsCollectionName)
-          .doc(uid)
-          .set({ status: "취소신청" });
+        await updateReservationStatus(match.id, uid, "취소신청");
         window.alert(
           "취소신청이 완료되었습니다. 환불 규정에 따라 환불 처리가 진행된 후 취소가 확정됩니다."
         );

@@ -55,7 +55,14 @@ const Admin = (): JSX.Element => {
 
   const renderPlayers = () => {
     return [...idToPlayers].map(([playerKey, status]) => {
-      return <PlayerListItem key={playerKey} id={playerKey} status={status} />;
+      return (
+        <PlayerListItem
+          key={playerKey}
+          matchId={id}
+          playerId={playerKey}
+          status={status}
+        />
+      );
     });
   };
 

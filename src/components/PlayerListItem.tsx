@@ -5,12 +5,17 @@ import "./PlayerListItem.css";
 import firebase from "firebase";
 import { Player } from "../types";
 import { CollectionName } from "../collections";
+import {
+  deleteReservationStatus,
+  updateReservationStatus,
+} from "../globalFunction";
 
 const PlayerListItem = (playerProps: {
-  id: string;
+  matchId: string;
+  playerId: string;
   status: string;
 }): JSX.Element => {
-  const { id, status } = playerProps;
+  const { matchId, playerId, status } = playerProps;
   const [player, setPlayer] = useState<Player | null>(null);
 
   useEffect(() => {
@@ -18,7 +23,7 @@ const PlayerListItem = (playerProps: {
       const db = firebase.firestore();
       const doc = await db
         .collection(CollectionName.usersCollectionName)
-        .doc(id)
+        .doc(playerId)
         .get();
       if (!doc.exists) return;
 
@@ -30,10 +35,38 @@ const PlayerListItem = (playerProps: {
       user.status = status;
       setPlayer(user as Player);
     })();
-  }, [id, status]);
+  }, [playerId, status]);
 
   const internationalToLocalKoreanPhoneNumber = (phoneNumber: string) => {
     return "0" + phoneNumber.substring(3, phoneNumber.length);
+  };
+
+  const confirmReservation = async () => {
+    const confirmReservation = window.confirm("예약신청을 승인하시겠습니까?");
+    if (!confirmReservation) return;
+    await updateReservationStatus(matchId, playerId, "확정");
+    await incrementMatchesPlayed(1);
+    window.alert("예약신청이 확정되었습니다.");
+    window.location.reload();
+  };
+
+  const cancelReservation = async () => {
+    const confirmCancel = window.confirm("취소신청을 승인하시겠습니까?");
+    if (!confirmCancel) return;
+    await deleteReservationStatus(matchId, playerId);
+    await incrementMatchesPlayed(-1);
+    window.alert("취소신청이 확정되었습니다.");
+    window.location.reload();
+  };
+
+  const incrementMatchesPlayed = async (incrementNumber: number) => {
+    const db = firebase.firestore();
+    await db
+      .collection(CollectionName.usersCollectionName)
+      .doc(playerId)
+      .update({
+        matchesPlayed: firebase.firestore.FieldValue.increment(incrementNumber),
+      });
   };
 
   return player ? (
@@ -49,9 +82,16 @@ const PlayerListItem = (playerProps: {
           {internationalToLocalKoreanPhoneNumber(player.phoneNumber)}
         </Col>
         <Col span={8} className="buttonContainer">
-          {player.status !== "확정" && (
-            <Button type="primary" size="small">
-              {player.status === "예약신청" ? "신청승인" : "취소승인"}
+          {player.status === "예약신청" && (
+            // 상태가 "예약신청"중인 경우, "신청승인" 버튼 보여주고 클릭하면 예약승인 함
+            <Button type="primary" size="small" onClick={confirmReservation}>
+              신청승인
+            </Button>
+          )}
+          {player.status === "취소신청" && (
+            // 상태가 "취소신청"중인 경우, "취소승인" 버튼 보여주고 클릭하면 취소승인 함
+            <Button type="primary" size="small" onClick={cancelReservation}>
+              취소승인
             </Button>
           )}
           <Button size="small">
