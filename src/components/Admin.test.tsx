@@ -26,14 +26,11 @@ describe("Test", () => {
                 },
                 place: "용산 더베이스",
                 memberCount: 15,
-                teamCount: 3,
                 gender: "여성",
-                level: "초급",
                 link: "www.naver.com",
                 gameType: "match",
                 fee: 20000,
                 canPark: true,
-                canRentShoes: true,
                 manager: "이지정",
                 isAdmin: true,
                 birthDate: {
@@ -69,7 +66,7 @@ describe("Test", () => {
     useParams.mockReturnValue({ id: "match123" });
     render(<Admin />);
     await waitFor(async () => {
-      expect(screen.getByDisplayValue("이지정")).toBeInTheDocument();
+      expect(screen.getByText("이지정")).toBeInTheDocument();
       expect(screen.getByText("수정하기")).toBeInTheDocument();
       expect(screen.getByText("삭제하기")).toBeInTheDocument();
     });
