@@ -19,6 +19,7 @@
 }
 .info {
   margin-right: 4px;
+  font-size: 12px;
 }
 .alignRight {
   display: flex;
