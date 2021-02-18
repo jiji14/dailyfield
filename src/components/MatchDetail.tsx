@@ -137,16 +137,7 @@ const MatchDetail = (): JSX.Element => {
           {match.gender}매치
         </Tag>
         <Tag color="warning" className="chip">
-          최대 {match.memberCount}명 ({match.teamCount}파전)
-        </Tag>
-        <Tag color="warning" className="chip">
-          {match.level}레벨
-        </Tag>
-        <Tag color="warning" className="chip">
           {match.gameType}
-        </Tag>
-        <Tag color="warning" className="chip">
-          풋살화 대여 {match.canRentShoes ? "가능" : "불가능"}
         </Tag>
         <Tag color="warning" className="chip">
           주차 {match.canPark ? "가능" : "불가능"}
