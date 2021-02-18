@@ -28,6 +28,7 @@ jest.mock("react-router-dom", () => ({
 }));
 
 jest.mock("./globalFunction", () => ({
+  // object를 type으로 쓰면 lint 오류나서 vscode가 추천한 Record<string, unknown>을 type으로 쓰기
   // https://github.com/microsoft/TypeScript/issues/21732
   ...(jest.requireActual("./globalFunction") as Record<string, unknown>),
   deleteReservationStatus: jest.fn(),
