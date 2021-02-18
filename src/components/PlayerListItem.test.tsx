@@ -25,7 +25,7 @@ describe("Test", () => {
                 purpose: [],
               };
             }),
-            id: "test12345",
+            id: "user123",
           }),
           update: jest.fn().mockReturnValue(null),
           // matches -> reservation collection, 해당 매치에 대한 예약상태 데이터
@@ -36,7 +36,7 @@ describe("Test", () => {
                   data: jest.fn().mockReturnValue({
                     status: "예약신청",
                   }),
-                  id: "test12345",
+                  id: "user123",
                 },
               ],
             }),
