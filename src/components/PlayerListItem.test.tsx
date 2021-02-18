@@ -52,15 +52,10 @@ describe("Test", () => {
     window.confirm = () => true;
     mockWindowLocationReload();
   });
-
   test("관리자 예약신청 승인", async () => {
     firebase.firestore.FieldValue.increment = jest.fn().mockReturnValue(2);
     render(
-      <PlayerListItem
-        matchId="match123"
-        playerId="player123"
-        status="예약신청"
-      />
+      <PlayerListItem matchId="match123" playerId="user123" status="예약신청" />
     );
     await waitFor(async () => {
       //상태가 예약신청일때 신청승인 버튼 나오는지 확인
@@ -72,22 +67,18 @@ describe("Test", () => {
       .collection(CollectionName.usersCollectionName)
       .doc("id").update.mock.calls[0][0];
     expect(user.matchesPlayed).toBe(2); // 매치가 2번으로 증가했는지 확인
-    const status = firebase
+    const { status } = firebase
       .firestore()
       .collection(CollectionName.usersCollectionName)
       .doc("matchId")
       .collection(CollectionName.reservationsCollectionName)
       .doc("uid").set.mock.calls[0][0];
-    expect(status.status).toBe("확정"); // 예약상태가 확정으로 바뀌었는지 확인
+    expect(status).toBe("확정"); // 예약상태가 확정으로 바뀌었는지 확인
   });
   test("관리자 취소신청 승인", async () => {
     firebase.firestore.FieldValue.increment = jest.fn().mockReturnValue(0);
     render(
-      <PlayerListItem
-        matchId="match123"
-        playerId="player123"
-        status="취소신청"
-      />
+      <PlayerListItem matchId="match123" playerId="user123" status="취소신청" />
     );
     await waitFor(async () => {
       //상태가 취소신청일때 취소승인 버튼 나오는지 확인
@@ -100,6 +91,7 @@ describe("Test", () => {
       .collection(CollectionName.usersCollectionName)
       .doc("id").update.mock.calls[0][0];
     expect(user.matchesPlayed).toBe(0); // 매치가 0번으로 감소했는지 확인
-    expect(deleteReservationStatus).toHaveBeenCalledTimes(1);
+    expect(deleteReservationStatus).toHaveBeenCalledWith("match123", "user123"); // 예약 상태 지우는 deleteReservationStatus 파라미터 확인
+    expect(deleteReservationStatus).toHaveBeenCalledTimes(1); // 예약 상태 지우는 deleteReservationStatus 1번 호출됐는지 확인
   });
 });
