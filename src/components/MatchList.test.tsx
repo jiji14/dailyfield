@@ -47,14 +47,11 @@ describe("Test", () => {
                   },
                   place: "용산 더베이스",
                   memberCount: 15,
-                  teamCount: 3,
                   gender: "여성",
-                  level: "초급",
                   link: "www.naver.com",
                   gameType: "match",
                   fee: 20000,
                   canPark: true,
-                  canRentShoes: true,
                   manager: "배성진",
                 }),
                 id: "test12345",
@@ -70,12 +67,10 @@ describe("Test", () => {
     render(<MatchList />);
     await waitFor(async () => {
       expect(screen.getByText(/용산 더베이스/i)).toBeInTheDocument();
-      expect(screen.getByText(/15명/i)).toBeInTheDocument();
       expect(screen.getByText(/여성/i)).toBeInTheDocument();
-      expect(screen.getByText(/초급/i)).toBeInTheDocument();
       //jsdom toLocaleDateString issue - https://github.com/jsdom/jsdom/issues/1489
       //jest 테스트환경 브라우저에서는 toLocaleDateString(ko-KR) 지원하지 않아서 테스트에서 영어로 확인해야됨.
-      //expect(screen.getByText("Friday, 1/1/2021")).toBeInTheDocument();
+      expect(screen.getByText("Friday, 1/1/2021")).toBeInTheDocument();
     });
     expect(screen.getByText(/예약확정/i)).toBeInTheDocument();
   });

@@ -14,7 +14,7 @@ import "antd/dist/antd.css";
 import "./AddMatch.css";
 import moment, { Moment } from "moment";
 import firebase from "firebase";
-import { Gender, Level, GameType, Match } from "../types";
+import { Gender, GameType, Match } from "../types";
 import { CollectionName } from "../collections";
 import { useHistory } from "react-router-dom";
 
@@ -27,14 +27,11 @@ const AddMatch = (props: { id: string }): JSX.Element => {
   const [gameDate, setGameDate] = useState<Moment | null>(null);
   const [place, setPlace] = useState("");
   const [memberCount, setMemberCount] = useState(18);
-  const [teamCount, setTeamCount] = useState(2);
   const [gender, setGender] = useState<Gender>("남성");
-  const [level, setLevel] = useState<Level>("초급");
   const [link, setLink] = useState("");
   const [gameType, setGameType] = useState<GameType>("gx+match");
   const [fee, setFee] = useState(20000);
   const [canPark, setCanPark] = useState(true);
-  const [canRentShoes, setCanRentShoes] = useState(false);
   const [manager, setManager] = useState("배성진");
 
   useEffect(() => {
@@ -56,14 +53,11 @@ const AddMatch = (props: { id: string }): JSX.Element => {
       setGameDate(moment(match.dateTime.toDate()));
       setPlace(match.place);
       setMemberCount(match.memberCount);
-      setTeamCount(match.teamCount);
       setGender(match.gender);
-      setLevel(match.level);
       setLink(match.link);
       setGameType(match.gameType);
       setFee(match.fee);
       setCanPark(match.canPark);
-      setCanRentShoes(match.canRentShoes);
       setManager(match.manager);
     })();
   }, [history, id]);
@@ -98,14 +92,11 @@ const AddMatch = (props: { id: string }): JSX.Element => {
       dateTime: gameDate.toDate(),
       place,
       memberCount,
-      teamCount,
       gender,
-      level,
       link,
       gameType,
       fee,
       canPark,
-      canRentShoes,
       manager,
     };
 
@@ -165,22 +156,6 @@ const AddMatch = (props: { id: string }): JSX.Element => {
             />
           </Col>
           <Col span={6} className="addMatchSubtitle">
-            종류
-          </Col>
-          <Col span={6}>
-            <Select
-              value={teamCount}
-              onChange={setTeamCount}
-              className="addMatchSelect"
-              data-testid="teamCountSelect"
-            >
-              <Option value={2}>2파전</Option>
-              <Option value={3}>3파전</Option>
-            </Select>
-          </Col>
-        </Row>
-        <Row align="middle" className="row">
-          <Col span={6} className="addMatchSubtitle">
             성별
           </Col>
           <Col span={6}>
@@ -193,21 +168,8 @@ const AddMatch = (props: { id: string }): JSX.Element => {
               <Option value="남성">남성</Option>
               <Option value="여성">여성</Option>
               <Option value="혼성">혼성</Option>
-            </Select>
-          </Col>
-          <Col span={6} className="addMatchSubtitle">
-            레벨
-          </Col>
-          <Col span={6}>
-            <Select
-              value={level}
-              onChange={setLevel}
-              className="addMatchSelect"
-              data-testid="levelSelect"
-            >
-              <Option value="초급">초급</Option>
-              <Option value="중급">중급</Option>
-              <Option value="고급">고급</Option>
+              <Option value="여성초급">여성초급</Option>
+              <Option value="혼성원팀">혼성원팀</Option>
             </Select>
           </Col>
         </Row>
@@ -270,21 +232,6 @@ const AddMatch = (props: { id: string }): JSX.Element => {
               }}
             >
               주차 가능
-            </Checkbox>
-          </Col>
-          <Col span={6} className="addMatchSubtitle">
-            풋살화
-          </Col>
-          <Col span={6}>
-            <Checkbox
-              data-testid="canRentShoes"
-              value={canRentShoes}
-              checked={canRentShoes}
-              onChange={(e) => {
-                setCanRentShoes(e.target.checked);
-              }}
-            >
-              풋살화 대여 가능
             </Checkbox>
           </Col>
         </Row>
