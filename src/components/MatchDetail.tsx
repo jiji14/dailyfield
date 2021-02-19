@@ -125,19 +125,19 @@ const MatchDetail = (): JSX.Element => {
       );
     } else if (match?.place.includes("누리")) {
       return (
-        <ul>
-          <li>입구 주차장 사용가능 (무료)</li>
+        <p>
+          <li>입구 주차장 사용가능 (무료)</ㅔ>
           <li>건물 뒷편 주차장 사용 가능 (3대 이상 무료)</li>
           <li>세화빌딩 지하주차 (무료)</li>
           <li>(2~3대 가능/단 SUV불가,일반세단 및 경차만 가능)</li>
           <li>평양면옥 발렛주차(30분 2,000원)</li>
-        </ul>
+        </p>
       );
     } else {
       return (
-        <ul>
+        <p>
           <li>직접 문의 해주세요.</li>
-        </ul>
+        </p>
       );
     }
   };
