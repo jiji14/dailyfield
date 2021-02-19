@@ -16,3 +16,10 @@
   display: flex;
   justify-content: space-between;
 }
+
+.loadingContainer {
+  height: 40vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
