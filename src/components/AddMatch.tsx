@@ -252,10 +252,7 @@ const AddMatch = (props: { id: string }): JSX.Element => {
 
       <div className="addMatchButtonContainer">
         {id ? (
-          <>
-            <Button type="primary">수정하기</Button>
-            <Button danger>삭제하기</Button>
-          </>
+          <></>
         ) : (
           <Button type="primary" onClick={addMatch}>
             등록하기

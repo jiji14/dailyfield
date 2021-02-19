@@ -94,9 +94,6 @@ const PlayerListItem = (playerProps: {
               취소승인
             </Button>
           )}
-          <Button size="small">
-            {player.status === "확정" ? "확정취소" : "거절"}
-          </Button>
         </Col>
       </Row>
       <Row className="playerDetail">
