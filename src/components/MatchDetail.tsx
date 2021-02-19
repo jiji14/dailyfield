@@ -116,6 +116,29 @@ const MatchDetail = (): JSX.Element => {
     }
   };
 
+  const renderPark = () => {
+    if (match?.place.includes("더베이스")) {
+      return (
+        <ul>
+          <li>해주차장 선착순 2명</li>
+          <li>예약신청 후 직접 문의주세요.</li>
+        </ul>
+      );
+    } else if (match?.place.includes("누리")) {
+      return (
+        <ul>
+          <li>입구 주차장 사용가능 (무료)</li>
+          <li>건물 뒷편 주차장 사용 가능 (3대 이상 무료)</li>
+          <li>세화빌딩 지하주차 (무료)</li>
+          <li>(2~3대 가능/단 SUV불가,일반세단 및 경차만 가능)</li>
+          <li>평양면옥 발렛주차(30분 2,000원)</li>
+        </ul>
+      );
+    } else {
+      return <p>직접 문의 해주세요.</p>;
+    }
+  };
+
   return !match ? (
     <div></div>
   ) : (
@@ -215,12 +238,7 @@ const MatchDetail = (): JSX.Element => {
         {match.canPark && (
           <>
             <h3 className="title">주차 안내</h3>
-            <ul>
-              <li>
-                주차는 상황에 따라 변동될 수 있으니 예약후 개별 메세지
-                부탁드립니다.
-              </li>
-            </ul>
+            {renderPark()}
           </>
         )}
         <ul className="iconUl">
