@@ -4,7 +4,7 @@ import "./MatchList.css";
 import firebase from "firebase";
 import MatchListItem from "./MatchListItem";
 import { Match } from "../types";
-import { Button } from "antd";
+import { Button, Spin } from "antd";
 import { Link } from "react-router-dom";
 import { CollectionName } from "../collections";
 
@@ -96,7 +96,13 @@ const MatchList = (): JSX.Element => {
           </Link>
         )}
       </div>
-      <section className="matchListContainer">{renderMatchList()}</section>
+      {dateKeyToMatches.size > 0 ? (
+        <section className="matchListContainer">{renderMatchList()}</section>
+      ) : (
+        <section className="loadingContainer">
+          <Spin size="large" />
+        </section>
+      )}
     </div>
   );
 };
