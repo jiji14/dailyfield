@@ -32,6 +32,7 @@
   list-style: none;
 }
 .iconUl {
+  padding-top: 16px;
   list-style-image: url("https://img.icons8.com/officexs/16/000000/pin.png");
 }
 .dateContainer > :not(:last-child) {
