@@ -101,7 +101,7 @@ const Header = (): JSX.Element => {
             target="_blank"
             rel="noreferrer"
           >
-            DM
+            문의
           </a>
         </Col>
         <Col span={4}></Col>
