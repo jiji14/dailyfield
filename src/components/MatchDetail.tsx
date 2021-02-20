@@ -173,10 +173,7 @@ const MatchDetail = (): JSX.Element => {
       )}
       <section>
         <h3 className="title">참가비</h3>
-        <p className="details">
-          {match.fee.toLocaleString()}원 (첫참석시{" "}
-          {(match.fee / 2).toLocaleString()}원)
-        </p>
+        <p className="details">{match.fee.toLocaleString()}원</p>
         <h3 className="title">매니저</h3>
         <p className="details">{match.manager}</p>
         <h3 className="title">매치 안내</h3>
