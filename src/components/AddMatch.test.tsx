@@ -14,6 +14,27 @@ describe("Test", () => {
     ((firebase.firestore as unknown) as jest.Mock).mockReturnValue({
       collection: jest.fn().mockReturnValue({
         add: jest.fn().mockResolvedValue({}),
+        doc: jest.fn().mockReturnValue({
+          get: jest.fn().mockResolvedValue({
+            exists: true,
+            data: jest.fn().mockImplementation(() => {
+              return {
+                dateTime: {
+                  toDate: jest.fn().mockReturnValue(new Date("2021-01-01")),
+                },
+                place: "용산 더베이스",
+                memberCount: 15,
+                gender: "여성",
+                link: "www.naver.com",
+                gameType: "match",
+                fee: 20000,
+                canPark: true,
+                manager: "배성진",
+              };
+            }),
+          }),
+          set: jest.fn().mockResolvedValue(null),
+        }),
       }),
     });
     window.alert = () => "";
@@ -50,6 +71,23 @@ describe("Test", () => {
     expect(match.fee).toBe(40000); // 참가비가 4만원인지 확인
     expect(match.canPark).toBe(false); // 주차 불가능이 맞는지 확인
     expect(match.manager).toBe("배성진"); // 매니저가 "배성진"이 맞는지 확인
+    expect(useHistory().push.mock.calls[0][0]).toBe("/"); // 등록후 메인페이지 옮겼는지 확인
+  });
+
+  test("Update Match", async () => {
+    render(<AddMatch id="match123" />);
+    await fireAntEvent.actAndSelect(screen.getByTestId("feeSelect"), "1만원");
+    await fireAntEvent.actAndSelect(
+      screen.getByTestId("gameTypeSelect"),
+      "GX만"
+    );
+    await fireAntEvent.actAndClick("수정하기");
+    const match = firebase
+      .firestore()
+      .collection(CollectionName.matchesCollectionName)
+      .doc("id").set.mock.calls[0][0];
+    expect(match.fee).toBe(10000); // 참가비가 1만원인지 확인
+    expect(match.gameType).toBe("gx"); // 게임타입이 gx가 맞는지 확인
     expect(useHistory().push.mock.calls[0][0]).toBe("/"); // 등록후 메인페이지 옮겼는지 확인
   });
 });
