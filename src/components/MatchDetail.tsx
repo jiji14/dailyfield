@@ -140,9 +140,9 @@ const MatchDetail = (): JSX.Element => {
   };
 
   return !match ? (
-    <div></div>
+    <></>
   ) : (
-    <div className="matchDetail">
+    <>
       <div className="container">
         <div className="dateContainer">
           {match.dateTime?.toLocaleString("ko-KR")}
@@ -249,7 +249,7 @@ const MatchDetail = (): JSX.Element => {
       </section>
       <Divider className="divider" />
       <div className="signUpButtonContainer">{renderButton()}</div>
-    </div>
+    </>
   );
 };
 

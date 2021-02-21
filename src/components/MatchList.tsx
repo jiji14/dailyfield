@@ -87,7 +87,7 @@ const MatchList = (): JSX.Element => {
   };
 
   return (
-    <div className="matchList">
+    <>
       <div className="matchlistTitle">
         <h2>매치목록</h2>
         {isAdmin && (
@@ -103,7 +103,7 @@ const MatchList = (): JSX.Element => {
           <Spin size="large" />
         </section>
       )}
-    </div>
+    </>
   );
 };
 

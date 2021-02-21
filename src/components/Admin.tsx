@@ -67,7 +67,7 @@ const Admin = (): JSX.Element => {
   };
 
   return (
-    <div className="admin">
+    <>
       <h2>회원목록</h2>
       <section className="playerListContainer">
         {idToPlayers.size > 0 ? (
@@ -77,7 +77,7 @@ const Admin = (): JSX.Element => {
         )}
       </section>
       <AddMatch id={id} />
-    </div>
+    </>
   );
 };
 
