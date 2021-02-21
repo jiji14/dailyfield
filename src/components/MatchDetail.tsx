@@ -13,7 +13,7 @@ import {
 import ReservationStatus from "./ReservationStatus";
 import { CollectionName } from "../collections";
 
-const MatchDetail = (): JSX.Element => {
+const MatchDetail = (): JSX.Element | null => {
   const history = useHistory();
   const [match, setMatch] = useState<Match | null>(null);
   const [user, setUser] = useState(firebase.auth().currentUser);
@@ -139,10 +139,10 @@ const MatchDetail = (): JSX.Element => {
     }
   };
 
-  return !match ? (
-    <div></div>
-  ) : (
-    <div className="matchDetail">
+  if (!match) return null;
+
+  return (
+    <>
       <div className="container">
         <div className="dateContainer">
           {match.dateTime?.toLocaleString("ko-KR")}
@@ -249,7 +249,7 @@ const MatchDetail = (): JSX.Element => {
       </section>
       <Divider className="divider" />
       <div className="signUpButtonContainer">{renderButton()}</div>
-    </div>
+    </>
   );
 };
 

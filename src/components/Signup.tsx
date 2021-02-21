@@ -80,7 +80,7 @@ const Signup = (): JSX.Element => {
   };
 
   return (
-    <div className="signUp">
+    <>
       <section className="signUpContainer">
         <h3>필수사항</h3>
         <Divider className="divider" />
@@ -147,7 +147,7 @@ const Signup = (): JSX.Element => {
           가입하기
         </Button>
       </div>
-    </div>
+    </>
   );
 };
 

@@ -111,7 +111,7 @@ const AddMatch = (props: { id: string }): JSX.Element => {
   };
 
   return (
-    <div className="addMatch">
+    <>
       <Divider className="divider" />
       {id ? <h2>매치수정</h2> : <h2>매치등록</h2>}
       <section className="addMatchContainer">
@@ -259,7 +259,7 @@ const AddMatch = (props: { id: string }): JSX.Element => {
           </Button>
         )}
       </div>
-    </div>
+    </>
   );
 };
 
