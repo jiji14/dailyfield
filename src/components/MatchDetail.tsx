@@ -13,7 +13,7 @@ import {
 import ReservationStatus from "./ReservationStatus";
 import { CollectionName } from "../collections";
 
-const MatchDetail = (): JSX.Element => {
+const MatchDetail = (): JSX.Element | null => {
   const history = useHistory();
   const [match, setMatch] = useState<Match | null>(null);
   const [user, setUser] = useState(firebase.auth().currentUser);
@@ -139,9 +139,9 @@ const MatchDetail = (): JSX.Element => {
     }
   };
 
-  return !match ? (
-    <></>
-  ) : (
+  if (!match) return null;
+
+  return (
     <>
       <div className="container">
         <div className="dateContainer">
