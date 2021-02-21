@@ -160,7 +160,7 @@ const MatchDetail = (): JSX.Element => {
           {match.gender}매치
         </Tag>
         <Tag color="warning" className="chip">
-          {match.gameType}
+          {match.gameType.toUpperCase()}
         </Tag>
         <Tag color="warning" className="chip">
           주차 {match.canPark ? "가능" : "불가능"}
