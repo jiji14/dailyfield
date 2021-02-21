@@ -84,6 +84,7 @@ const Header = (): JSX.Element => {
   };
 
   const submitPhoneNumber = (event: React.FormEvent<HTMLFormElement>) => {
+    // onSubmit하면 window.location.reload()되는 현상 막기위해 event.preventDefault() 코드 사용
     event.preventDefault();
     signInWithPhoneNumber();
   };
