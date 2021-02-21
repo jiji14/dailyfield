@@ -83,6 +83,11 @@ const Header = (): JSX.Element => {
     }
   };
 
+  const submitPhoneNumber = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    signInWithPhoneNumber();
+  };
+
   return (
     <div className="headerContainer">
       <Row className="menubar">
@@ -132,23 +137,25 @@ const Header = (): JSX.Element => {
         okText="로그인"
         confirmLoading={loading}
       >
-        <h3>핸드폰번호</h3>
-        <input
-          value={phoneNumber}
-          onChange={changePhoneNumber}
-          className="phoneNumber"
-          placeholder="- 없이 숫자만 입력해주세요. (ex)01012345678"
-        />
-        <ul>
-          <li>
-            핸드폰번호 입력 후 로그인 버튼을 클릭하면 인증번호가 발송됩니다.
-            인증번호 입력후 로그인 하실 수 있습니다.
-          </li>
-          <li>
-            신규회원인 경우 회원가입 페이지로 전환되니 회원가입을 진행후
-            로그인해주세요.
-          </li>
-        </ul>
+        <form onSubmit={submitPhoneNumber}>
+          <h3>핸드폰번호</h3>
+          <input
+            value={phoneNumber}
+            onChange={changePhoneNumber}
+            className="phoneNumber"
+            placeholder="- 없이 숫자만 입력해주세요. (ex)01012345678"
+          />
+          <ul>
+            <li>
+              핸드폰번호 입력 후 로그인 버튼을 클릭하면 인증번호가 발송됩니다.
+              인증번호 입력후 로그인 하실 수 있습니다.
+            </li>
+            <li>
+              신규회원인 경우 회원가입 페이지로 전환되니 회원가입을 진행후
+              로그인해주세요.
+            </li>
+          </ul>
+        </form>
       </Modal>
     </div>
   );
