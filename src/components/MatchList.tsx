@@ -25,6 +25,7 @@ const MatchList = (): JSX.Element => {
       const querySnapshot = await db
         .collection(CollectionName.matchesCollectionName)
         .orderBy("dateTime", "desc")
+        .where("dateTime", ">=", new Date())
         .get();
 
       const dateKeyToMatches: Map<string, Match[]> = new Map();
