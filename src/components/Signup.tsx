@@ -31,6 +31,8 @@ const Signup = (): JSX.Element => {
   const [birthDate, setBirthDate] = useState<Moment | null>(null);
   const [gender, setGender] = useState<Gender>("남성");
   const [purpose, setPurpose] = useState<string[]>([]);
+  const [privacyPolice, setPrivacyPolice] = useState(true);
+  const [serviceTerm, setServiceTerm] = useState(true);
 
   const changeName = (e: React.FormEvent<HTMLInputElement>) => {
     setName(e.currentTarget.value);
@@ -51,6 +53,16 @@ const Signup = (): JSX.Element => {
       return;
     }
 
+    if (!privacyPolice) {
+      window.alert("개인 정보 처리방침에 동의해주세요.");
+      return;
+    }
+
+    if (!serviceTerm) {
+      window.alert("서비스 이용약관에 동의해주세요.");
+      return;
+    }
+
     const currentUser = firebase.auth().currentUser;
     if (!currentUser) {
       window.alert("인증절차를 진행후 회원가입을 진행해주세요.");
@@ -64,6 +76,8 @@ const Signup = (): JSX.Element => {
       birthDate: birthDate?.toDate(),
       matchesPlayed: 0,
       purpose,
+      privacyPolice,
+      serviceTerm,
     };
 
     try {
@@ -140,6 +154,38 @@ const Signup = (): JSX.Element => {
               value={purpose}
             />
           </Col>
+        </Row>
+      </section>
+      <section className="signUpContainer">
+        <Row align="middle" className="row">
+          <Checkbox
+            data-testid="privacyPolice"
+            value={privacyPolice}
+            checked={privacyPolice}
+            onChange={(e) => {
+              setPrivacyPolice(e.target.checked);
+            }}
+          >
+            <a href="/privacypolice" target="_blank">
+              개인 정보 처리방침
+            </a>
+            에 동의합니다.
+          </Checkbox>
+        </Row>
+        <Row align="middle" className="row">
+          <Checkbox
+            data-testid="serviceTerm"
+            value={serviceTerm}
+            checked={serviceTerm}
+            onChange={(e) => {
+              setServiceTerm(e.target.checked);
+            }}
+          >
+            <a href="/serviceterm" target="_blank">
+              서비스 이용약관
+            </a>
+            에 동의합니다.
+          </Checkbox>
         </Row>
       </section>
       <div className="signUpButtonContainer">
