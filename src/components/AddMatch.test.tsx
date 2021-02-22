@@ -10,37 +10,16 @@ describe("Test", () => {
     ((firebase.auth as unknown) as jest.Mock).mockReturnValue({
       currentUser: {},
     });
-
-    ((firebase.firestore as unknown) as jest.Mock).mockReturnValue({
-      collection: jest.fn().mockReturnValue({
-        add: jest.fn().mockResolvedValue({}),
-        doc: jest.fn().mockReturnValue({
-          get: jest.fn().mockResolvedValue({
-            exists: true,
-            data: jest.fn().mockImplementation(() => {
-              return {
-                dateTime: {
-                  toDate: jest.fn().mockReturnValue(new Date("2021-01-01")),
-                },
-                place: "용산 더베이스",
-                memberCount: 15,
-                gender: "여성",
-                link: "www.naver.com",
-                gameType: "match",
-                fee: 20000,
-                canPark: true,
-                manager: "배성진",
-              };
-            }),
-          }),
-          set: jest.fn().mockResolvedValue(null),
-        }),
-      }),
-    });
     window.alert = () => "";
   });
 
   test("Add Match", async () => {
+    ((firebase.firestore as unknown) as jest.Mock).mockReturnValue({
+      collection: jest.fn().mockReturnValue({
+        add: jest.fn().mockResolvedValue({}),
+      }),
+    });
+
     render(<AddMatch />);
 
     await fireAntEvent.actAndSetDate(screen.getByTestId("gameDate"), "Now");
@@ -75,6 +54,32 @@ describe("Test", () => {
   });
 
   test("Update Match", async () => {
+    ((firebase.firestore as unknown) as jest.Mock).mockReturnValue({
+      collection: jest.fn().mockReturnValue({
+        doc: jest.fn().mockReturnValue({
+          get: jest.fn().mockResolvedValue({
+            exists: true,
+            data: jest.fn().mockImplementation(() => {
+              return {
+                dateTime: {
+                  toDate: jest.fn().mockReturnValue(new Date("2021-01-01")),
+                },
+                place: "용산 더베이스",
+                memberCount: 15,
+                gender: "여성",
+                link: "www.naver.com",
+                gameType: "match",
+                fee: 20000,
+                canPark: true,
+                manager: "배성진",
+              };
+            }),
+          }),
+          set: jest.fn().mockResolvedValue(null),
+        }),
+      }),
+    });
+
     render(<AddMatch id="match123" />);
     await fireAntEvent.actAndSelect(screen.getByTestId("feeSelect"), "1만원");
     await fireAntEvent.actAndSelect(
