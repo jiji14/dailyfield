@@ -32,6 +32,7 @@ jest.mock("./globalFunction", () => ({
   // https://github.com/microsoft/TypeScript/issues/21732
   ...(jest.requireActual("./globalFunction") as Record<string, unknown>),
   deleteReservationStatus: jest.fn(),
+  updateReservationStatus: jest.fn(),
 }));
 
 export const fireAntEvent = {

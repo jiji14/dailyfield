@@ -3,7 +3,10 @@ import firebase from "firebase";
 import PlayerListItem from "./PlayerListItem";
 import { mockWindowLocationReload, fireAntEvent } from "../setupTests";
 import { CollectionName } from "../collections";
-import { deleteReservationStatus } from "../globalFunction";
+import {
+  deleteReservationStatus,
+  updateReservationStatus,
+} from "../globalFunction";
 
 describe("Test", () => {
   beforeEach(() => {
@@ -66,14 +69,16 @@ describe("Test", () => {
       .firestore()
       .collection(CollectionName.usersCollectionName)
       .doc("id").update.mock.calls[0][0];
-    expect(user.matchesPlayed).toBe(2); // 매치가 2번으로 증가했는지 확인
-    const { status } = firebase
-      .firestore()
-      .collection(CollectionName.usersCollectionName)
-      .doc("matchId")
-      .collection(CollectionName.reservationsCollectionName)
-      .doc("uid").set.mock.calls[0][0];
-    expect(status).toBe("확정"); // 예약상태가 확정으로 바뀌었는지 확인
+    // 매치가 2번으로 증가했는지 확인
+    expect(user.matchesPlayed).toBe(2);
+    // 예약 상태 업데이트하는 updateReservationStatus 파라미터 확인, status가 "확정"으로 들어왔는지 확인
+    expect(updateReservationStatus).toHaveBeenCalledWith(
+      "match123",
+      "user123",
+      "확정"
+    );
+    // 예약 상태 업데이트하는 updateReservationStatus 1번 호출됐는지 확인
+    expect(updateReservationStatus).toHaveBeenCalledTimes(1);
   });
   test("관리자 취소신청 승인", async () => {
     firebase.firestore.FieldValue.increment = jest.fn().mockReturnValue(0);
@@ -90,8 +95,11 @@ describe("Test", () => {
       .firestore()
       .collection(CollectionName.usersCollectionName)
       .doc("id").update.mock.calls[0][0];
-    expect(user.matchesPlayed).toBe(0); // 매치가 0번으로 감소했는지 확인
-    expect(deleteReservationStatus).toHaveBeenCalledWith("match123", "user123"); // 예약 상태 지우는 deleteReservationStatus 파라미터 확인
-    expect(deleteReservationStatus).toHaveBeenCalledTimes(1); // 예약 상태 지우는 deleteReservationStatus 1번 호출됐는지 확인
+    // 매치가 0번으로 감소했는지 확인
+    expect(user.matchesPlayed).toBe(0);
+    // 예약 상태 지우는 deleteReservationStatus 파라미터 확인
+    expect(deleteReservationStatus).toHaveBeenCalledWith("match123", "user123");
+    // 예약 상태 지우는 deleteReservationStatus 1번 호출됐는지 확인
+    expect(deleteReservationStatus).toHaveBeenCalledTimes(1);
   });
 });

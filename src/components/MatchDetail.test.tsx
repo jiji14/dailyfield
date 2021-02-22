@@ -3,13 +3,16 @@ import MatchDetail from "./MatchDetail";
 import firebase from "firebase";
 import { fireAntEvent, mockWindowLocationReload } from "../setupTests";
 import { useParams } from "react-router-dom";
-import { CollectionName } from "../collections";
+import { updateReservationStatus } from "../globalFunction";
 
 describe("Test", () => {
   beforeEach(() => {
+    const fakeUser = { uid: "user123" } as firebase.User;
     ((firebase.auth as unknown) as jest.Mock).mockReturnValue({
       currentUser: {},
-      onAuthStateChanged: jest.fn(),
+      onAuthStateChanged: (callback: (user: firebase.User) => void) => {
+        callback(fakeUser);
+      },
     });
   });
 
@@ -34,7 +37,7 @@ describe("Test", () => {
                 manager: "배성진",
               };
             }),
-            id: "test12345",
+            id: "match123",
           }),
           collection: jest.fn().mockReturnValue({
             where: jest.fn().mockReturnValue({
@@ -69,13 +72,14 @@ describe("Test", () => {
     mockWindowLocationReload();
 
     await fireAntEvent.actAndClick("예약취소");
-    const { status } = firebase
-      .firestore()
-      .collection(CollectionName.matchesCollectionName)
-      .doc("id")
-      .collection(CollectionName.reservationsCollectionName)
-      .doc("uid").set.mock.calls[0][0];
-    expect(status).toBe("취소신청"); // 예약취소 후 status가 취소신청으로 바뀌었는지 확인
+    // 예약 상태 업데이트하는 updateReservationStatus 파라미터 확인, status가 "취소신청"으로 들어왔는지 확인
+    expect(updateReservationStatus).toHaveBeenCalledWith(
+      "match123",
+      "user123",
+      "취소신청"
+    );
+    // 예약 상태 업데이트하는 updateReservationStatus 1번 호출됐는지 확인
+    expect(updateReservationStatus).toHaveBeenCalledTimes(1);
   });
 
   test("예약이 선수 다 차서 마감이면 마감인지 테스트", async () => {
@@ -99,7 +103,7 @@ describe("Test", () => {
                 manager: "배성진",
               };
             }),
-            id: "test12345",
+            id: "match123",
           }),
           collection: jest.fn().mockReturnValue({
             where: jest.fn().mockReturnValue({
@@ -149,7 +153,7 @@ describe("Test", () => {
                 manager: "배성진",
               };
             }),
-            id: "test12345",
+            id: "match123",
           }),
           collection: jest.fn().mockReturnValue({
             where: jest.fn().mockReturnValue({
@@ -180,12 +184,13 @@ describe("Test", () => {
       expect(screen.getByText("예약하기")).toBeInTheDocument(); // 신청가능이면 예약하기가 보여야함
     });
     await fireAntEvent.actAndClick("예약하기");
-    const { status } = firebase
-      .firestore()
-      .collection(CollectionName.matchesCollectionName)
-      .doc("id")
-      .collection(CollectionName.reservationsCollectionName)
-      .doc("uid").set.mock.calls[0][0];
-    expect(status).toBe("예약신청"); // 예약하기 후 status가 예약신청으로 바뀌었는지 확인
+    // 예약 상태 업데이트하는 updateReservationStatus 파라미터 확인, status가 "예약신청"으로 들어왔는지 확인
+    expect(updateReservationStatus).toHaveBeenCalledWith(
+      "match123",
+      "user123",
+      "예약신청"
+    );
+    // 예약 상태 업데이트하는 updateReservationStatus 1번 호출됐는지 확인
+    expect(updateReservationStatus).toHaveBeenCalledTimes(1);
   });
 });
