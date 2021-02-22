@@ -24,7 +24,7 @@ const MatchList = (): JSX.Element => {
       const db = firebase.firestore();
       const querySnapshot = await db
         .collection(CollectionName.matchesCollectionName)
-        .orderBy("dateTime", "desc")
+        .orderBy("dateTime", "asc")
         .where("dateTime", ">=", new Date())
         .get();
 
