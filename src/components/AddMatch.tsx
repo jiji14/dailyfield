@@ -79,13 +79,44 @@ const AddMatch = (props: { id: string }): JSX.Element => {
   };
 
   const addMatch = async () => {
+    const match = getMatch();
+    if (!match) return;
+
+    try {
+      const db = firebase.firestore();
+      await db.collection(CollectionName.matchesCollectionName).add(match);
+      window.alert("매치가 등록되었습니다!");
+      history.push("/");
+    } catch (error) {
+      window.alert(error);
+    }
+  };
+
+  const updateMatch = async () => {
+    const match = getMatch();
+    if (!match) return;
+
+    try {
+      const db = firebase.firestore();
+      await db
+        .collection(CollectionName.matchesCollectionName)
+        .doc(id)
+        .set(match);
+      window.alert("매치가 수정되었습니다!");
+      history.push("/");
+    } catch (error) {
+      window.alert(error);
+    }
+  };
+
+  const getMatch = () => {
     if (!gameDate) {
       window.alert("매치 일시를 선택해주세요.");
-      return;
+      return null;
     }
     if (place.length < 1) {
       window.alert("매치 장소를 입력해주세요.");
-      return;
+      return null;
     }
 
     const match: Match = {
@@ -99,15 +130,7 @@ const AddMatch = (props: { id: string }): JSX.Element => {
       canPark,
       manager,
     };
-
-    try {
-      const db = firebase.firestore();
-      await db.collection(CollectionName.matchesCollectionName).add(match);
-      window.alert("매치가 등록되었습니다!");
-      history.push("/");
-    } catch (error) {
-      window.alert(error);
-    }
+    return match;
   };
 
   return (
@@ -252,7 +275,9 @@ const AddMatch = (props: { id: string }): JSX.Element => {
 
       <div className="addMatchButtonContainer">
         {id ? (
-          <></>
+          <Button type="primary" onClick={updateMatch}>
+            수정하기
+          </Button>
         ) : (
           <Button type="primary" onClick={addMatch}>
             등록하기
