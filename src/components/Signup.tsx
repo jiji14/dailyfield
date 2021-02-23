@@ -32,7 +32,7 @@ const Signup = (): JSX.Element => {
   const [gender, setGender] = useState<Gender>("남성");
   const [purpose, setPurpose] = useState<string[]>([]);
   const [privacyPolicy, setPrivacyPolicy] = useState(true);
-  const [serviceTerm, setServiceTerm] = useState(true);
+  const [termsOfService, setTermsOfService] = useState(true);
 
   const changeName = (e: React.FormEvent<HTMLInputElement>) => {
     setName(e.currentTarget.value);
@@ -58,7 +58,7 @@ const Signup = (): JSX.Element => {
       return;
     }
 
-    if (!serviceTerm) {
+    if (!termsOfService) {
       window.alert("서비스 이용약관에 동의해주세요.");
       return;
     }
@@ -77,7 +77,7 @@ const Signup = (): JSX.Element => {
       matchesPlayed: 0,
       purpose,
       privacyPolicy,
-      serviceTerm,
+      termsOfService,
     };
 
     try {
@@ -166,7 +166,7 @@ const Signup = (): JSX.Element => {
               setPrivacyPolicy(e.target.checked);
             }}
           >
-            <a href="/privacyPolicy" target="_blank">
+            <a href="/privacypolicy" target="_blank">
               개인 정보 처리방침
             </a>
             에 동의합니다.
@@ -174,14 +174,14 @@ const Signup = (): JSX.Element => {
         </Row>
         <Row align="middle" className="row">
           <Checkbox
-            data-testid="serviceTerm"
-            value={serviceTerm}
-            checked={serviceTerm}
+            data-testid="termsOfService"
+            value={termsOfService}
+            checked={termsOfService}
             onChange={(e) => {
-              setServiceTerm(e.target.checked);
+              setTermsOfService(e.target.checked);
             }}
           >
-            <a href="/serviceterm" target="_blank">
+            <a href="/termsofservice" target="_blank">
               서비스 이용약관
             </a>
             에 동의합니다.

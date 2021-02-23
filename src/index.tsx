@@ -11,7 +11,7 @@ import MatchList from "./components/MatchList";
 import MatchDetail from "./components/MatchDetail";
 import Admin from "./components/Admin";
 import PrivacyPolicy from "./components/PrivacyPolicy";
-import ServiceTerm from "./components/ServiceTerm";
+import TermsOfService from "./components/TermsOfService";
 
 // Required for side-effects
 require("firebase/firestore");
@@ -34,7 +34,7 @@ ReactDOM.render(
           <Route path="/match/:id" component={MatchDetail} />
           <Route path="/signup" component={Signup} />
           <Route path="/privacypolicy" component={PrivacyPolicy} />
-          <Route path="/serviceterm" component={ServiceTerm} />
+          <Route path="/termsofservice" component={TermsOfService} />
           <Route path="/" component={MatchList} />
         </Switch>
       </div>

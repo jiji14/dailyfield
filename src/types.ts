@@ -23,6 +23,6 @@ export interface Player {
   matchesPlayed: number;
   purpose?: string[];
   privacyPolicy?: boolean;
-  serviceTerm?: boolean;
+  termsOfService?: boolean;
   status?: Status;
 }
