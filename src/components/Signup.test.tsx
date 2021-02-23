@@ -42,5 +42,5 @@ describe("Test", () => {
     expect(user.privacyPolicy).toBe(true); // 개인정보보호법에 동의했는지 확인
     expect(user.serviceTerm).toBe(true); // 서비스이용약관에 동의했는지 확인
     expect(useHistory().push.mock.calls[0][0]).toBe("/"); // 회원가입후 메인페이지 옮겼는지 확인
-  };);
+  });
 });
