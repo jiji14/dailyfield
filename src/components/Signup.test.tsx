@@ -39,6 +39,8 @@ describe("Test", () => {
     expect(user.gender).toBe("여성"); // 성별이 여성이 맞는지 확인
     expect(user.purpose).toStrictEqual(["sporty"]); // 선택한 테마가 스포티 맞는지 확인
     expect(user.matchesPlayed).toBe(0); // 지금까지한 매치가 0인지 확인
+    expect(user.privacyPolicy).toBe(true); // 개인정보보호법에 동의했는지 확인
+    expect(user.termsOfService).toBe(true); // 서비스이용약관에 동의했는지 확인
     expect(useHistory().push.mock.calls[0][0]).toBe("/"); // 회원가입후 메인페이지 옮겼는지 확인
   });
 });

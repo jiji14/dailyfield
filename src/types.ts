@@ -22,5 +22,7 @@ export interface Player {
   birthDate?: Date;
   matchesPlayed: number;
   purpose?: string[];
+  privacyPolicy?: boolean;
+  termsOfService?: boolean;
   status?: Status;
 }
