@@ -224,12 +224,9 @@ const MatchDetail = (): JSX.Element | null => {
             최소인원 미달시 매치취소 안내와 함께 참가비를 전액 환급드립니다.
           </li>
         </ul>
-        <h3 className="title">입금 절차</h3>
+        <h3 className="title">참가 방법</h3>
         <ul>
-          <li>
-            예약하기 버튼 클릭 후 아래계좌로 참가비를 입금해주시면 매니저 확인
-            후 예약확정이 됩니다.
-          </li>
+          <li>아래 계좌로 참가비 입금후, 하단 예약하기 클릭!</li>
           <li>국민은행 472501-04-011482 배성진</li>
         </ul>
         {match.canPark && (
