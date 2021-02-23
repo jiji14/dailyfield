@@ -10,7 +10,7 @@ import MatchForm from "./components/AddMatch";
 import MatchList from "./components/MatchList";
 import MatchDetail from "./components/MatchDetail";
 import Admin from "./components/Admin";
-import PrivacyPolice from "./components/PrivacyPolice";
+import PrivacyPolicy from "./components/PrivacyPolicy";
 import ServiceTerm from "./components/ServiceTerm";
 
 // Required for side-effects
@@ -33,7 +33,7 @@ ReactDOM.render(
           <Route path="/match/:id/admin" component={Admin} />
           <Route path="/match/:id" component={MatchDetail} />
           <Route path="/signup" component={Signup} />
-          <Route path="/privacypolice" component={PrivacyPolice} />
+          <Route path="/privacypolicy" component={PrivacyPolicy} />
           <Route path="/serviceterm" component={ServiceTerm} />
           <Route path="/" component={MatchList} />
         </Switch>

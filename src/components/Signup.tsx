@@ -31,7 +31,7 @@ const Signup = (): JSX.Element => {
   const [birthDate, setBirthDate] = useState<Moment | null>(null);
   const [gender, setGender] = useState<Gender>("남성");
   const [purpose, setPurpose] = useState<string[]>([]);
-  const [privacyPolice, setPrivacyPolice] = useState(true);
+  const [privacyPolicy, setPrivacyPolicy] = useState(true);
   const [serviceTerm, setServiceTerm] = useState(true);
 
   const changeName = (e: React.FormEvent<HTMLInputElement>) => {
@@ -53,7 +53,7 @@ const Signup = (): JSX.Element => {
       return;
     }
 
-    if (!privacyPolice) {
+    if (!privacyPolicy) {
       window.alert("개인 정보 처리방침에 동의해주세요.");
       return;
     }
@@ -76,7 +76,7 @@ const Signup = (): JSX.Element => {
       birthDate: birthDate?.toDate(),
       matchesPlayed: 0,
       purpose,
-      privacyPolice,
+      privacyPolicy,
       serviceTerm,
     };
 
@@ -159,14 +159,14 @@ const Signup = (): JSX.Element => {
       <section className="signUpContainer">
         <Row align="middle" className="row">
           <Checkbox
-            data-testid="privacyPolice"
-            value={privacyPolice}
-            checked={privacyPolice}
+            data-testid="privacyPolicy"
+            value={privacyPolicy}
+            checked={privacyPolicy}
             onChange={(e) => {
-              setPrivacyPolice(e.target.checked);
+              setPrivacyPolicy(e.target.checked);
             }}
           >
-            <a href="/privacypolice" target="_blank">
+            <a href="/privacyPolicy" target="_blank">
               개인 정보 처리방침
             </a>
             에 동의합니다.
