@@ -238,6 +238,7 @@ const AddMatch = (props: { id: string }): JSX.Element => {
               <Option value={20000}>2만원</Option>
               <Option value={30000}>3만원</Option>
               <Option value={40000}>4만원</Option>
+              <Option value={80000}>8만원</Option>
             </Select>
           </Col>
         </Row>
