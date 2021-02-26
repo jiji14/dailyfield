@@ -32,15 +32,15 @@ const MatchListItem = (matchProps: {
     match && (
       <Link to={isAdmin ? `/match/${match.id}/admin` : `/match/${match.id}`}>
         <Row align="middle">
-          <Col span={8}>
+          <Col span={6}>
             <div className="time">
               {match.dateTime?.toLocaleTimeString("ko-KR", {
-                hour: "2-digit",
-                minute: "2-digit",
+                hour: "numeric",
+                hour12: false,
               })}
             </div>
           </Col>
-          <Col span={10}>
+          <Col span={12}>
             <div className="place">{match.place}</div>
             <div className="infoContainer">
               <div className="info">{match.gender}</div>
