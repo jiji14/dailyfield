@@ -1,0 +1,9 @@
+.footerContainer {
+  background-color: var(--black-color);
+  padding: 10px;
+}
+
+.footerLink {
+  display: block;
+  color: var(--white-color);
+}

@@ -12,6 +12,7 @@ import MatchDetail from "./components/MatchDetail";
 import Admin from "./components/Admin";
 import PrivacyPolicy from "./components/PrivacyPolicy";
 import TermsOfService from "./components/TermsOfService";
+import Footer from "./components/Footer";
 
 // Required for side-effects
 require("firebase/firestore");
@@ -38,6 +39,7 @@ ReactDOM.render(
           <Route path="/" component={MatchList} />
         </Switch>
       </div>
+      <Footer />
     </BrowserRouter>
   </StrictMode>,
   document.getElementById("root")
