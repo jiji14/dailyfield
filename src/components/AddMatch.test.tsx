@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, fireEvent } from "@testing-library/react";
 import firebase from "firebase";
 import { useHistory } from "react-router-dom";
 import AddMatch from "./AddMatch";
@@ -34,7 +34,7 @@ describe("Test", () => {
       screen.getByTestId("gameTypeSelect"),
       "매치만"
     );
-    await fireAntEvent.actAndSelect(screen.getByTestId("feeSelect"), "4만원");
+    await fireAntEvent.actAndInput("금액을 입력해주세요.", "40000");
     await fireAntEvent.actAndCheckbox("canPark");
     await fireAntEvent.actAndInput("매니저를 입력해주세요.", "배성진");
     await fireAntEvent.actAndClick("등록하기");
@@ -81,11 +81,12 @@ describe("Test", () => {
     });
 
     render(<AddMatch id="match123" />);
-    await fireAntEvent.actAndSelect(screen.getByTestId("feeSelect"), "1만원");
     await fireAntEvent.actAndSelect(
       screen.getByTestId("gameTypeSelect"),
       "GX만"
     );
+    const input = screen.getByTestId("feeInput");
+    await fireEvent.change(input, { target: { value: "10000" } });
     await fireAntEvent.actAndClick("수정하기");
     const match = firebase
       .firestore()
