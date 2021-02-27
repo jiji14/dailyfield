@@ -4,23 +4,19 @@ import "antd/dist/antd.css";
 import "./MatchListItem.css";
 import { Match, Status } from "../types";
 import { Link } from "react-router-dom";
-import firebase from "firebase";
 import { getReservationStatus } from "../globalFunction";
 import ReservationStatus from "./ReservationStatus";
+import { useUser } from "../customHooks/useUser";
 
 const MatchListItem = (matchProps: {
   match: Match;
   isAdmin: boolean;
 }): JSX.Element => {
   const { match, isAdmin } = matchProps;
-  const [user, setUser] = useState(firebase.auth().currentUser);
   const [reservationStatus, setReservationStatus] = useState<Status>(
     "신청가능"
   );
-
-  useEffect(() => {
-    firebase.auth().onAuthStateChanged(setUser);
-  }, []);
+  const user = useUser();
 
   useEffect(() => {
     (async () => {

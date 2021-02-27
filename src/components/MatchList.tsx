@@ -7,17 +7,14 @@ import { Match } from "../types";
 import { Button, Spin } from "antd";
 import { Link } from "react-router-dom";
 import { CollectionName } from "../collections";
+import { useUser } from "../customHooks/useUser";
 
 const MatchList = (): JSX.Element => {
   const [dateKeyToMatches, setDateKeyToMatches] = useState<
     Map<string, Match[]>
   >(new Map());
-  const [user, setUser] = useState(firebase.auth().currentUser);
   const [isAdmin, setIsAdmin] = useState(false);
-
-  useEffect(() => {
-    firebase.auth().onAuthStateChanged(setUser);
-  }, []);
+  const user = useUser();
 
   useEffect(() => {
     async function getMatches() {

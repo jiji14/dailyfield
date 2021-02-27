@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Row, Col, Modal } from "antd";
 import "antd/dist/antd.css";
 import "./Header.css";
 import firebase from "firebase";
 import { useHistory, Link } from "react-router-dom";
 import { CollectionName } from "../collections";
+import { useUser } from "../customHooks/useUser";
 
 let appVerifier: firebase.auth.ApplicationVerifier | null = null;
 
@@ -12,12 +13,8 @@ const Header = (): JSX.Element => {
   const history = useHistory();
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [phoneNumber, setPhoneNumber] = useState("");
-  const [user, setUser] = useState(firebase.auth().currentUser);
   const [loading, setLoading] = useState(false);
-
-  useEffect(() => {
-    firebase.auth().onAuthStateChanged(setUser);
-  }, []);
+  const user = useUser();
 
   const showModal = () => {
     setIsModalVisible(true);
@@ -65,8 +62,6 @@ const Header = (): JSX.Element => {
       hideModal();
       if (isNewUser) {
         history.push("/signup");
-      } else {
-        setUser(user);
       }
     } catch (error) {
       window.alert(error);
@@ -77,7 +72,6 @@ const Header = (): JSX.Element => {
   const signOut = async () => {
     try {
       await firebase.auth().signOut();
-      setUser(null);
     } catch (error) {
       window.alert(error);
     }
