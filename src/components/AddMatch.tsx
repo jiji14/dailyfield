@@ -78,6 +78,10 @@ const AddMatch = (props: { id: string }): JSX.Element => {
     setMemberCount(value);
   };
 
+  const changeFee = (value: number) => {
+    setFee(value);
+  };
+
   const addMatch = async () => {
     const match = getMatch();
     if (!match) return;
@@ -95,7 +99,6 @@ const AddMatch = (props: { id: string }): JSX.Element => {
   const updateMatch = async () => {
     const match = getMatch();
     if (!match) return;
-
     try {
       const db = firebase.firestore();
       await db
@@ -228,18 +231,14 @@ const AddMatch = (props: { id: string }): JSX.Element => {
             참가비
           </Col>
           <Col span={6}>
-            <Select
+            <InputNumber
               value={fee}
-              onChange={setFee}
-              className="addMatchSelect"
-              data-testid="feeSelect"
-            >
-              <Option value={10000}>1만원</Option>
-              <Option value={20000}>2만원</Option>
-              <Option value={30000}>3만원</Option>
-              <Option value={40000}>4만원</Option>
-              <Option value={80000}>8만원</Option>
-            </Select>
+              data-testid="feeInput"
+              placeholder="금액을 입력해주세요."
+              onChange={(value) => {
+                changeFee(value as number);
+              }}
+            />
           </Col>
         </Row>
         <Row align="middle" className="row">
