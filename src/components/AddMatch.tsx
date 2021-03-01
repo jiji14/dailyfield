@@ -32,6 +32,7 @@ const AddMatch = (props: { id: string }): JSX.Element => {
   const [gameType, setGameType] = useState<GameType>("gx+match");
   const [fee, setFee] = useState(20000);
   const [canPark, setCanPark] = useState(true);
+  const [isSpecialClass, setIsSpecialClass] = useState(false);
   const [manager, setManager] = useState("배성진");
 
   useEffect(() => {
@@ -58,6 +59,7 @@ const AddMatch = (props: { id: string }): JSX.Element => {
       setGameType(match.gameType);
       setFee(match.fee);
       setCanPark(match.canPark);
+      setIsSpecialClass(match.isSpecialClass);
       setManager(match.manager);
     })();
   }, [history, id]);
@@ -131,6 +133,7 @@ const AddMatch = (props: { id: string }): JSX.Element => {
       gameType,
       fee,
       canPark,
+      isSpecialClass,
       manager,
     };
     return match;
@@ -255,6 +258,21 @@ const AddMatch = (props: { id: string }): JSX.Element => {
               }}
             >
               주차 가능
+            </Checkbox>
+          </Col>
+          <Col span={6} className="addMatchSubtitle">
+            기획반 여부
+          </Col>
+          <Col span={6}>
+            <Checkbox
+              data-testid="isSpecialClass"
+              value={isSpecialClass}
+              checked={isSpecialClass}
+              onChange={(e) => {
+                setIsSpecialClass(e.target.checked);
+              }}
+            >
+              기획반
             </Checkbox>
           </Col>
         </Row>
