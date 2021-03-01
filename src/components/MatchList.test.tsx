@@ -72,7 +72,7 @@ describe("Test", () => {
       expect(screen.getByText(/여성/i)).toBeInTheDocument();
       //jsdom toLocaleDateString issue - https://github.com/jsdom/jsdom/issues/1489
       //jest 테스트환경 브라우저에서는 toLocaleDateString(ko-KR) 지원하지 않아서 테스트에서 영어로 확인해야됨.
-      expect(screen.getByText("Wednesday, 12/1")).toBeInTheDocument();
+      expect(screen.getByText("Wednesday, 12/1/2021")).toBeInTheDocument();
     });
     expect(screen.getByText(/예약확정/i)).toBeInTheDocument();
   });

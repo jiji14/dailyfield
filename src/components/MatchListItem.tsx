@@ -35,8 +35,9 @@ const MatchListItem = (matchProps: {
           <Col span={6}>
             <div className="time">
               {match.dateTime?.toLocaleTimeString("ko-KR", {
-                hour: "numeric",
+                hour: "2-digit",
                 hour12: false,
+                minute: "2-digit",
               })}
             </div>
           </Col>

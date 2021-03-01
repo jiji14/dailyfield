@@ -36,6 +36,7 @@ const MatchList = (): JSX.Element => {
         data.id = doc.id;
         const options = {
           weekday: "long",
+          year: "numeric",
           month: "numeric",
           day: "numeric",
         };

@@ -240,10 +240,12 @@ const MatchDetail = (): JSX.Element | null => {
         <div className="dateContainer">
           {match.dateTime?.toLocaleString("ko-KR", {
             weekday: "long",
-            month: "long",
+            year: "numeric",
+            month: "numeric",
             day: "numeric",
-            hour: "numeric",
+            hour: "2-digit",
             hour12: false,
+            minute: "2-digit",
           })}
         </div>
         <ReservationStatus reservationStatus={reservationStatus} />
