@@ -12,6 +12,7 @@ export interface Match {
   gameType: GameType;
   fee: number;
   canPark: boolean;
+  isSpecialClass: boolean;
   manager: string;
 }
 
