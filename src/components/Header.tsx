@@ -5,6 +5,7 @@ import "./Header.css";
 import firebase from "firebase";
 import { useHistory, Link } from "react-router-dom";
 import { CollectionName } from "../collections";
+import queryString from "query-string";
 
 let appVerifier: firebase.auth.ApplicationVerifier | null = null;
 
@@ -14,10 +15,20 @@ const Header = (): JSX.Element => {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [user, setUser] = useState(firebase.auth().currentUser);
   const [loading, setLoading] = useState(false);
+  const [menu, setMenu] = useState("match");
 
   useEffect(() => {
     firebase.auth().onAuthStateChanged(setUser);
   }, []);
+
+  useEffect(() => {
+    const query = queryString.parse(history.location.search);
+    if (query.specialclass) {
+      setMenu("special");
+    } else {
+      setMenu("match");
+    }
+  }, [history.location]);
 
   const showModal = () => {
     setIsModalVisible(true);
@@ -92,14 +103,34 @@ const Header = (): JSX.Element => {
   return (
     <div className="headerContainer">
       <Row className="menubar">
-        <Col span={8}>
+        <Col span={6}>
           <Link to="/" className="logo">
             DAILY FIELD
           </Link>
         </Col>
-        <Col span={8} className="menu">
+        <Col span={12} className="menu">
           <Link to="/">
-            <div className="menuFirstItem selectedMenu">MATCH</div>
+            <div
+              className={`menuFirstItem ${
+                menu === "match" ? "selectedMenu" : "menu"
+              }`}
+            >
+              MATCH
+            </div>
+          </Link>
+          <Link
+            to={{
+              pathname: "/",
+              search: "?specialclass=true",
+            }}
+          >
+            <div
+              className={`menuFirstItem ${
+                menu === "special" ? "selectedMenu" : "menu"
+              }`}
+            >
+              기획반
+            </div>
           </Link>
           <a
             className="dm"
@@ -110,8 +141,7 @@ const Header = (): JSX.Element => {
             문의
           </a>
         </Col>
-        <Col span={4}></Col>
-        <Col span={4} className="signin">
+        <Col span={6} className="signin">
           {!user ? (
             <button
               onClick={showModal}
