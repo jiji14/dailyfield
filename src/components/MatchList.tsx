@@ -7,6 +7,8 @@ import { Match } from "../types";
 import { Button, Spin } from "antd";
 import { Link } from "react-router-dom";
 import { CollectionName } from "../collections";
+import { useHistory } from "react-router-dom";
+import queryString from "query-string";
 
 const MatchList = (): JSX.Element => {
   const [dateKeyToMatches, setDateKeyToMatches] = useState<
@@ -14,6 +16,7 @@ const MatchList = (): JSX.Element => {
   >(new Map());
   const [user, setUser] = useState(firebase.auth().currentUser);
   const [isAdmin, setIsAdmin] = useState(false);
+  const history = useHistory();
 
   useEffect(() => {
     firebase.auth().onAuthStateChanged(setUser);
@@ -21,11 +24,17 @@ const MatchList = (): JSX.Element => {
 
   useEffect(() => {
     async function getMatches() {
+      const query = queryString.parse(history.location.search);
       const db = firebase.firestore();
+      const nowDate = new Date();
+      const standardDate = query.specialclass
+        ? new Date(nowDate.setDate(nowDate.getDate() - 28))
+        : new Date();
       const querySnapshot = await db
         .collection(CollectionName.matchesCollectionName)
+        .where("dateTime", ">=", standardDate)
+        .where("isSpecialClass", "==", query.specialclass ? true : false)
         .orderBy("dateTime", "asc")
-        .where("dateTime", ">=", new Date())
         .get();
 
       const dateKeyToMatches: Map<string, Match[]> = new Map();
@@ -49,7 +58,7 @@ const MatchList = (): JSX.Element => {
     }
 
     getMatches();
-  }, []);
+  }, [history.location]);
 
   useEffect(() => {
     async function getUser() {
