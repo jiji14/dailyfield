@@ -8,14 +8,12 @@
 .menu {
   display: flex;
   flex-wrap: wrap;
-  color: var(--white-color);
   box-sizing: border-box;
 }
 .menu > :not(:last-child) {
   margin-right: 16px;
 }
 .selectedMenu {
-  color: var(--white-color);
   border-bottom: 1px solid var(--orange-color);
 }
 .defaultMenu {
