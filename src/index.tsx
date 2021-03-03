@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import reportWebVitals from "./reportWebVitals";
 import firebase from "firebase";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 import Signup from "./components/Signup";
 import Header from "./components/Header";
 import MatchForm from "./components/AddMatch";
@@ -41,6 +41,7 @@ ReactDOM.render(
           <Route path="/matches">
             <MatchList />
           </Route>
+          <Redirect exact from="/" to="/matches" />
         </Switch>
       </div>
     </BrowserRouter>
