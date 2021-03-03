@@ -3,7 +3,7 @@ import { Row, Col, Modal } from "antd";
 import "antd/dist/antd.css";
 import "./Header.css";
 import firebase from "firebase";
-import { useHistory, Link } from "react-router-dom";
+import { useHistory, NavLink } from "react-router-dom";
 import { CollectionName } from "../collections";
 
 let appVerifier: firebase.auth.ApplicationVerifier | null = null;
@@ -14,19 +14,10 @@ const Header = (): JSX.Element => {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [user, setUser] = useState(firebase.auth().currentUser);
   const [loading, setLoading] = useState(false);
-  const [menu, setMenu] = useState("match");
 
   useEffect(() => {
     firebase.auth().onAuthStateChanged(setUser);
   }, []);
-
-  useEffect(() => {
-    if (history.location.pathname.includes("specialclasses")) {
-      setMenu("specialclasses");
-    } else {
-      setMenu("match");
-    }
-  }, [history.location]);
 
   const showModal = () => {
     setIsModalVisible(true);
@@ -102,39 +93,25 @@ const Header = (): JSX.Element => {
     <div className="headerContainer">
       <Row className="menubar">
         <Col span={6}>
-          <Link to="/" className="logo">
+          <NavLink to="/match" className="logo">
             DAILY FIELD
-          </Link>
+          </NavLink>
         </Col>
         <Col span={12} className="menu">
-          <Link
-            to="/"
-            onClick={() => {
-              setMenu("match");
-            }}
+          <NavLink
+            to="/match"
+            activeClassName="selectedMenu"
+            className="defaultMenu"
           >
-            <div
-              className={`menuFirstItem ${
-                menu === "match" ? "selectedMenu" : "menu"
-              }`}
-            >
-              MATCH
-            </div>
-          </Link>
-          <Link
+            MATCH
+          </NavLink>
+          <NavLink
             to="/specialclasses"
-            onClick={() => {
-              setMenu("specialclasses");
-            }}
+            activeClassName="selectedMenu"
+            className="defaultMenu"
           >
-            <div
-              className={`menuFirstItem ${
-                menu === "specialclasses" ? "selectedMenu" : "menu"
-              }`}
-            >
-              기획반
-            </div>
-          </Link>
+            기획반
+          </NavLink>
           <a
             className="dm"
             href="http://pf.kakao.com/_vQNPK"
