@@ -24,12 +24,12 @@ const MatchList = (props: { specialClasses?: boolean }): JSX.Element => {
     async function getMatches() {
       const db = firebase.firestore();
       const nowDate = new Date();
-      const standardDate = specialClasses
-        ? new Date(nowDate.setDate(nowDate.getDate() - 28))
+      const dateThreshold = specialClasses
+        ? new Date(nowDate.setDate(nowDate.getDate() - 28)) //기획반이 4주 주기여서 4주동안 보여줄것
         : new Date();
       const querySnapshot = await db
         .collection(CollectionName.matchesCollectionName)
-        .where("dateTime", ">=", standardDate)
+        .where("dateTime", ">=", dateThreshold)
         .where("isSpecialClass", "==", specialClasses ? true : false)
         .orderBy("dateTime", "asc")
         .get();
