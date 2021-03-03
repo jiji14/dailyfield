@@ -32,7 +32,7 @@ const AddMatch = (props: { id: string }): JSX.Element => {
   const [gameType, setGameType] = useState<GameType>("gx+match");
   const [fee, setFee] = useState(20000);
   const [canPark, setCanPark] = useState(true);
-  const [isSpecialClass, setIsSpecialClass] = useState(false);
+  const [isRecurringClass, setIsRecurringClass] = useState(false);
   const [manager, setManager] = useState("배성진");
 
   useEffect(() => {
@@ -59,7 +59,7 @@ const AddMatch = (props: { id: string }): JSX.Element => {
       setGameType(match.gameType);
       setFee(match.fee);
       setCanPark(match.canPark);
-      setIsSpecialClass(match.isSpecialClass);
+      setIsRecurringClass(match.isRecurringClass);
       setManager(match.manager);
     })();
   }, [history, id]);
@@ -133,7 +133,7 @@ const AddMatch = (props: { id: string }): JSX.Element => {
       gameType,
       fee,
       canPark,
-      isSpecialClass,
+      isRecurringClass,
       manager,
     };
     return match;
@@ -265,11 +265,11 @@ const AddMatch = (props: { id: string }): JSX.Element => {
           </Col>
           <Col span={6}>
             <Checkbox
-              data-testid="isSpecialClass"
-              value={isSpecialClass}
-              checked={isSpecialClass}
+              data-testid="isRecurringClass"
+              value={isRecurringClass}
+              checked={isRecurringClass}
               onChange={(e) => {
-                setIsSpecialClass(e.target.checked);
+                setIsRecurringClass(e.target.checked);
               }}
             >
               기획반

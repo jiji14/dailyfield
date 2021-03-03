@@ -36,7 +36,7 @@ describe("Test", () => {
     );
     await fireAntEvent.actAndInput("금액을 입력해주세요.", "40000");
     await fireAntEvent.actAndCheckbox("canPark");
-    await fireAntEvent.actAndCheckbox("isSpecialClass");
+    await fireAntEvent.actAndCheckbox("isRecurringClass");
     await fireAntEvent.actAndInput("매니저를 입력해주세요.", "배성진");
     await fireAntEvent.actAndClick("등록하기");
 
@@ -50,7 +50,7 @@ describe("Test", () => {
     expect(match.gameType).toBe("match"); // 게임타입이 match가 맞는지 확인
     expect(match.fee).toBe(40000); // 참가비가 4만원인지 확인
     expect(match.canPark).toBe(false); // 주차 불가능이 맞는지 확인
-    expect(match.isSpecialClass).toBe(true); // 기획반이 맞는지 확인
+    expect(match.isRecurringClass).toBe(true); // 기획반이 맞는지 확인
     expect(match.manager).toBe("배성진"); // 매니저가 "배성진"이 맞는지 확인
     expect(useHistory().push.mock.calls[0][0]).toBe("/"); // 등록후 메인페이지 옮겼는지 확인
   });
@@ -73,7 +73,7 @@ describe("Test", () => {
                 gameType: "match",
                 fee: 20000,
                 canPark: true,
-                isSpecialClass: false,
+                isRecurringClass: false,
                 manager: "배성진",
               };
             }),
@@ -90,7 +90,7 @@ describe("Test", () => {
     );
     const input = screen.getByTestId("feeInput");
     await fireEvent.change(input, { target: { value: "10000" } });
-    await fireAntEvent.actAndCheckbox("isSpecialClass");
+    await fireAntEvent.actAndCheckbox("isRecurringClass");
     await fireAntEvent.actAndClick("수정하기");
     const match = firebase
       .firestore()
@@ -98,7 +98,7 @@ describe("Test", () => {
       .doc("id").set.mock.calls[0][0];
     expect(match.fee).toBe(10000); // 참가비가 1만원인지 확인
     expect(match.gameType).toBe("gx"); // 게임타입이 gx가 맞는지 확인
-    expect(match.isSpecialClass).toBe(true); // 게임타입이 gx가 맞는지 확인
+    expect(match.isRecurringClass).toBe(true); // 게임타입이 gx가 맞는지 확인
     expect(useHistory().push.mock.calls[0][0]).toBe("/"); // 등록후 메인페이지 옮겼는지 확인
   });
 });
