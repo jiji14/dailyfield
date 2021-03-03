@@ -5,7 +5,6 @@ import "./Header.css";
 import firebase from "firebase";
 import { useHistory, Link } from "react-router-dom";
 import { CollectionName } from "../collections";
-import queryString from "query-string";
 
 let appVerifier: firebase.auth.ApplicationVerifier | null = null;
 
@@ -22,9 +21,8 @@ const Header = (): JSX.Element => {
   }, []);
 
   useEffect(() => {
-    const query = queryString.parse(history.location.search);
-    if (query.specialclass) {
-      setMenu("special");
+    if (history.location.pathname.includes("specialclasses")) {
+      setMenu("specialclasses");
     } else {
       setMenu("match");
     }
@@ -109,7 +107,12 @@ const Header = (): JSX.Element => {
           </Link>
         </Col>
         <Col span={12} className="menu">
-          <Link to="/">
+          <Link
+            to="/"
+            onClick={() => {
+              setMenu("match");
+            }}
+          >
             <div
               className={`menuFirstItem ${
                 menu === "match" ? "selectedMenu" : "menu"
@@ -119,14 +122,14 @@ const Header = (): JSX.Element => {
             </div>
           </Link>
           <Link
-            to={{
-              pathname: "/",
-              search: "?specialclass=true",
+            to="/specialclasses"
+            onClick={() => {
+              setMenu("specialclasses");
             }}
           >
             <div
               className={`menuFirstItem ${
-                menu === "special" ? "selectedMenu" : "menu"
+                menu === "specialclasses" ? "selectedMenu" : "menu"
               }`}
             >
               기획반
