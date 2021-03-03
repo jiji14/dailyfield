@@ -93,13 +93,13 @@ const Header = (): JSX.Element => {
     <div className="headerContainer">
       <Row className="menubar">
         <Col span={6}>
-          <NavLink to="/match" className="logo">
+          <NavLink to="/matches" className="logo">
             DAILY FIELD
           </NavLink>
         </Col>
         <Col span={12} className="menu">
           <NavLink
-            to="/match"
+            to="/matches"
             activeClassName="selectedMenu"
             className="defaultMenu"
           >
