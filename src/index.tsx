@@ -38,7 +38,7 @@ ReactDOM.render(
           <Route path="/specialclasses">
             <MatchList specialClasses />
           </Route>
-          <Route path="/">
+          <Route path="/match">
             <MatchList />
           </Route>
         </Switch>
