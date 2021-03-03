@@ -35,8 +35,8 @@ ReactDOM.render(
           <Route path="/signup" component={Signup} />
           <Route path="/privacypolicy" component={PrivacyPolicy} />
           <Route path="/termsofservice" component={TermsOfService} />
-          <Route path="/specialclasses">
-            <MatchList specialClasses />
+          <Route path="/recurringclasses">
+            <MatchList recurringClasses />
           </Route>
           <Route path="/matches">
             <MatchList />

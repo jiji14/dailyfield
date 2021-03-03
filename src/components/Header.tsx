@@ -106,7 +106,7 @@ const Header = (): JSX.Element => {
             MATCH
           </NavLink>
           <NavLink
-            to="/specialclasses"
+            to="/recurringclasses"
             activeClassName="selectedMenu"
             className="defaultMenu"
           >
