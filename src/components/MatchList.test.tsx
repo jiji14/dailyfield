@@ -20,7 +20,7 @@ describe("Test", () => {
           get: jest.fn().mockResolvedValue({
             exists: true,
             data: jest.fn().mockReturnValue({
-              isAdmin: true, //관리자인지 확인 
+              isAdmin: true, //관리자인지 확인
             }),
           }),
           collection: jest.fn().mockReturnValue({
@@ -43,11 +43,14 @@ describe("Test", () => {
           where: jest.fn().mockReturnValue({
             orderBy: jest.fn().mockReturnValue({
               get: jest.fn().mockResolvedValue({
-                docs: [ // 매치 정보 가져오기 
+                docs: [
+                  // 매치 정보 가져오기
                   {
                     data: jest.fn().mockReturnValue({
                       dateTime: {
-                        toDate: jest.fn().mockReturnValue(new Date("2021-12-01")),
+                        toDate: jest
+                          .fn()
+                          .mockReturnValue(new Date("2021-12-01")),
                       },
                       place: "용산 더베이스",
                       memberCount: 15,
@@ -57,7 +60,7 @@ describe("Test", () => {
                       fee: 20000,
                       canPark: true,
                       manager: "배성진",
-                      isRecurringClass: false
+                      isRecurringClass: false,
                     }),
                     id: "test12345",
                   },
@@ -88,7 +91,7 @@ describe("Test", () => {
           get: jest.fn().mockResolvedValue({
             exists: true,
             data: jest.fn().mockReturnValue({
-              isAdmin: false, //관리자인지 확인 
+              isAdmin: false, //관리자인지 확인
             }),
           }),
           collection: jest.fn().mockReturnValue({
@@ -100,7 +103,7 @@ describe("Test", () => {
             doc: jest.fn().mockReturnValue({
               get: jest.fn().mockResolvedValue({
                 exists: {},
-                data: jest.fn() //나의 예약상태 확인
+                data: jest.fn(), //나의 예약상태 확인
               }),
             }),
           }),
@@ -109,11 +112,14 @@ describe("Test", () => {
           where: jest.fn().mockReturnValue({
             orderBy: jest.fn().mockReturnValue({
               get: jest.fn().mockResolvedValue({
-                docs: [ // 매치 정보 가져오기 s
+                docs: [
+                  // 매치 정보 가져오기 s
                   {
                     data: jest.fn().mockReturnValue({
                       dateTime: {
-                        toDate: jest.fn().mockReturnValue(new Date("2021-12-01")),
+                        toDate: jest
+                          .fn()
+                          .mockReturnValue(new Date("2021-12-01")),
                       },
                       place: "신사 누리",
                       memberCount: 15,
@@ -123,7 +129,7 @@ describe("Test", () => {
                       fee: 20000,
                       canPark: true,
                       manager: "배성진",
-                      isRecurringClass: true
+                      isRecurringClass: true,
                     }),
                     id: "test12345",
                   },
