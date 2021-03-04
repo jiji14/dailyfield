@@ -39,7 +39,7 @@ ReactDOM.render(
             <MatchList recurringClasses />
           </Route>
           <Route path="/matches">
-            <MatchList />
+            <MatchList recurringClasses={false} />
           </Route>
           <Redirect exact from="/" to="/matches" />
         </Switch>

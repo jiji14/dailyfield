@@ -30,7 +30,7 @@ const MatchList = (props: { recurringClasses?: boolean }): JSX.Element => {
       const querySnapshot = await db
         .collection(CollectionName.matchesCollectionName)
         .where("dateTime", ">=", dateThreshold)
-        .where("isRecurringClass", "==", recurringClasses ? true : false)
+        .where("isRecurringClass", "==", recurringClasses)
         .orderBy("dateTime", "asc")
         .get();
 
