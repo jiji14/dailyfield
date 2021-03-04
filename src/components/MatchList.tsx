@@ -23,9 +23,10 @@ const MatchList = (props: { recurringClasses?: boolean }): JSX.Element => {
   useEffect(() => {
     async function getMatches() {
       const db = firebase.firestore();
-      const nowDate = new Date();
+      const dateForRecurringClasses = new Date();
+      dateForRecurringClasses.setDate(dateForRecurringClasses.getDate() - 28) //기획반이 4주 주기여서 4주동안 보여줄것
       const dateThreshold = recurringClasses
-        ? new Date(nowDate.setDate(nowDate.getDate() - 28)) //기획반이 4주 주기여서 4주동안 보여줄것
+        ? dateForRecurringClasses 
         : new Date();
       const querySnapshot = await db
         .collection(CollectionName.matchesCollectionName)
