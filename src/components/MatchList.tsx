@@ -8,7 +8,8 @@ import { Button, Spin } from "antd";
 import { Link } from "react-router-dom";
 import { CollectionName } from "../collections";
 
-const MatchList = (): JSX.Element => {
+const MatchList = (props: { recurringClasses?: boolean }): JSX.Element => {
+  const { recurringClasses } = props;
   const [dateKeyToMatches, setDateKeyToMatches] = useState<
     Map<string, Match[]>
   >(new Map());
@@ -22,10 +23,14 @@ const MatchList = (): JSX.Element => {
   useEffect(() => {
     async function getMatches() {
       const db = firebase.firestore();
+      const fourWeeksAgo = new Date();
+      fourWeeksAgo.setDate(fourWeeksAgo.getDate() - 28); //기획반이 4주 주기여서 4주동안 보여줄것
+      const dateThreshold = recurringClasses ? fourWeeksAgo : new Date();
       const querySnapshot = await db
         .collection(CollectionName.matchesCollectionName)
+        .where("dateTime", ">=", dateThreshold)
+        .where("isRecurringClass", "==", recurringClasses)
         .orderBy("dateTime", "asc")
-        .where("dateTime", ">=", new Date())
         .get();
 
       const dateKeyToMatches: Map<string, Match[]> = new Map();
@@ -49,7 +54,7 @@ const MatchList = (): JSX.Element => {
     }
 
     getMatches();
-  }, []);
+  }, [recurringClasses]);
 
   useEffect(() => {
     async function getUser() {

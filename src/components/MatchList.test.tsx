@@ -11,62 +11,68 @@ describe("Test", () => {
         callback(fakeUser);
       },
     });
+  });
 
+  test("renders Matches - 일반", async () => {
     ((firebase.firestore as unknown) as jest.Mock).mockReturnValue({
       collection: jest.fn().mockReturnValue({
         doc: jest.fn().mockReturnValue({
           get: jest.fn().mockResolvedValue({
             exists: true,
             data: jest.fn().mockReturnValue({
-              isAdmin: true,
+              isAdmin: true, //관리자인지 확인
             }),
           }),
           collection: jest.fn().mockReturnValue({
             where: jest.fn().mockReturnValue({
               get: jest.fn().mockResolvedValue({
-                size: 10,
+                size: 10, // 신청중인 선수 몇명인지 확인
               }),
             }),
             doc: jest.fn().mockReturnValue({
               get: jest.fn().mockResolvedValue({
                 exists: {},
                 data: jest.fn().mockReturnValue({
-                  status: "확정",
+                  status: "확정", //나의 예약상태 확인
                 }),
               }),
             }),
           }),
         }),
-        orderBy: jest.fn().mockReturnValue({
+        where: jest.fn().mockReturnValue({
           where: jest.fn().mockReturnValue({
-            get: jest.fn().mockResolvedValue({
-              docs: [
-                {
-                  data: jest.fn().mockReturnValue({
-                    dateTime: {
-                      toDate: jest.fn().mockReturnValue(new Date("2021-12-01")),
-                    },
-                    place: "용산 더베이스",
-                    memberCount: 15,
-                    gender: "여성",
-                    link: "www.naver.com",
-                    gameType: "match",
-                    fee: 20000,
-                    canPark: true,
-                    manager: "배성진",
-                  }),
-                  id: "test12345",
-                },
-              ],
+            orderBy: jest.fn().mockReturnValue({
+              get: jest.fn().mockResolvedValue({
+                docs: [
+                  // 매치 정보 가져오기
+                  {
+                    data: jest.fn().mockReturnValue({
+                      dateTime: {
+                        toDate: jest
+                          .fn()
+                          .mockReturnValue(new Date("2021-12-01")),
+                      },
+                      place: "용산 더베이스",
+                      memberCount: 15,
+                      gender: "여성",
+                      link: "www.naver.com",
+                      gameType: "match",
+                      fee: 20000,
+                      canPark: true,
+                      manager: "배성진",
+                      isRecurringClass: false,
+                    }),
+                    id: "test12345",
+                  },
+                ],
+              }),
             }),
           }),
         }),
       }),
     });
-  });
 
-  test("renders Matches", async () => {
-    render(<MatchList />);
+    render(<MatchList recurringClasses={false} />);
     await waitFor(async () => {
       expect(screen.getByText(/용산 더베이스/i)).toBeInTheDocument();
       expect(screen.getByText(/여성/i)).toBeInTheDocument();
@@ -75,12 +81,78 @@ describe("Test", () => {
       expect(screen.getByText("Wednesday, 12/1/2021")).toBeInTheDocument();
     });
     expect(screen.getByText(/예약확정/i)).toBeInTheDocument();
+    expect(screen.getByText(/매치등록/i)).toBeInTheDocument(); //어드민일때 매치등록 버튼 보이는지 확인
+    expect(
+      firebase.firestore().collection().where().where
+    ).toHaveBeenCalledWith("isRecurringClass", "==", false);
   });
 
-  test("check AddMatch Button", async () => {
-    render(<MatchList />);
+  test("renders Matches - 기획반", async () => {
+    ((firebase.firestore as unknown) as jest.Mock).mockReturnValue({
+      collection: jest.fn().mockReturnValue({
+        doc: jest.fn().mockReturnValue({
+          get: jest.fn().mockResolvedValue({
+            exists: true,
+            data: jest.fn().mockReturnValue({
+              isAdmin: false, //관리자인지 확인
+            }),
+          }),
+          collection: jest.fn().mockReturnValue({
+            where: jest.fn().mockReturnValue({
+              get: jest.fn().mockResolvedValue({
+                size: 10, // 신청중인 선수 몇명인지 확인
+              }),
+            }),
+            doc: jest.fn().mockReturnValue({
+              get: jest.fn().mockResolvedValue({
+                exists: {},
+                data: jest.fn(), //나의 예약상태 확인
+              }),
+            }),
+          }),
+        }),
+        where: jest.fn().mockReturnValue({
+          where: jest.fn().mockReturnValue({
+            orderBy: jest.fn().mockReturnValue({
+              get: jest.fn().mockResolvedValue({
+                docs: [
+                  // 매치 정보 가져오기 s
+                  {
+                    data: jest.fn().mockReturnValue({
+                      dateTime: {
+                        toDate: jest
+                          .fn()
+                          .mockReturnValue(new Date("2021-12-01")),
+                      },
+                      place: "신사 누리",
+                      memberCount: 15,
+                      gender: "혼성원팀",
+                      link: "www.naver.com",
+                      gameType: "match",
+                      fee: 20000,
+                      canPark: true,
+                      manager: "배성진",
+                      isRecurringClass: true,
+                    }),
+                    id: "test12345",
+                  },
+                ],
+              }),
+            }),
+          }),
+        }),
+      }),
+    });
+
+    render(<MatchList recurringClasses />);
     await waitFor(async () => {
-      expect(screen.getByText(/매치등록/i)).toBeInTheDocument();
+      //recurringClasses 일때 다른정보 제대로 나오는지 확인
+      expect(screen.getByText(/신사 누리/i)).toBeInTheDocument();
+      expect(screen.getByText(/혼성원팀/i)).toBeInTheDocument();
+      expect(screen.getByText(/신청가능/i)).toBeInTheDocument();
+      expect(
+        firebase.firestore().collection().where().where
+      ).toHaveBeenCalledWith("isRecurringClass", "==", true);
     });
   });
 });

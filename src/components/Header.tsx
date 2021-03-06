@@ -3,7 +3,7 @@ import { Row, Col, Modal } from "antd";
 import "antd/dist/antd.css";
 import "./Header.css";
 import firebase from "firebase";
-import { useHistory, Link } from "react-router-dom";
+import { useHistory, NavLink } from "react-router-dom";
 import { CollectionName } from "../collections";
 
 let appVerifier: firebase.auth.ApplicationVerifier | null = null;
@@ -92,15 +92,26 @@ const Header = (): JSX.Element => {
   return (
     <div className="headerContainer">
       <Row className="menubar">
-        <Col span={8}>
-          <Link to="/" className="logo">
+        <Col span={6}>
+          <NavLink to="/matches" className="logo">
             DAILY FIELD
-          </Link>
+          </NavLink>
         </Col>
-        <Col span={8} className="menu">
-          <Link to="/">
-            <div className="menuFirstItem selectedMenu">MATCH</div>
-          </Link>
+        <Col span={12} className="menu">
+          <NavLink
+            to="/matches"
+            activeClassName="selectedMenu"
+            className="defaultMenu"
+          >
+            MATCH
+          </NavLink>
+          <NavLink
+            to="/recurringclasses"
+            activeClassName="selectedMenu"
+            className="defaultMenu"
+          >
+            기획반
+          </NavLink>
           <a
             className="dm"
             href="http://pf.kakao.com/_vQNPK"
@@ -110,8 +121,7 @@ const Header = (): JSX.Element => {
             문의
           </a>
         </Col>
-        <Col span={4}></Col>
-        <Col span={4} className="signin">
+        <Col span={6} className="signin">
           {!user ? (
             <button
               onClick={showModal}
