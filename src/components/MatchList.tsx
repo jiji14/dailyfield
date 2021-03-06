@@ -25,9 +25,7 @@ const MatchList = (props: { recurringClasses?: boolean }): JSX.Element => {
       const db = firebase.firestore();
       const fourWeeksAgo = new Date();
       fourWeeksAgo.setDate(fourWeeksAgo.getDate() - 28); //기획반이 4주 주기여서 4주동안 보여줄것
-      const dateThreshold = recurringClasses
-        ? fourWeeksAgo
-        : new Date();
+      const dateThreshold = recurringClasses ? fourWeeksAgo : new Date();
       const querySnapshot = await db
         .collection(CollectionName.matchesCollectionName)
         .where("dateTime", ">=", dateThreshold)
