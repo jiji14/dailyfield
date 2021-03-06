@@ -82,6 +82,9 @@ describe("Test", () => {
     });
     expect(screen.getByText(/예약확정/i)).toBeInTheDocument();
     expect(screen.getByText(/매치등록/i)).toBeInTheDocument(); //어드민일때 매치등록 버튼 보이는지 확인
+    expect(
+      firebase.firestore().collection().where().where
+    ).toHaveBeenCalledWith("isRecurringClass", "==", false);
   });
 
   test("renders Matches - 기획반", async () => {
@@ -147,6 +150,9 @@ describe("Test", () => {
       expect(screen.getByText(/신사 누리/i)).toBeInTheDocument();
       expect(screen.getByText(/혼성원팀/i)).toBeInTheDocument();
       expect(screen.getByText(/신청가능/i)).toBeInTheDocument();
+      expect(
+        firebase.firestore().collection().where().where
+      ).toHaveBeenCalledWith("isRecurringClass", "==", true);
     });
   });
 });
