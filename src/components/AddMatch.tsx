@@ -115,8 +115,7 @@ const AddMatch = (props: { id: string }): JSX.Element => {
   };
 
   const deleteMatch = async () => {
-    const match = getMatch();
-    if (!match) return;
+    if (!id) return;
     const isConfirmedWithDelete = window.confirm(
       "해당 매치를 삭제하시겠습니까?"
     );
@@ -318,7 +317,7 @@ const AddMatch = (props: { id: string }): JSX.Element => {
             <Button type="primary" onClick={updateMatch}>
               수정하기
             </Button>
-            <Button type="primary" onClick={deleteMatch}>
+            <Button danger onClick={deleteMatch}>
               삭제하기
             </Button>
           </>
