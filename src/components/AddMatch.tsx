@@ -117,8 +117,10 @@ const AddMatch = (props: { id: string }): JSX.Element => {
   const deleteMatch = async () => {
     const match = getMatch();
     if (!match) return;
-    const isConfirmedWithDelete = window.confirm("해당 매치를 삭제하시겠습니까?");
-    if(!isConfirmedWithDelete) return;
+    const isConfirmedWithDelete = window.confirm(
+      "해당 매치를 삭제하시겠습니까?"
+    );
+    if (!isConfirmedWithDelete) return;
 
     try {
       const db = firebase.firestore();
@@ -313,12 +315,12 @@ const AddMatch = (props: { id: string }): JSX.Element => {
       <div className="addMatchButtonContainer">
         {id ? (
           <>
-          <Button type="primary" onClick={updateMatch}>
-            수정하기
-          </Button>
-          <Button type="primary" onClick={deleteMatch}>
-            삭제하기
-          </Button>
+            <Button type="primary" onClick={updateMatch}>
+              수정하기
+            </Button>
+            <Button type="primary" onClick={deleteMatch}>
+              삭제하기
+            </Button>
           </>
         ) : (
           <Button type="primary" onClick={addMatch}>
