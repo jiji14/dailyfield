@@ -125,7 +125,7 @@ describe("Test", () => {
               };
             }),
           }),
-          delete: jest.fn().mockResolvedValue(null),
+          delete: jest.fn(),
         }),
       }),
     });
