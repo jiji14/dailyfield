@@ -59,6 +59,17 @@ const PlayerListItem = (playerProps: {
     window.location.reload();
   };
 
+  const deleteReservation = async () => {
+    const confirmCancel = window.confirm(
+      "해당 회원을 명단에서 삭제하시겠습니까?"
+    );
+    if (!confirmCancel) return;
+    await deleteReservationStatus(matchId, playerId);
+    if (status !== "예약신청") await incrementMatchesPlayed(-1); //예약신청인 경우는 매치 횟수 차감 안함
+    window.alert("명단에서 삭제하였습니다.");
+    window.location.reload();
+  };
+
   const incrementMatchesPlayed = async (incrementNumber: number) => {
     const db = firebase.firestore();
     await db
@@ -94,6 +105,9 @@ const PlayerListItem = (playerProps: {
               취소승인
             </Button>
           )}
+          <Button danger size="small" onClick={deleteReservation}>
+            삭제하기
+          </Button>
         </Col>
       </Row>
       <Row className="playerDetail">
