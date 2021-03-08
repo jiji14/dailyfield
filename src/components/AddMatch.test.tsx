@@ -101,4 +101,41 @@ describe("Test", () => {
     expect(match.isRecurringClass).toBe(true); // 게임타입이 gx가 맞는지 확인
     expect(useHistory().push.mock.calls[0][0]).toBe("/"); // 등록후 메인페이지 옮겼는지 확인
   });
+
+  test("Delete Match", async () => {
+    ((firebase.firestore as unknown) as jest.Mock).mockReturnValue({
+      collection: jest.fn().mockReturnValue({
+        doc: jest.fn().mockReturnValue({
+          get: jest.fn().mockResolvedValue({
+            exists: true,
+            data: jest.fn().mockImplementation(() => {
+              return {
+                dateTime: {
+                  toDate: jest.fn().mockReturnValue(new Date("2021-01-01")),
+                },
+                place: "용산 더베이스",
+                memberCount: 15,
+                gender: "여성",
+                link: "www.naver.com",
+                gameType: "match",
+                fee: 20000,
+                canPark: true,
+                isRecurringClass: false,
+                manager: "배성진",
+              };
+            }),
+          }),
+          delete: jest.fn(),
+        }),
+      }),
+    });
+    window.confirm = () => true;
+
+    render(<AddMatch id="match123" />);
+    await fireAntEvent.actAndClick("삭제하기");
+    expect(firebase.firestore().collection().doc).toHaveBeenCalledWith(
+      "match123"
+    );
+    expect(firebase.firestore().collection().doc().delete).toHaveBeenCalled();
+  });
 });

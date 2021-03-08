@@ -114,6 +114,26 @@ const AddMatch = (props: { id: string }): JSX.Element => {
     }
   };
 
+  const deleteMatch = async () => {
+    if (!id) return;
+    const isConfirmedWithDelete = window.confirm(
+      "해당 매치를 삭제하시겠습니까?"
+    );
+    if (!isConfirmedWithDelete) return;
+
+    try {
+      const db = firebase.firestore();
+      await db
+        .collection(CollectionName.matchesCollectionName)
+        .doc(id)
+        .delete();
+      window.alert("매치가 삭제되었습니다!");
+      history.push("/");
+    } catch (error) {
+      window.alert(error);
+    }
+  };
+
   const getMatch = () => {
     if (!gameDate) {
       window.alert("매치 일시를 선택해주세요.");
@@ -293,9 +313,14 @@ const AddMatch = (props: { id: string }): JSX.Element => {
 
       <div className="addMatchButtonContainer">
         {id ? (
-          <Button type="primary" onClick={updateMatch}>
-            수정하기
-          </Button>
+          <>
+            <Button type="primary" onClick={updateMatch}>
+              수정하기
+            </Button>
+            <Button danger onClick={deleteMatch}>
+              삭제하기
+            </Button>
+          </>
         ) : (
           <Button type="primary" onClick={addMatch}>
             등록하기
