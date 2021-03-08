@@ -132,9 +132,10 @@ describe("Test", () => {
     window.confirm = () => true;
 
     render(<AddMatch id="match123" />);
-    await fireAntEvent.actAndClick("수정하기");
+    await fireAntEvent.actAndClick("삭제하기");
     expect(firebase.firestore().collection().doc).toHaveBeenCalledWith(
       "match123"
     );
+    expect(firebase.firestore().collection().doc().delete).toHaveBeenCalled();
   });
 });
