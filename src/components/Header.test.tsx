@@ -8,14 +8,13 @@ describe("Test", () => {
     const fakeUser = {} as firebase.User;
     ((firebase.auth as unknown) as jest.Mock).mockReturnValue({
       currentUser: null,
-      onAuthStateChanged: jest.fn(),
+      onAuthStateChanged: (callback: (user: firebase.User | null) => void) => {
+        callback(firebase.auth().currentUser ? null : fakeUser);
+      },
       signInWithPhoneNumber: jest.fn().mockResolvedValue({
         confirm: jest.fn().mockResolvedValue({
           additionalUserInfo: { isNewUser: false },
         }),
-        onAuthStateChanged: (callback: (user: firebase.User) => void) => {
-          callback(fakeUser);
-        },
       }),
     });
     ((firebase.firestore as unknown) as jest.Mock).mockReturnValue({
