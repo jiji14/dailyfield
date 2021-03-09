@@ -6,10 +6,11 @@ import { fireAntEvent } from "../setupTests";
 describe("Test", () => {
   test("Sign In", async () => {
     const fakeUser = {} as firebase.User;
+    let isSignInButtonClicked = false;
     ((firebase.auth as unknown) as jest.Mock).mockReturnValue({
       currentUser: null,
       onAuthStateChanged: (callback: (user: firebase.User | null) => void) => {
-        callback(firebase.auth().currentUser ? null : fakeUser);
+        callback(isSignInButtonClicked ? fakeUser : null);
       },
       signInWithPhoneNumber: jest.fn().mockResolvedValue({
         confirm: jest.fn().mockResolvedValue({
@@ -37,6 +38,7 @@ describe("Test", () => {
     );
 
     await fireAntEvent.actAndClick("로그인");
+    isSignInButtonClicked = true;
     const phoneNumber = firebase.auth().signInWithPhoneNumber.mock.calls[0][0];
     expect(phoneNumber).toBe("+821090143492");
     const signoutButton = screen.getByText(/SIGNOUT/i);
