@@ -102,4 +102,26 @@ describe("Test", () => {
     // 예약 상태 지우는 deleteReservationStatus 1번 호출됐는지 확인
     expect(deleteReservationStatus).toHaveBeenCalledTimes(1);
   });
+  test("관리자 매치목록에서 회원 삭제", async () => {
+    firebase.firestore.FieldValue.increment = jest.fn().mockReturnValue(0);
+    render(
+      <PlayerListItem matchId="match456" playerId="user456" status="확정" />
+    );
+    await waitFor(async () => {
+      //삭제하기 버튼 나오는지 확인하고 누르기
+      expect(screen.getByText("삭제하기")).toBeInTheDocument();
+    });
+    await fireAntEvent.actAndClick("삭제하기");
+
+    const user = firebase
+      .firestore()
+      .collection(CollectionName.usersCollectionName)
+      .doc("id").update.mock.calls[0][0];
+    // 매치가 0번으로 감소했는지 확인
+    expect(user.matchesPlayed).toBe(0);
+    // 예약 상태 지우는 deleteReservationStatus 파라미터 확인
+    expect(deleteReservationStatus).toHaveBeenCalledWith("match456", "user456");
+    // 예약 상태 지우는 deleteReservationStatus 1번 호출됐는지 확인
+    expect(deleteReservationStatus).toHaveBeenCalledTimes(1);
+  });
 });
