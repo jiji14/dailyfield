@@ -65,7 +65,7 @@ const PlayerListItem = (playerProps: {
     );
     if (!confirmCancel) return;
     await deleteReservationStatus(matchId, playerId);
-    if (status == "확정" || status == "취소신청")
+    if (status === "확정" || status === "취소신청")
       await incrementMatchesPlayed(-1); //예약신청인 경우는 매치 횟수 차감 안함
     window.alert("명단에서 삭제하였습니다.");
     window.location.reload();
