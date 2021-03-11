@@ -6,16 +6,15 @@ import { fireAntEvent } from "../setupTests";
 describe("Test", () => {
   test("Sign In", async () => {
     const fakeUser = {} as firebase.User;
-    let isSignInButtonClicked = false;
     ((firebase.auth as unknown) as jest.Mock).mockReturnValue({
       currentUser: null,
       onAuthStateChanged: (callback: (user: firebase.User | null) => void) => {
-        callback(isSignInButtonClicked ? fakeUser : null);
+        callback(null);
       },
       signInWithPhoneNumber: jest.fn().mockResolvedValue({
-        confirm: jest.fn().mockResolvedValue({
-          additionalUserInfo: { isNewUser: false },
-        }),
+        confirm: jest.fn().mockImplementation((callback: (user: firebase.User | null) => void) => {
+          callback(fakeUser);
+        })
       }),
     });
     ((firebase.firestore as unknown) as jest.Mock).mockReturnValue({
@@ -38,7 +37,6 @@ describe("Test", () => {
     );
 
     await fireAntEvent.actAndClick("로그인");
-    isSignInButtonClicked = true;
     const phoneNumber = firebase.auth().signInWithPhoneNumber.mock.calls[0][0];
     expect(phoneNumber).toBe("+821090143492");
     const signoutButton = screen.getByText(/SIGNOUT/i);
@@ -50,10 +48,8 @@ describe("Test", () => {
     ((firebase.auth as unknown) as jest.Mock).mockReturnValue({
       onAuthStateChanged: jest.fn(),
       currentUser: {},
-      signOut: jest.fn().mockResolvedValue({
-        onAuthStateChanged: (callback: (user: null) => void) => {
-          callback(fakeUser);
-        },
+      signOut: jest.fn().mockImplementation((callback: (user: firebase.User | null) => void) => {
+        callback(null);
       }),
     });
 
