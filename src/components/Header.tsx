@@ -97,7 +97,7 @@ const Header = (): JSX.Element => {
             DAILY FIELD
           </NavLink>
         </Col>
-        <Col span={12} className="headerLink">
+        <Col span={12} className="linkContainer">
           <NavLink
             to="/matches"
             activeClassName="selectedLink"

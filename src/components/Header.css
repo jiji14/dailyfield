@@ -5,12 +5,12 @@
 .logo {
   color: var(--orange-color);
 }
-.headerLink {
+.linkContainer {
   display: flex;
   flex-wrap: wrap;
   box-sizing: border-box;
 }
-.headerLink > :not(:last-child) {
+.linkContainer > :not(:last-child) {
   margin-right: 16px;
 }
 .selectedLink {
