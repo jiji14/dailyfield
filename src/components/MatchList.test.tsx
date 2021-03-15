@@ -52,6 +52,7 @@ describe("Test", () => {
                           .fn()
                           .mockReturnValue(new Date("2021-12-01")),
                       },
+                      title: "1자리 남음",
                       place: "용산 더베이스",
                       memberCount: 15,
                       gender: "여성",
@@ -74,6 +75,7 @@ describe("Test", () => {
 
     render(<MatchList recurringClasses={false} />);
     await waitFor(async () => {
+      expect(screen.getByText(/1자리 남음/i)).toBeInTheDocument();
       expect(screen.getByText(/용산 더베이스/i)).toBeInTheDocument();
       expect(screen.getByText(/여성/i)).toBeInTheDocument();
       //jsdom toLocaleDateString issue - https://github.com/jsdom/jsdom/issues/1489
@@ -124,6 +126,7 @@ describe("Test", () => {
                           .fn()
                           .mockReturnValue(new Date("2021-12-01")),
                       },
+                      title: "1자리 남음",
                       place: "신사 누리",
                       memberCount: 15,
                       gender: "혼성원팀",
