@@ -18,8 +18,11 @@
   color: var(--grey-color);
 }
 .info {
-  margin-right: 4px;
+  margin-right: 8px;
   font-size: 12px;
+}
+.highlight {
+  color: var(--orange-color);
 }
 .alignRight {
   display: flex;
