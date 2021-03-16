@@ -240,7 +240,6 @@ const MatchDetail = (): JSX.Element | null => {
         <div className="dateContainer">
           {match.dateTime?.toLocaleString("ko-KR", {
             weekday: "long",
-            year: "numeric",
             month: "numeric",
             day: "numeric",
             hour: "2-digit",
