@@ -91,24 +91,24 @@ const Header = (): JSX.Element => {
 
   return (
     <div className="headerContainer">
-      <Row className="menubar">
+      <Row className="header">
         <Col span={6}>
           <NavLink to="/matches" className="logo">
             DAILY FIELD
           </NavLink>
         </Col>
-        <Col span={12} className="menu">
+        <Col span={12} className="linkContainer">
           <NavLink
             to="/matches"
-            activeClassName="selectedMenu"
-            className="defaultMenu"
+            activeClassName="selectedLink"
+            className="defaultLink"
           >
             MATCH
           </NavLink>
           <NavLink
             to="/recurringclasses"
-            activeClassName="selectedMenu"
-            className="defaultMenu"
+            activeClassName="selectedLink"
+            className="defaultLink"
           >
             기획반
           </NavLink>

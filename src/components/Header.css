@@ -1,22 +1,22 @@
-.menubar {
+.header {
   background-color: var(--black-color);
   padding: 20px 10px;
 }
 .logo {
   color: var(--orange-color);
 }
-.menu {
+.linkContainer {
   display: flex;
   flex-wrap: wrap;
   box-sizing: border-box;
 }
-.menu > :not(:last-child) {
+.linkContainer > :not(:last-child) {
   margin-right: 16px;
 }
-.selectedMenu {
+.selectedLink {
   border-bottom: 1px solid var(--orange-color);
 }
-.defaultMenu {
+.defaultLink {
   color: var(--white-color);
 }
 .dm {
