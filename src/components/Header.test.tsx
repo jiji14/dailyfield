@@ -14,7 +14,9 @@ describe("Test", () => {
         callback(null);
       },
       signInWithPhoneNumber: jest.fn().mockResolvedValue({
-        confirm: jest.fn(),
+        confirm: () => {
+          if (setUser) setUser(fakeUser);
+        },
       }),
     });
     ((firebase.firestore as unknown) as jest.Mock).mockReturnValue({
@@ -31,9 +33,6 @@ describe("Test", () => {
 
     render(<Header />);
     await fireAntEvent.actAndClick("SIGNIN");
-    await act(async () => {
-      if (setUser) setUser(fakeUser);
-    });
     await fireAntEvent.actAndInput(
       "- 없이 숫자만 입력해주세요. (ex)01012345678",
       "01090143492"
@@ -55,14 +54,13 @@ describe("Test", () => {
         callback(fakeUser);
       },
       currentUser: {},
-      signOut: jest.fn(),
+      signOut: () => {
+        if (setUser) setUser(null);
+      },
     });
 
     render(<Header />);
     await fireAntEvent.actAndClick("SIGNOUT");
-    await act(async () => {
-      if (setUser) setUser(null);
-    });
     const signoutButton = screen.getByText("SIGNIN");
     expect(signoutButton).toBeInTheDocument();
   });
