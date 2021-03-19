@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from "@testing-library/react";
+import { render, screen, waitFor, act } from "@testing-library/react";
 import Header from "./Header";
 import firebase from "firebase";
 import { fireAntEvent } from "../setupTests";
@@ -6,15 +6,15 @@ import { fireAntEvent } from "../setupTests";
 describe("Test", () => {
   test("Sign In", async () => {
     const fakeUser = {} as firebase.User;
+    let setUser: (user: firebase.User | null) => void = () => null;
     ((firebase.auth as unknown) as jest.Mock).mockReturnValue({
       currentUser: null,
       onAuthStateChanged: (callback: (user: firebase.User | null) => void) => {
+        setUser = callback;
         callback(null);
       },
       signInWithPhoneNumber: jest.fn().mockResolvedValue({
-        confirm: jest.fn().mockImplementation((callback: (user: firebase.User | null) => void) => {
-          callback(fakeUser);
-        })
+        confirm: jest.fn(),
       }),
     });
     ((firebase.firestore as unknown) as jest.Mock).mockReturnValue({
@@ -31,6 +31,9 @@ describe("Test", () => {
 
     render(<Header />);
     await fireAntEvent.actAndClick("SIGNIN");
+    await act(async () => {
+      if (setUser) setUser(fakeUser);
+    });
     await fireAntEvent.actAndInput(
       "- 없이 숫자만 입력해주세요. (ex)01012345678",
       "01090143492"
@@ -44,17 +47,22 @@ describe("Test", () => {
   });
 
   test("Sign Out", async () => {
-    const fakeUser = null;
+    const fakeUser = {} as firebase.User;
+    let setUser: (user: firebase.User | null) => void = () => null;
     ((firebase.auth as unknown) as jest.Mock).mockReturnValue({
-      onAuthStateChanged: jest.fn(),
+      onAuthStateChanged: (callback: (user: firebase.User | null) => void) => {
+        setUser = callback;
+        callback(fakeUser);
+      },
       currentUser: {},
-      signOut: jest.fn().mockImplementation((callback: (user: firebase.User | null) => void) => {
-        callback(null);
-      }),
+      signOut: jest.fn(),
     });
 
     render(<Header />);
     await fireAntEvent.actAndClick("SIGNOUT");
+    await act(async () => {
+      if (setUser) setUser(null);
+    });
     const signoutButton = screen.getByText("SIGNIN");
     expect(signoutButton).toBeInTheDocument();
   });
