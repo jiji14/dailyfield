@@ -15,7 +15,7 @@ describe("Test", () => {
       },
       signInWithPhoneNumber: jest.fn().mockResolvedValue({
         confirm: () => {
-          if (setUser) setUser(fakeUser);
+          setUser(fakeUser);
         },
       }),
     });
@@ -55,7 +55,7 @@ describe("Test", () => {
       },
       currentUser: {},
       signOut: () => {
-        if (setUser) setUser(null);
+        setUser(null);
       },
     });
 
