@@ -12,19 +12,16 @@ import {
 } from "../globalFunction";
 import ReservationStatus from "./ReservationStatus";
 import { CollectionName } from "../collections";
+import { useUser } from "../customHooks/useUser";
 
 const MatchDetail = (): JSX.Element | null => {
   const history = useHistory();
   const [match, setMatch] = useState<Match | null>(null);
-  const [user, setUser] = useState(firebase.auth().currentUser);
   const [reservationStatus, setReservationStatus] = useState<Status>(
     "신청가능"
   );
   const { id } = useParams<{ id: string }>();
-
-  useEffect(() => {
-    firebase.auth().onAuthStateChanged(setUser);
-  }, []);
+  const user = useUser();
 
   useEffect(() => {
     (async () => {

@@ -6,18 +6,16 @@ import { useHistory, useParams } from "react-router-dom";
 import PlayerListItem from "./PlayerListItem";
 import AddMatch from "./AddMatch";
 import { CollectionName } from "../collections";
+import { useUser } from "../customHooks/useUser";
 
 const Admin = (): JSX.Element => {
   const history = useHistory();
   const { id } = useParams<{ id: string }>();
-  const [user, setUser] = useState(firebase.auth().currentUser);
   const [idToPlayers, setIdToPlayers] = useState<Map<string, string>>(
     new Map()
   );
 
-  useEffect(() => {
-    firebase.auth().onAuthStateChanged(setUser);
-  }, []);
+  const user = useUser();
 
   useEffect(() => {
     (async () => {

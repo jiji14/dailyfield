@@ -5,14 +5,18 @@ import { fireAntEvent } from "../setupTests";
 
 describe("Test", () => {
   test("Sign In", async () => {
+    const fakeUser = {} as firebase.User;
+    let setUser: (user: firebase.User | null) => void = () => null;
     ((firebase.auth as unknown) as jest.Mock).mockReturnValue({
       currentUser: null,
-      onAuthStateChanged: jest.fn(),
+      onAuthStateChanged: (callback: (user: firebase.User | null) => void) => {
+        setUser = callback;
+        callback(null);
+      },
       signInWithPhoneNumber: jest.fn().mockResolvedValue({
-        confirm: jest.fn().mockResolvedValue({
-          additionalUserInfo: { isNewUser: false },
-          user: {},
-        }),
+        confirm: () => {
+          setUser(fakeUser);
+        },
       }),
     });
     ((firebase.firestore as unknown) as jest.Mock).mockReturnValue({
@@ -42,10 +46,17 @@ describe("Test", () => {
   });
 
   test("Sign Out", async () => {
+    const fakeUser = {} as firebase.User;
+    let setUser: (user: firebase.User | null) => void = () => null;
     ((firebase.auth as unknown) as jest.Mock).mockReturnValue({
-      onAuthStateChanged: jest.fn(),
+      onAuthStateChanged: (callback: (user: firebase.User | null) => void) => {
+        setUser = callback;
+        callback(fakeUser);
+      },
       currentUser: {},
-      signOut: jest.fn().mockResolvedValue(null),
+      signOut: () => {
+        setUser(null);
+      },
     });
 
     render(<Header />);
@@ -57,6 +68,7 @@ describe("Test", () => {
   test("Sign In Status", async () => {
     const fakeUser = {} as firebase.User;
     ((firebase.auth as unknown) as jest.Mock).mockReturnValue({
+      currentUser: {},
       onAuthStateChanged: (callback: (user: firebase.User) => void) => {
         callback(fakeUser);
       },
