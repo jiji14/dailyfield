@@ -1,4 +1,4 @@
-import { render, screen, waitFor, act } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import Header from "./Header";
 import firebase from "firebase";
 import { fireAntEvent } from "../setupTests";
