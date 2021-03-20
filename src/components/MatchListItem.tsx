@@ -42,7 +42,7 @@ const MatchListItem = (matchProps: {
             </div>
           </Col>
           <Col span={12}>
-            <div className="place">{match.title}</div>
+            <div className="infoTitle">{match.title}</div>
             <div className="infoContainer">
               <div className="info">{match.gender}</div>
               <div className="info highlight">{match.place}</div>
