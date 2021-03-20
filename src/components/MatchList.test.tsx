@@ -76,7 +76,6 @@ describe("Test", () => {
     render(<MatchList recurringClasses={false} />);
     await waitFor(async () => {
       expect(screen.getByText(/1자리 남음/i)).toBeInTheDocument();
-      expect(screen.getByText(/용산 더베이스/i)).toBeInTheDocument();
       expect(screen.getByText(/여성/i)).toBeInTheDocument();
       //jsdom toLocaleDateString issue - https://github.com/jsdom/jsdom/issues/1489
       //jest 테스트환경 브라우저에서는 toLocaleDateString(ko-KR) 지원하지 않아서 테스트에서 영어로 확인해야됨.
