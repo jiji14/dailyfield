@@ -23,6 +23,7 @@ describe("Test", () => {
     render(<AddMatch />);
 
     await fireAntEvent.actAndSetDate(screen.getByTestId("gameDate"), "Now");
+    await fireAntEvent.actAndInput("제목을 입력해주세요.", "1자리 남음");
     await fireAntEvent.actAndInput("경기장을 입력해주세요.", "용산 더베이스");
     await fireAntEvent.actAndInput("멤버수를 입력해주세요.", "20");
     await fireAntEvent.actAndSelect(screen.getByTestId("genderSelect"), "혼성");
@@ -43,6 +44,7 @@ describe("Test", () => {
     const match = firebase
       .firestore()
       .collection(CollectionName.matchesCollectionName).add.mock.calls[0][0];
+    expect(match.title).toBe("1자리 남음"); // 장소가 "1자리 남음"이 맞는지 확인
     expect(match.place).toBe("용산 더베이스"); // 장소가 "용산 더베이스"이 맞는지 확인
     expect(match.memberCount).toBe(20); // 인원수가 20이 맞는지 확인
     expect(match.gender).toBe("혼성"); // 성별이 혼성이 맞는지 확인
@@ -66,6 +68,7 @@ describe("Test", () => {
                 dateTime: {
                   toDate: jest.fn().mockReturnValue(new Date("2021-01-01")),
                 },
+                title: "1자리 남음",
                 place: "용산 더베이스",
                 memberCount: 15,
                 gender: "여성",
@@ -113,6 +116,7 @@ describe("Test", () => {
                 dateTime: {
                   toDate: jest.fn().mockReturnValue(new Date("2021-01-01")),
                 },
+                title: "1자리 남음",
                 place: "용산 더베이스",
                 memberCount: 15,
                 gender: "여성",

@@ -25,6 +25,7 @@ const AddMatch = (props: { id: string }): JSX.Element => {
   const history = useHistory();
 
   const [gameDate, setGameDate] = useState<Moment | null>(null);
+  const [title, setTitle] = useState("");
   const [place, setPlace] = useState("");
   const [memberCount, setMemberCount] = useState(18);
   const [gender, setGender] = useState<Gender>("남성");
@@ -52,6 +53,7 @@ const AddMatch = (props: { id: string }): JSX.Element => {
       const match = doc.data();
       if (!match) return;
       setGameDate(moment(match.dateTime.toDate()));
+      setTitle(match.title);
       setPlace(match.place);
       setMemberCount(match.memberCount);
       setGender(match.gender);
@@ -63,6 +65,10 @@ const AddMatch = (props: { id: string }): JSX.Element => {
       setManager(match.manager);
     })();
   }, [history, id]);
+
+  const changeTitle = (e: React.FormEvent<HTMLInputElement>) => {
+    setTitle(e.currentTarget.value);
+  };
 
   const changePlace = (e: React.FormEvent<HTMLInputElement>) => {
     setPlace(e.currentTarget.value);
@@ -139,6 +145,10 @@ const AddMatch = (props: { id: string }): JSX.Element => {
       window.alert("매치 일시를 선택해주세요.");
       return null;
     }
+    if (title.length < 1) {
+      window.alert("제목을 입력해주세요.");
+      return null;
+    }
     if (place.length < 1) {
       window.alert("매치 장소를 입력해주세요.");
       return null;
@@ -146,6 +156,7 @@ const AddMatch = (props: { id: string }): JSX.Element => {
 
     const match: Match = {
       dateTime: gameDate.toDate(),
+      title,
       place,
       memberCount,
       gender,
@@ -174,6 +185,18 @@ const AddMatch = (props: { id: string }): JSX.Element => {
               showTime={true}
               onChange={setGameDate}
               value={gameDate}
+            />
+          </Col>
+        </Row>
+        <Row align="middle" className="row">
+          <Col span={6} className="addMatchSubtitle">
+            제목
+          </Col>
+          <Col span={18}>
+            <Input
+              onChange={changeTitle}
+              value={title}
+              placeholder="제목을 입력해주세요."
             />
           </Col>
         </Row>

@@ -5,6 +5,7 @@ export type Status = "신청가능" | "예약신청" | "취소신청" | "확정"
 export interface Match {
   id?: string;
   dateTime: Date | null;
+  title: string;
   place: string;
   memberCount: number;
   gender: Gender;
