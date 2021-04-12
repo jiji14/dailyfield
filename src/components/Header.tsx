@@ -21,6 +21,7 @@ const Header = (): JSX.Element => {
   };
 
   const hideModal = () => {
+    if (loading) return;
     setIsModalVisible(false);
   };
 
@@ -65,6 +66,12 @@ const Header = (): JSX.Element => {
       }
     } catch (error) {
       window.alert(error);
+      // invalid-verification-code 에러일때 alert창 자동으로 꺼져서 오류메세지 다시 보여주기
+      if (error.code === "auth/invalid-verification-code")
+        window.alert(
+          "The SMS verification code used to create the phone auth credential is invalid."
+        );
+      window.location.reload();
     }
     setLoading(false);
   };
