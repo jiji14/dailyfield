@@ -31,9 +31,14 @@
 .subLi {
   list-style: none;
 }
+.UlTitle {
+  font-size: 16px;
+}
 .iconUl {
-  padding-top: 16px;
-  list-style-image: url("https://img.icons8.com/officexs/16/000000/pin.png");
+  list-style-image: url("https://img.icons8.com/fluent/16/000000/rhombus.png");
+}
+.iconUl > :not(:last-child) {
+  margin-bottom: 4px;
 }
 .dateContainer > :not(:last-child) {
   margin-right: 8px;
