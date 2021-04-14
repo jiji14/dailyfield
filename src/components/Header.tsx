@@ -21,7 +21,6 @@ const Header = (): JSX.Element => {
   };
 
   const hideModal = () => {
-    if (loading) return;
     setIsModalVisible(false);
   };
 
@@ -68,9 +67,8 @@ const Header = (): JSX.Element => {
       window.alert(error);
       // invalid-verification-code 에러일때 alert창 자동으로 꺼져서 오류메세지 다시 보여주기
       if (error.code === "auth/invalid-verification-code")
-        window.alert(
-          "The SMS verification code used to create the phone auth credential is invalid."
-        );
+        window.alert("인증코드가 올바르지 않습니다. 다시 로그인 해주세요.");
+      // 리캡차가 오류난 경우 다시 실행하면 인증코드가 제대로 오지 않음 -> 페이지 리로드로 문제 해결
       window.location.reload();
     }
     setLoading(false);
@@ -145,6 +143,9 @@ const Header = (): JSX.Element => {
         visible={isModalVisible}
         onOk={signInWithPhoneNumber}
         onCancel={hideModal}
+        cancelButtonProps={{ disabled: loading }}
+        maskClosable={!loading}
+        closable={!loading}
         cancelText="취소"
         okText="로그인"
         confirmLoading={loading}
