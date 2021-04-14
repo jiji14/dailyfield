@@ -137,15 +137,28 @@ const MatchDetail = (): JSX.Element | null => {
   };
 
   const renderProgram = () => {
-    if (match?.gender === "여성초급") {
+    if (
+      match?.gender === "여성초급" ||
+      match?.gender === "남성초급" ||
+      match?.gender === "여성초중급"
+    ) {
       return (
         <>
           <h4>[초급반] 프로그램 안내:</h4>
-          <p>
-            데일리 왕초급탈출
-            <br />
-            두려움 없애기 프로젝트
-          </p>
+          {match?.gender === "여성초급" && (
+            <p>
+              데일리 왕초급탈출
+              <br />
+              두려움 없애기 프로젝트
+            </p>
+          )}
+          {match?.gender === "여성초중급" && (
+            <p>
+              왕초급 탈출!
+              <br />
+              다음 STEP 배워보기
+            </p>
+          )}
           <ul>
             <li>week1 감각키우기</li>
             <li>week2 패스</li>
@@ -229,6 +242,46 @@ const MatchDetail = (): JSX.Element | null => {
     }
   };
 
+  const renderCancelPolicy = () => {
+    if (match?.isRecurringClass) {
+      return (
+        <ol>
+          <li>
+            언제까지 예약 가능한지 : 최대인원 {match?.memberCount}명 모집시
+          </li>
+          <li>환불 : 해당 일정 내 부상시 환불적용</li>
+        </ol>
+      );
+    } else {
+      return (
+        <>
+          <ol>
+            <li>
+              언제까지 예약 가능한지 : 최대인원 {match?.memberCount}명 모집시
+            </li>
+            <li>
+              언제까지 예약취소 가능한지 : 서비스의 질을 고려하여 당일취소는
+              환급이 어렵습니다.
+            </li>
+            <li className="subLi">
+              <ul>
+                <li>하루전 취소시 50% 환급</li>
+                <li>2일전 취소시 : 100% 환급</li>
+              </ul>
+            </li>
+          </ol>
+          <ul>
+            <li>상대방을 배려하는 측면에서 참고해주시면 감사합니다.</li>
+            <li>기타 자연재해 등으로 인한 운영불가 시 100% 환급 드립니다.</li>
+            <li>
+              최소인원 미달시 매치취소 안내와 함께 참가비를 전액 환급드립니다.
+            </li>
+          </ul>
+        </>
+      );
+    }
+  };
+
   if (!match) return null;
 
   return (
@@ -281,28 +334,7 @@ const MatchDetail = (): JSX.Element | null => {
         </ul>
         {renderProgram()}
         <h3 className="title">예약 안내</h3>
-        <ol>
-          <li>
-            언제까지 예약 가능한지 : 최대인원 {match.memberCount}명 모집시
-          </li>
-          <li>
-            언제까지 예약취소 가능한지 : 서비스의 질을 고려하여 당일취소는
-            환급이 어렵습니다.
-          </li>
-          <li className="subLi">
-            <ul>
-              <li>하루전 취소시 50% 환급</li>
-              <li>2일전 취소시 : 100% 환급</li>
-            </ul>
-          </li>
-        </ol>
-        <ul>
-          <li>상대방을 배려하는 측면에서 참고해주시면 감사합니다.</li>
-          <li>기타 자연재해 등으로 인한 운영불가 시 100% 환급 드립니다.</li>
-          <li>
-            최소인원 미달시 매치취소 안내와 함께 참가비를 전액 환급드립니다.
-          </li>
-        </ul>
+        {renderCancelPolicy()}
         <h3 className="title">참가 방법</h3>
         <ul>
           <li>아래 계좌로 참가비 입금후, 하단 예약하기 클릭!</li>
@@ -314,13 +346,11 @@ const MatchDetail = (): JSX.Element | null => {
             {renderPark()}
           </>
         )}
+        <h3 className="UlTitle">[운동 사진 & 영상 미리보기]</h3>
         <ul className="iconUl">
-          <li>축구도 이제 고급스포츠! 혼자와도 재밌게 운동하자!</li>
-          <li>새로운 커뮤니티의 시작♡ 데일리필드⚽</li>
-          <li>카카오채널 pf.kakao.com/_vQNPK</li>
-          <li>인스타팔로우 @daily_field</li>
-          <li>블로그♡ blog.naver.com/piterq</li>
-          <li>스페셜 영상 youtu.be/08zp7lrtOpc</li>
+          <li>인스타 : @daily_field</li>
+          <li>블로그 : blog.naver.com/piterq</li>
+          <li>유튜브 : 데일리필드 검색</li>
         </ul>
       </section>
       <Divider className="divider" />
