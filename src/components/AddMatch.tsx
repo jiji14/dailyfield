@@ -242,6 +242,8 @@ const AddMatch = (props: { id: string }): JSX.Element => {
               <Option value="혼성">혼성</Option>
               <Option value="여성초급">여성초급</Option>
               <Option value="혼성원팀">혼성원팀</Option>
+              <Option value="남성초급">남성초급</Option>
+              <Option value="여성초중급">여성초중급</Option>
             </Select>
           </Col>
         </Row>
