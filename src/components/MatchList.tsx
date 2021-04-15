@@ -73,7 +73,11 @@ const MatchList = (props: { recurringClasses?: boolean }): JSX.Element => {
     return [...dateKeyToMatches].map(([dateKey, matches]) => {
       return (
         <div key={dateKey}>
-          <div className="dateTitle">{dateKey}</div>
+          <div className="dateTitle">
+            {dateKey}
+            {/* 클라이언트 긴급요청으로 인한 하드코딩, 해당 기간 후 코드 삭제 예정 */}
+            {dateKey === "5. 5. 수요일" && " / 5. 8. 토요일"}
+          </div>
           {matches.map((match, idx) => {
             return (
               <MatchListItem

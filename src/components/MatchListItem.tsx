@@ -35,6 +35,8 @@ const MatchListItem = (matchProps: {
                 hour12: false,
                 minute: "2-digit",
               })}
+              {/* 클라이언트 긴급요청으로 인한 하드코딩, 해당 기간 후 코드 삭제 예정 */}
+              {match.id === "NCFFseorszSs7BHc5EJb" && " / 12:00"}
             </div>
           </Col>
           <Col span={12}>
