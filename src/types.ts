@@ -22,6 +22,7 @@ export interface Match {
   canPark: boolean;
   isRecurringClass: boolean;
   manager: string;
+  matchContent: string;
 }
 
 export interface Player {
