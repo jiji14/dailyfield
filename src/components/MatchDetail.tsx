@@ -13,6 +13,7 @@ import {
 import ReservationStatus from "./ReservationStatus";
 import { CollectionName } from "../collections";
 import { useUser } from "../customHooks/useUser";
+import ReactMarkdown from "react-markdown";
 
 const MatchDetail = (): JSX.Element | null => {
   const history = useHistory();
@@ -136,112 +137,6 @@ const MatchDetail = (): JSX.Element | null => {
     }
   };
 
-  const renderProgram = () => {
-    if (
-      match?.gender === "여성초급" ||
-      match?.gender === "남성초급" ||
-      match?.gender === "여성초중급"
-    ) {
-      return (
-        <>
-          <h4>[초급반] 프로그램 안내:</h4>
-          {match?.gender === "여성초급" && (
-            <p>
-              데일리 왕초급탈출
-              <br />
-              두려움 없애기 프로젝트
-            </p>
-          )}
-          {match?.gender === "여성초중급" && (
-            <p>
-              왕초급 탈출!
-              <br />
-              다음 STEP 배워보기
-            </p>
-          )}
-          <ul>
-            <li>week1 감각키우기</li>
-            <li>week2 패스</li>
-            <li>week3 드리블 & 슈팅</li>
-            <li>week4 연계 & 팀워크</li>
-            <li>(ALL) GX + 매치 포함</li>
-          </ul>
-          <ul>
-            <li>스타일 : GX 프로그램(1시간) + 매치(1시간)</li>
-            <li>GX프로그램은 데일리필드만의 차별화된 진행 방식입니다.</li>
-          </ul>
-          <p>
-            기존 소셜 매치와는 다르게 테크닉에 집중하여 기본기를 향상시킴으로써
-            초급자분들이 운동을 좀더 재밌게 즐기실 수 있도록 준비되었습니다!
-            <br />
-            놀면서 배우며 자신감 UP!
-          </p>
-        </>
-      );
-    } else if (match?.gender === "혼성원팀") {
-      return (
-        <>
-          <h4>[혼성원팀] 프로그램 안내:</h4>
-          <h4>What{"'"}s 혼성원팀?</h4>
-          <ul>
-            <li>
-              매일 반복되는 지루한 일상속에서 4주동안, 새롭지만 디테일한
-              운동경험을 위해 기획되었습니다.
-            </li>
-            <li>
-              이기는 축구가 아닌 고급 취미활동으로 자리잡기 위해 인원이 선별될수
-              있습니다.
-            </li>
-            <li>
-              남녀 비율을 최대한 50%에 가깝게 모집됩니다. (초기 인원부족시
-              달라질수 있음)
-            </li>
-            <br />
-            <li>스타일 : GX 프로그램(30분) + 매치(1시간 30분)</li>
-            <li>GX프로그램은 데일리필드만의 차별화된 진행 방식입니다.</li>
-          </ul>
-          <p>
-            데일리필드는 소셜 커뮤니티 플랫폼으로써 축구기술의 전파보다는 즐거운
-            소통문화를 자리잡기 위해 노력합니다!
-          </p>
-          <h4>혼성원팀반 차별점</h4>
-          <ol>
-            <li>매번 어색함을 풀고 새로 친해져야 하는 시간 절약!</li>
-            <li>단계적인 프로그램</li>
-            <li>팀빌딩 시스템</li>
-            <li>고정 팀원들과 4주동안 다양한 전술시도 가능</li>
-            <li>열린소통을 통한 새로운 커뮤니티 형성!</li>
-            <li>BETA할인 12만원 ={">"} 8만원</li>
-          </ol>
-        </>
-      );
-    } else {
-      return (
-        <>
-          <h4>프로그램 안내</h4>
-          <ul>
-            <li>스타일 : GX 프로그램(30분) + 매치(1시간 30분)</li>
-            <li>
-              GX프로그램은 데일리필드만의 차별화된 진행 방식입니다. 인트로에
-              짧게 프로그램을 진행함으로써,
-            </li>
-          </ul>
-          <ol>
-            <li>
-              초급분들께는 풋살에 필요한 기본 스킬을 익힐수 있는 방향을 제시해
-              드려요!
-            </li>
-            <li>
-              혼자 또는 친구분들과 참석해도 어색하지 않아요! 처음보는 팀원들과
-              친해지고 소통할수 있는 기회를 제공합니다.
-            </li>
-            <li>준비된 몸과 마음을 매치 플레이에 적극적으로 펼치세요!^^</li>
-          </ol>
-        </>
-      );
-    }
-  };
-
   const renderCancelPolicy = () => {
     if (match?.isRecurringClass) {
       return (
@@ -329,12 +224,7 @@ const MatchDetail = (): JSX.Element | null => {
         <h3 className="title">매니저</h3>
         <p className="details">{match.manager}</p>
         <h3 className="title">매치 안내</h3>
-        <h4>준비물</h4>
-        <ul>
-          <li>신발 복장은 편한것으로 준비</li>
-          <li>열정적이고 열린 마음 준비</li>
-        </ul>
-        {renderProgram()}
+        {<ReactMarkdown>{match.matchContent}</ReactMarkdown>}
         <h3 className="title">예약 안내</h3>
         {renderCancelPolicy()}
         <h3 className="title">참가 방법</h3>
