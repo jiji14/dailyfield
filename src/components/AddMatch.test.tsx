@@ -38,6 +38,7 @@ describe("Test", () => {
     await fireAntEvent.actAndInput("금액을 입력해주세요.", "40000");
     await fireAntEvent.actAndCheckbox("canPark");
     await fireAntEvent.actAndCheckbox("isRecurringClass");
+    await fireAntEvent.actAndSetDate(screen.getByTestId("endDate"), "Now");
     await fireAntEvent.actAndInput("매니저를 입력해주세요.", "배성진");
     await fireAntEvent.actAndClick("등록하기");
 
