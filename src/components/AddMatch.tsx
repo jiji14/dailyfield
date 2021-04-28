@@ -156,7 +156,7 @@ const AddMatch = (props: { id: string }): JSX.Element => {
       return null;
     }
 
-    if(isRecurringClass && !endDate) {
+    if (isRecurringClass && !endDate) {
       window.alert("기획반 종료일을 입력해주세요.");
       return null;
     }
@@ -329,22 +329,21 @@ const AddMatch = (props: { id: string }): JSX.Element => {
             </Checkbox>
           </Col>
         </Row>
-        {
-        isRecurringClass && 
-        <Row align="middle" className="row">
-          <Col span={6} className="addMatchSubtitle">
-            기획반 종료일
-          </Col>
-          <Col span={18}>
-            <DatePicker
-              data-testid="endDate"
-              showTime={true}
-              onChange={setEndDate}
-              value={endDate}
-            />
-          </Col>
-        </Row>
-        }
+        {isRecurringClass && (
+          <Row align="middle" className="row">
+            <Col span={6} className="addMatchSubtitle">
+              기획반 종료일
+            </Col>
+            <Col span={18}>
+              <DatePicker
+                data-testid="endDate"
+                showTime={true}
+                onChange={setEndDate}
+                value={endDate}
+              />
+            </Col>
+          </Row>
+        )}
         <Row align="middle" className="row">
           <Col span={6} className="addMatchSubtitle">
             매니저
