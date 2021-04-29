@@ -2,26 +2,24 @@ import React, { useState, useEffect } from "react";
 import { Divider, Button, Tag } from "antd";
 import "antd/dist/antd.css";
 import "./MatchDetail.css";
-import { Match, Status } from "../types";
+import { Match } from "../types";
 import { useHistory, useParams } from "react-router-dom";
 import firebase from "firebase";
 import {
-  getReservationStatus,
   deleteReservationStatus,
   updateReservationStatus,
 } from "../globalFunction";
 import ReservationStatus from "./ReservationStatus";
 import { CollectionName } from "../collections";
 import { useUser } from "../customHooks/useUser";
+import { useReservationStatus } from "../customHooks/useReservationStatus";
 
 const MatchDetail = (): JSX.Element | null => {
   const history = useHistory();
   const [match, setMatch] = useState<Match | null>(null);
-  const [reservationStatus, setReservationStatus] = useState<Status>(
-    "신청가능"
-  );
   const { id } = useParams<{ id: string }>();
   const user = useUser();
+  const reservationStatus = useReservationStatus(match, user);
 
   useEffect(() => {
     (async () => {
@@ -43,12 +41,6 @@ const MatchDetail = (): JSX.Element | null => {
       setMatch(match as Match);
     })();
   }, [history, id, user]);
-
-  useEffect(() => {
-    (async () => {
-      setReservationStatus(await getReservationStatus(match, user));
-    })();
-  }, [match, user]);
 
   const reserveMatch = async () => {
     if (!user) {
