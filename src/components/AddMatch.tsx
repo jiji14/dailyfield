@@ -21,8 +21,8 @@ import { useHistory } from "react-router-dom";
 const { Option } = Select;
 const { TextArea } = Input;
 const defaultMatchMarkdown = `#### 준비물
-* 신발 복장은 편한것으로 준비
-* 열정적이고 열린 마음 준비
+- 신발 복장은 편한것으로 준비
+- 열정적이고 열린 마음 준비
 
 #### 프로그램 안내
 - 스타일 : GX 프로그램(30분) + 매치(1시간 30분)
@@ -47,7 +47,7 @@ const AddMatch = (props: { id: string }): JSX.Element => {
   const [canPark, setCanPark] = useState(true);
   const [isRecurringClass, setIsRecurringClass] = useState(false);
   const [manager, setManager] = useState("배성진");
-  const [matchContent, setMatchContent] = useState(defaultMatchMarkdown);
+  const [guideline, setGuideline] = useState(defaultMatchMarkdown);
 
   useEffect(() => {
     (async () => {
@@ -76,7 +76,7 @@ const AddMatch = (props: { id: string }): JSX.Element => {
       setCanPark(match.canPark);
       setIsRecurringClass(match.isRecurringClass);
       setManager(match.manager);
-      setMatchContent(match.matchContent);
+      setGuideline(match.guideline);
     })();
   }, [history, id]);
 
@@ -96,8 +96,8 @@ const AddMatch = (props: { id: string }): JSX.Element => {
     setManager(e.currentTarget.value);
   };
 
-  const changeMatchContent = (e: React.FormEvent<HTMLTextAreaElement>) => {
-    setMatchContent(e.currentTarget.value);
+  const changeGuideline = (e: React.FormEvent<HTMLTextAreaElement>) => {
+    setGuideline(e.currentTarget.value);
   };
 
   const changeMemberCount = (value: number) => {
@@ -184,7 +184,7 @@ const AddMatch = (props: { id: string }): JSX.Element => {
       canPark,
       isRecurringClass,
       manager,
-      matchContent,
+      guideline,
     };
     return match;
   };
@@ -358,9 +358,9 @@ const AddMatch = (props: { id: string }): JSX.Element => {
           </Col>
           <Col span={18}>
             <TextArea
-              data-testid="matchContent"
-              onChange={changeMatchContent}
-              value={matchContent}
+              data-testid="guideline"
+              onChange={changeGuideline}
+              value={guideline}
               autoSize={{ minRows: 2, maxRows: 50 }}
             />
           </Col>

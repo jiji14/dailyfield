@@ -224,7 +224,7 @@ const MatchDetail = (): JSX.Element | null => {
         <h3 className="title">매니저</h3>
         <p className="details">{match.manager}</p>
         <h3 className="title">매치 안내</h3>
-        {<ReactMarkdown>{match.matchContent}</ReactMarkdown>}
+        {<ReactMarkdown>{match.guideline}</ReactMarkdown>}
         <h3 className="title">예약 안내</h3>
         {renderCancelPolicy()}
         <h3 className="title">참가 방법</h3>
