@@ -20,17 +20,17 @@ import { useHistory } from "react-router-dom";
 
 const { Option } = Select;
 const { TextArea } = Input;
-const basicMatchMarkdown = `#### 준비물
+const defaultMatchMarkdown = `#### 준비물
 * 신발 복장은 편한것으로 준비
 * 열정적이고 열린 마음 준비
 
 #### 프로그램 안내
-* 스타일 : GX 프로그램(30분) + 매치(1시간 30분)
-* GX프로그램은 데일리필드만의 차별화된 진행 방식입니다. 인트로에 짧게 프로그램을 진행함으로써,
+- 스타일 : GX 프로그램(30분) + 매치(1시간 30분)
+- GX프로그램은 데일리필드만의 차별화된 진행 방식입니다. 인트로에 짧게 프로그램을 진행함으로써,
 
-1) 초급분들께는 풋살에 필요한 기본 스킬을 익힐수 있는 방향을 제시해 드려요!
-2) 혼자 또는 친구분들과 참석해도 어색하지 않아요! 처음보는 팀원들과 친해지고 소통할수 있는 기회를 제공합니다.
-3) 준비된 몸과 마음을 매치 플레이에 적극적으로 펼치세요!^^`;
+1. 초급분들께는 풋살에 필요한 기본 스킬을 익힐수 있는 방향을 제시해 드려요!
+1. 혼자 또는 친구분들과 참석해도 어색하지 않아요! 처음보는 팀원들과 친해지고 소통할수 있는 기회를 제공합니다.
+1. 준비된 몸과 마음을 매치 플레이에 적극적으로 펼치세요!^^`;
 
 const AddMatch = (props: { id: string }): JSX.Element => {
   const { id } = props;
@@ -47,7 +47,7 @@ const AddMatch = (props: { id: string }): JSX.Element => {
   const [canPark, setCanPark] = useState(true);
   const [isRecurringClass, setIsRecurringClass] = useState(false);
   const [manager, setManager] = useState("배성진");
-  const [matchContent, setMatchContent] = useState(basicMatchMarkdown);
+  const [matchContent, setMatchContent] = useState(defaultMatchMarkdown);
 
   useEffect(() => {
     (async () => {
