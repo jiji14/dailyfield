@@ -1,4 +1,4 @@
-import { render, screen, fireEvent } from "@testing-library/react";
+import { render, screen, fireEvent, act } from "@testing-library/react";
 import firebase from "firebase";
 import { useHistory } from "react-router-dom";
 import AddMatch from "./AddMatch";
@@ -39,6 +39,10 @@ describe("Test", () => {
     await fireAntEvent.actAndCheckbox("canPark");
     await fireAntEvent.actAndCheckbox("isRecurringClass");
     await fireAntEvent.actAndInput("매니저를 입력해주세요.", "배성진");
+    await act(async () => {
+      const input = screen.getByTestId("matchContent");
+      fireEvent.change(input, { target: { value: "# 매치안내" } });
+    });
     await fireAntEvent.actAndClick("등록하기");
 
     const match = firebase
@@ -54,6 +58,7 @@ describe("Test", () => {
     expect(match.canPark).toBe(false); // 주차 불가능이 맞는지 확인
     expect(match.isRecurringClass).toBe(true); // 기획반이 맞는지 확인
     expect(match.manager).toBe("배성진"); // 매니저가 "배성진"이 맞는지 확인
+    expect(match.matchContent).toBe("# 매치안내"); // 매치 내용 잘 나오는지 확인
     expect(useHistory().push.mock.calls[0][0]).toBe("/"); // 등록후 메인페이지 옮겼는지 확인
   });
 

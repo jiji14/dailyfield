@@ -358,6 +358,7 @@ const AddMatch = (props: { id: string }): JSX.Element => {
           </Col>
           <Col span={18}>
             <TextArea
+              data-testid="matchContent"
               onChange={changeMatchContent}
               value={matchContent}
               autoSize={{ minRows: 2, maxRows: 50 }}
