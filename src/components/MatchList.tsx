@@ -20,12 +20,12 @@ const MatchList = (props: { recurringClasses?: boolean }): JSX.Element => {
   useEffect(() => {
     async function getMatches() {
       const db = firebase.firestore();
-      const date = recurringClasses ? "endDate" : "dateTime";
+      const eventEndDateKey = recurringClasses ? "endDate" : "dateTime";
       const querySnapshot = await db
         .collection(CollectionName.matchesCollectionName)
-        .where(date, ">=", new Date())
+        .where(eventEndDateKey, ">=", new Date())
         .where("isRecurringClass", "==", recurringClasses)
-        .orderBy(date, "asc")
+        .orderBy(eventEndDateKey, "asc")
         .get();
 
       const dateKeyToMatches: Map<string, Match[]> = new Map();
