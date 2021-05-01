@@ -19,6 +19,18 @@ import { CollectionName } from "../collections";
 import { useHistory } from "react-router-dom";
 
 const { Option } = Select;
+const { TextArea } = Input;
+const defaultMatchMarkdown = `#### 준비물
+- 신발 복장은 편한것으로 준비
+- 열정적이고 열린 마음 준비
+
+#### 프로그램 안내
+- 스타일 : GX 프로그램(30분) + 매치(1시간 30분)
+- GX프로그램은 데일리필드만의 차별화된 진행 방식입니다. 인트로에 짧게 프로그램을 진행함으로써,
+
+1. 초급분들께는 풋살에 필요한 기본 스킬을 익힐수 있는 방향을 제시해 드려요!
+1. 혼자 또는 친구분들과 참석해도 어색하지 않아요! 처음보는 팀원들과 친해지고 소통할수 있는 기회를 제공합니다.
+1. 준비된 몸과 마음을 매치 플레이에 적극적으로 펼치세요!^^`;
 
 const AddMatch = (props: { id: string }): JSX.Element => {
   const { id } = props;
@@ -35,6 +47,7 @@ const AddMatch = (props: { id: string }): JSX.Element => {
   const [canPark, setCanPark] = useState(true);
   const [isRecurringClass, setIsRecurringClass] = useState(false);
   const [manager, setManager] = useState("배성진");
+  const [guideline, setGuideline] = useState(defaultMatchMarkdown);
 
   useEffect(() => {
     (async () => {
@@ -63,6 +76,7 @@ const AddMatch = (props: { id: string }): JSX.Element => {
       setCanPark(match.canPark);
       setIsRecurringClass(match.isRecurringClass);
       setManager(match.manager);
+      setGuideline(match.guideline);
     })();
   }, [history, id]);
 
@@ -80,6 +94,10 @@ const AddMatch = (props: { id: string }): JSX.Element => {
 
   const changeManager = (e: React.FormEvent<HTMLInputElement>) => {
     setManager(e.currentTarget.value);
+  };
+
+  const changeGuideline = (e: React.FormEvent<HTMLTextAreaElement>) => {
+    setGuideline(e.currentTarget.value);
   };
 
   const changeMemberCount = (value: number) => {
@@ -166,6 +184,7 @@ const AddMatch = (props: { id: string }): JSX.Element => {
       canPark,
       isRecurringClass,
       manager,
+      guideline,
     };
     return match;
   };
@@ -330,6 +349,19 @@ const AddMatch = (props: { id: string }): JSX.Element => {
               onChange={changeManager}
               value={manager}
               placeholder="매니저를 입력해주세요."
+            />
+          </Col>
+        </Row>
+        <Row align="middle" className="row">
+          <Col span={6} className="addMatchSubtitle">
+            매치안내
+          </Col>
+          <Col span={18}>
+            <TextArea
+              data-testid="guideline"
+              onChange={changeGuideline}
+              value={guideline}
+              autoSize={{ minRows: 2, maxRows: 50 }}
             />
           </Col>
         </Row>
