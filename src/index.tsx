@@ -41,7 +41,7 @@ ReactDOM.render(
           <Route path="/matches">
             <MatchList recurringClasses={false} />
           </Route>
-          <Redirect exact from="/" to="/matches" />
+          <Redirect exact from="/" to="/recurringclasses" />
         </Switch>
       </div>
     </BrowserRouter>
