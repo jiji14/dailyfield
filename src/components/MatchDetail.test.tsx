@@ -125,9 +125,6 @@ describe("Test", () => {
     render(<MatchDetail />);
 
     await waitFor(async () => {
-      expect(
-        screen.getByText("입구 주차장 사용가능 (무료)")
-      ).toBeInTheDocument(); //주차관련 안내 제대로 나오는지 확인
       expect(screen.getByText("마감")).toBeInTheDocument(); //예약이 마감인지 확인
     });
   });
@@ -179,7 +176,6 @@ describe("Test", () => {
     render(<MatchDetail />);
 
     await waitFor(async () => {
-      expect(screen.getByText("해주차장 선착순 2명")).toBeInTheDocument(); //주차관련 안내 제대로 나오는지 확인
       expect(screen.getByText("신청가능")).toBeInTheDocument(); //예약이 신청가능인지 확인
       expect(screen.getByText("예약하기")).toBeInTheDocument(); // 신청가능이면 예약하기가 보여야함
     });
