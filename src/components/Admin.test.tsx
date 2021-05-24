@@ -26,7 +26,7 @@ describe("Test", () => {
                 },
                 place: "용산 더베이스",
                 memberCount: 15,
-                gender: "여성",
+                memberType: "여성",
                 link: "www.naver.com",
                 gameType: "match",
                 fee: 20000,

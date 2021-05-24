@@ -34,7 +34,7 @@ const MatchListItem = (matchProps: {
           <Col span={12}>
             <div className="infoTitle">{match.title}</div>
             <div className="infoContainer">
-              <div className="info">{match.gender}</div>
+              <div className="info">{match.memberType}</div>
               {match.isRecurringClass && (
                 <div className="info highlight">{match.place}</div>
               )}

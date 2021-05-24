@@ -1,11 +1,4 @@
-export type Gender =
-  | "남성"
-  | "여성"
-  | "혼성"
-  | "여성초급"
-  | "혼성원팀"
-  | "남성초급"
-  | "여성초중급";
+export type Gender = "남성" | "여성";
 export type GameType = "gx" | "match" | "gx+match";
 export type Status = "신청가능" | "예약신청" | "취소신청" | "확정" | "마감";
 
@@ -15,7 +8,7 @@ export interface Match {
   title: string;
   place: string;
   memberCount: number;
-  gender: Gender;
+  memberType: string;
   link: string;
   gameType: GameType;
   fee: number;

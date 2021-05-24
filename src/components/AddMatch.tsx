@@ -14,7 +14,7 @@ import "antd/dist/antd.css";
 import "./AddMatch.css";
 import moment, { Moment } from "moment";
 import firebase from "firebase";
-import { Gender, GameType, Match } from "../types";
+import { GameType, Match } from "../types";
 import { CollectionName } from "../collections";
 import { useHistory } from "react-router-dom";
 
@@ -40,7 +40,7 @@ const AddMatch = (props: { id: string }): JSX.Element => {
   const [title, setTitle] = useState("");
   const [place, setPlace] = useState("");
   const [memberCount, setMemberCount] = useState(18);
-  const [gender, setGender] = useState<Gender>("남성");
+  const [gender, setGender] = useState("남성");
   const [link, setLink] = useState("");
   const [gameType, setGameType] = useState<GameType>("gx+match");
   const [fee, setFee] = useState(20000);
@@ -82,6 +82,10 @@ const AddMatch = (props: { id: string }): JSX.Element => {
 
   const changeTitle = (e: React.FormEvent<HTMLInputElement>) => {
     setTitle(e.currentTarget.value);
+  };
+
+  const changeGender = (e: React.FormEvent<HTMLInputElement>) => {
+    setGender(e.currentTarget.value);
   };
 
   const changePlace = (e: React.FormEvent<HTMLInputElement>) => {
@@ -250,20 +254,11 @@ const AddMatch = (props: { id: string }): JSX.Element => {
             성별
           </Col>
           <Col span={6}>
-            <Select
+            <Input
+              onChange={changeGender}
               value={gender}
-              onChange={setGender}
-              className="addMatchSelect"
-              data-testid="genderSelect"
-            >
-              <Option value="남성">남성</Option>
-              <Option value="여성">여성</Option>
-              <Option value="혼성">혼성</Option>
-              <Option value="여성초급">여성초급</Option>
-              <Option value="혼성원팀">혼성원팀</Option>
-              <Option value="남성초급">남성초급</Option>
-              <Option value="여성초중급">여성초중급</Option>
-            </Select>
+              placeholder="성별을 입력해주세요."
+            />
           </Col>
         </Row>
         <Row align="middle" className="row">
