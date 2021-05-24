@@ -137,7 +137,9 @@ const Header = (): JSX.Element => {
           )}
         </Col>
       </Row>
-      <div className="banner">새로운 커뮤니티의 시작♡ DAILY FIELD</div>
+      <div className="bannerContainer">
+        <p className="banner">새로운 커뮤니티의 시작♡ DAILY FIELD</p>
+      </div>
       <Modal
         title="SIGNIN"
         visible={isModalVisible}
