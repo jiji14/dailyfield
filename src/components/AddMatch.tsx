@@ -40,7 +40,7 @@ const AddMatch = (props: { id: string }): JSX.Element => {
   const [title, setTitle] = useState("");
   const [place, setPlace] = useState("");
   const [memberCount, setMemberCount] = useState(18);
-  const [gender, setGender] = useState("남성");
+  const [memberType, setMemberType] = useState("남성");
   const [link, setLink] = useState("");
   const [gameType, setGameType] = useState<GameType>("gx+match");
   const [fee, setFee] = useState(20000);
@@ -69,7 +69,7 @@ const AddMatch = (props: { id: string }): JSX.Element => {
       setTitle(match.title);
       setPlace(match.place);
       setMemberCount(match.memberCount);
-      setGender(match.gender);
+      setMemberType(match.memberType);
       setLink(match.link);
       setGameType(match.gameType);
       setFee(match.fee);
@@ -84,8 +84,8 @@ const AddMatch = (props: { id: string }): JSX.Element => {
     setTitle(e.currentTarget.value);
   };
 
-  const changeGender = (e: React.FormEvent<HTMLInputElement>) => {
-    setGender(e.currentTarget.value);
+  const changeMemberType = (e: React.FormEvent<HTMLInputElement>) => {
+    setMemberType(e.currentTarget.value);
   };
 
   const changePlace = (e: React.FormEvent<HTMLInputElement>) => {
@@ -181,7 +181,7 @@ const AddMatch = (props: { id: string }): JSX.Element => {
       title,
       place,
       memberCount,
-      gender,
+      memberType,
       link,
       gameType,
       fee,
@@ -255,8 +255,8 @@ const AddMatch = (props: { id: string }): JSX.Element => {
           </Col>
           <Col span={6}>
             <Input
-              onChange={changeGender}
-              value={gender}
+              onChange={changeMemberType}
+              value={memberType}
               placeholder="성별을 입력해주세요."
             />
           </Col>
