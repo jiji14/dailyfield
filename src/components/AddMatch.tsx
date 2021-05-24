@@ -32,6 +32,8 @@ const defaultMatchMarkdown = `#### 준비물
 1. 혼자 또는 친구분들과 참석해도 어색하지 않아요! 처음보는 팀원들과 친해지고 소통할수 있는 기회를 제공합니다.
 1. 준비된 몸과 마음을 매치 플레이에 적극적으로 펼치세요!^^`;
 
+const defaultParkMarkdown = `- 직접 문의 해주세요.`;
+
 const AddMatch = (props: { id: string }): JSX.Element => {
   const { id } = props;
   const history = useHistory();
@@ -48,6 +50,7 @@ const AddMatch = (props: { id: string }): JSX.Element => {
   const [isRecurringClass, setIsRecurringClass] = useState(false);
   const [manager, setManager] = useState("배성진");
   const [guideline, setGuideline] = useState(defaultMatchMarkdown);
+  const [parkGuide, setParkGuide] = useState(defaultParkMarkdown);
 
   useEffect(() => {
     (async () => {
@@ -77,6 +80,7 @@ const AddMatch = (props: { id: string }): JSX.Element => {
       setIsRecurringClass(match.isRecurringClass);
       setManager(match.manager);
       setGuideline(match.guideline);
+      setParkGuide(match.parkGuide);
     })();
   }, [history, id]);
 
@@ -98,6 +102,10 @@ const AddMatch = (props: { id: string }): JSX.Element => {
 
   const changeGuideline = (e: React.FormEvent<HTMLTextAreaElement>) => {
     setGuideline(e.currentTarget.value);
+  };
+
+  const changeParkGuide = (e: React.FormEvent<HTMLTextAreaElement>) => {
+    setParkGuide(e.currentTarget.value);
   };
 
   const changeMemberCount = (value: number) => {
@@ -185,6 +193,7 @@ const AddMatch = (props: { id: string }): JSX.Element => {
       isRecurringClass,
       manager,
       guideline,
+      parkGuide,
     };
     return match;
   };
@@ -361,6 +370,19 @@ const AddMatch = (props: { id: string }): JSX.Element => {
               data-testid="guideline"
               onChange={changeGuideline}
               value={guideline}
+              autoSize={{ minRows: 2, maxRows: 50 }}
+            />
+          </Col>
+        </Row>
+        <Row align="middle" className="row">
+          <Col span={6} className="addMatchSubtitle">
+            주차안내
+          </Col>
+          <Col span={18}>
+            <TextArea
+              data-testid="parkGuide"
+              onChange={changeParkGuide}
+              value={parkGuide}
               autoSize={{ minRows: 2, maxRows: 50 }}
             />
           </Col>
