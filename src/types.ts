@@ -23,6 +23,7 @@ export interface Match {
   isRecurringClass: boolean;
   manager: string;
   guideline: string;
+  parkGuide: string;
 }
 
 export interface Player {
