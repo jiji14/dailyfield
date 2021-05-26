@@ -6,14 +6,14 @@ import { useParams } from "react-router-dom";
 describe("Test", () => {
   beforeEach(() => {
     const fakeUser = {} as firebase.User;
-    ((firebase.auth as unknown) as jest.Mock).mockReturnValue({
+    (firebase.auth as unknown as jest.Mock).mockReturnValue({
       currentUser: {},
       onAuthStateChanged: (callback: (user: firebase.User) => void) => {
         callback(fakeUser);
       },
     });
 
-    ((firebase.firestore as unknown) as jest.Mock).mockReturnValue({
+    (firebase.firestore as unknown as jest.Mock).mockReturnValue({
       // users collection, 유저정보 데이터
       collection: jest.fn().mockReturnValue({
         doc: jest.fn().mockReturnValue({
@@ -26,7 +26,7 @@ describe("Test", () => {
                 },
                 place: "용산 더베이스",
                 memberCount: 15,
-                gender: "여성",
+                memberType: "여성",
                 link: "www.naver.com",
                 gameType: "match",
                 fee: 20000,

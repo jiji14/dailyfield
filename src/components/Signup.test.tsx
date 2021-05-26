@@ -8,11 +8,11 @@ import { CollectionName } from "../collections";
 
 describe("Test", () => {
   beforeEach(() => {
-    ((firebase.auth as unknown) as jest.Mock).mockReturnValue({
+    (firebase.auth as unknown as jest.Mock).mockReturnValue({
       currentUser: {},
     });
 
-    ((firebase.firestore as unknown) as jest.Mock).mockReturnValue({
+    (firebase.firestore as unknown as jest.Mock).mockReturnValue({
       collection: jest.fn().mockReturnValue({
         doc: jest
           .fn()

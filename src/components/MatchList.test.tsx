@@ -5,7 +5,7 @@ import firebase from "firebase";
 describe("Test", () => {
   beforeEach(() => {
     const fakeUser = {} as firebase.User;
-    ((firebase.auth as unknown) as jest.Mock).mockReturnValue({
+    (firebase.auth as unknown as jest.Mock).mockReturnValue({
       currentUser: {},
       onAuthStateChanged: (callback: (user: firebase.User) => void) => {
         callback(fakeUser);
@@ -14,7 +14,7 @@ describe("Test", () => {
   });
 
   test("renders Matches - 일반", async () => {
-    ((firebase.firestore as unknown) as jest.Mock).mockReturnValue({
+    (firebase.firestore as unknown as jest.Mock).mockReturnValue({
       collection: jest.fn().mockReturnValue({
         doc: jest.fn().mockReturnValue({
           get: jest.fn().mockResolvedValue({
@@ -55,7 +55,7 @@ describe("Test", () => {
                       title: "1자리 남음",
                       place: "용산 더베이스",
                       memberCount: 15,
-                      gender: "여성",
+                      memberType: "여성",
                       link: "www.naver.com",
                       gameType: "match",
                       fee: 20000,
@@ -89,7 +89,7 @@ describe("Test", () => {
   });
 
   test("renders Matches - 기획반", async () => {
-    ((firebase.firestore as unknown) as jest.Mock).mockReturnValue({
+    (firebase.firestore as unknown as jest.Mock).mockReturnValue({
       collection: jest.fn().mockReturnValue({
         doc: jest.fn().mockReturnValue({
           get: jest.fn().mockResolvedValue({
@@ -128,7 +128,7 @@ describe("Test", () => {
                       title: "1자리 남음",
                       place: "신사 누리",
                       memberCount: 15,
-                      gender: "혼성원팀",
+                      memberType: "혼성원팀",
                       link: "www.naver.com",
                       gameType: "match",
                       fee: 20000,

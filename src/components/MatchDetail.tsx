@@ -194,7 +194,7 @@ const MatchDetail = (): JSX.Element | null => {
       </div>
       <div className="tagContainer">
         <Tag color="warning" className="chip">
-          {match.gender}매치
+          {match.memberType}
         </Tag>
         <Tag color="warning" className="chip">
           {match.gameType.toUpperCase()}
@@ -203,7 +203,7 @@ const MatchDetail = (): JSX.Element | null => {
           주차 {match.canPark ? "가능" : "불가능"}
         </Tag>
       </div>
-      {match.gender === "여성" && (
+      {match.memberType === "여성" && (
         <p className="details">
           * 여성매치시 인원부족시 혼성매치로 진행됩니다.
         </p>

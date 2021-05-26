@@ -7,14 +7,14 @@ import { CollectionName } from "../collections";
 
 describe("Test", () => {
   beforeEach(() => {
-    ((firebase.auth as unknown) as jest.Mock).mockReturnValue({
+    (firebase.auth as unknown as jest.Mock).mockReturnValue({
       currentUser: {},
     });
     window.alert = () => "";
   });
 
   test("Add Match", async () => {
-    ((firebase.firestore as unknown) as jest.Mock).mockReturnValue({
+    (firebase.firestore as unknown as jest.Mock).mockReturnValue({
       collection: jest.fn().mockReturnValue({
         add: jest.fn().mockResolvedValue({}),
       }),
@@ -26,7 +26,10 @@ describe("Test", () => {
     await fireAntEvent.actAndInput("제목을 입력해주세요.", "1자리 남음");
     await fireAntEvent.actAndInput("경기장을 입력해주세요.", "용산 더베이스");
     await fireAntEvent.actAndInput("멤버수를 입력해주세요.", "20");
-    await fireAntEvent.actAndSelect(screen.getByTestId("genderSelect"), "혼성");
+    await fireAntEvent.actAndInput(
+      "멤버 성별을 선택해주세요. (ex) 남성, 여성",
+      "혼성"
+    );
     await fireAntEvent.actAndInput(
       "링크를 입력해주세요.",
       "www.dailyfield.info"
@@ -51,7 +54,7 @@ describe("Test", () => {
     expect(match.title).toBe("1자리 남음"); // 장소가 "1자리 남음"이 맞는지 확인
     expect(match.place).toBe("용산 더베이스"); // 장소가 "용산 더베이스"이 맞는지 확인
     expect(match.memberCount).toBe(20); // 인원수가 20이 맞는지 확인
-    expect(match.gender).toBe("혼성"); // 성별이 혼성이 맞는지 확인
+    expect(match.memberType).toBe("혼성"); // 성별이 혼성이 맞는지 확인
     expect(match.link).toBe("www.dailyfield.info"); // 링크가 "www.dailyfield.info" 맞는지 확인
     expect(match.gameType).toBe("match"); // 게임타입이 match가 맞는지 확인
     expect(match.fee).toBe(40000); // 참가비가 4만원인지 확인
@@ -63,7 +66,7 @@ describe("Test", () => {
   });
 
   test("Update Match", async () => {
-    ((firebase.firestore as unknown) as jest.Mock).mockReturnValue({
+    (firebase.firestore as unknown as jest.Mock).mockReturnValue({
       collection: jest.fn().mockReturnValue({
         doc: jest.fn().mockReturnValue({
           get: jest.fn().mockResolvedValue({
@@ -76,7 +79,7 @@ describe("Test", () => {
                 title: "1자리 남음",
                 place: "용산 더베이스",
                 memberCount: 15,
-                gender: "여성",
+                memberType: "여성",
                 link: "www.naver.com",
                 gameType: "match",
                 fee: 20000,
@@ -111,7 +114,7 @@ describe("Test", () => {
   });
 
   test("Delete Match", async () => {
-    ((firebase.firestore as unknown) as jest.Mock).mockReturnValue({
+    (firebase.firestore as unknown as jest.Mock).mockReturnValue({
       collection: jest.fn().mockReturnValue({
         doc: jest.fn().mockReturnValue({
           get: jest.fn().mockResolvedValue({
@@ -124,7 +127,7 @@ describe("Test", () => {
                 title: "1자리 남음",
                 place: "용산 더베이스",
                 memberCount: 15,
-                gender: "여성",
+                memberType: "여성",
                 link: "www.naver.com",
                 gameType: "match",
                 fee: 20000,
