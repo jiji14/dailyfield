@@ -43,8 +43,8 @@ export const fireAntEvent = {
       // https://github.com/ant-design/ant-design/issues/22074#issuecomment-611352984
     });
     await act(async () => {
-      const memberType = screen.getByTitle(type);
-      fireEvent.click(memberType);
+      const dropdownOption = screen.getByTitle(type);
+      fireEvent.click(dropdownOption);
     });
   },
   actAndSetDate: async function (id: HTMLElement, date: string): void {
