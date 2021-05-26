@@ -144,9 +144,8 @@ const AddMatch = (props: { id: string }): JSX.Element => {
 
   const deleteMatch = async () => {
     if (!id) return;
-    const isConfirmedWithDelete = window.confirm(
-      "해당 매치를 삭제하시겠습니까?"
-    );
+    const isConfirmedWithDelete =
+      window.confirm("해당 매치를 삭제하시겠습니까?");
     if (!isConfirmedWithDelete) return;
 
     try {

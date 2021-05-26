@@ -5,7 +5,7 @@ import firebase from "firebase";
 describe("Test", () => {
   beforeEach(() => {
     const fakeUser = {} as firebase.User;
-    ((firebase.auth as unknown) as jest.Mock).mockReturnValue({
+    (firebase.auth as unknown as jest.Mock).mockReturnValue({
       currentUser: {},
       onAuthStateChanged: (callback: (user: firebase.User) => void) => {
         callback(fakeUser);
@@ -14,7 +14,7 @@ describe("Test", () => {
   });
 
   test("renders Matches - 일반", async () => {
-    ((firebase.firestore as unknown) as jest.Mock).mockReturnValue({
+    (firebase.firestore as unknown as jest.Mock).mockReturnValue({
       collection: jest.fn().mockReturnValue({
         doc: jest.fn().mockReturnValue({
           get: jest.fn().mockResolvedValue({
@@ -89,7 +89,7 @@ describe("Test", () => {
   });
 
   test("renders Matches - 기획반", async () => {
-    ((firebase.firestore as unknown) as jest.Mock).mockReturnValue({
+    (firebase.firestore as unknown as jest.Mock).mockReturnValue({
       collection: jest.fn().mockReturnValue({
         doc: jest.fn().mockReturnValue({
           get: jest.fn().mockResolvedValue({

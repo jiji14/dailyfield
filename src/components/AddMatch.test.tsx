@@ -7,14 +7,14 @@ import { CollectionName } from "../collections";
 
 describe("Test", () => {
   beforeEach(() => {
-    ((firebase.auth as unknown) as jest.Mock).mockReturnValue({
+    (firebase.auth as unknown as jest.Mock).mockReturnValue({
       currentUser: {},
     });
     window.alert = () => "";
   });
 
   test("Add Match", async () => {
-    ((firebase.firestore as unknown) as jest.Mock).mockReturnValue({
+    (firebase.firestore as unknown as jest.Mock).mockReturnValue({
       collection: jest.fn().mockReturnValue({
         add: jest.fn().mockResolvedValue({}),
       }),
@@ -63,7 +63,7 @@ describe("Test", () => {
   });
 
   test("Update Match", async () => {
-    ((firebase.firestore as unknown) as jest.Mock).mockReturnValue({
+    (firebase.firestore as unknown as jest.Mock).mockReturnValue({
       collection: jest.fn().mockReturnValue({
         doc: jest.fn().mockReturnValue({
           get: jest.fn().mockResolvedValue({
@@ -111,7 +111,7 @@ describe("Test", () => {
   });
 
   test("Delete Match", async () => {
-    ((firebase.firestore as unknown) as jest.Mock).mockReturnValue({
+    (firebase.firestore as unknown as jest.Mock).mockReturnValue({
       collection: jest.fn().mockReturnValue({
         doc: jest.fn().mockReturnValue({
           get: jest.fn().mockResolvedValue({
