@@ -101,6 +101,7 @@ describe("Test", () => {
                 fee: 20000,
                 canPark: true,
                 manager: "배성진",
+                parkingGuidelines: "# 주차테스트",
               };
             }),
             id: "match123",
@@ -126,6 +127,7 @@ describe("Test", () => {
 
     await waitFor(async () => {
       expect(screen.getByText("마감")).toBeInTheDocument(); //예약이 마감인지 확인
+      expect(screen.getByText("주차테스트")).toBeInTheDocument(); //주차 확인
     });
   });
 

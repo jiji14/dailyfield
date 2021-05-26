@@ -50,7 +50,8 @@ const AddMatch = (props: { id: string }): JSX.Element => {
   const [isRecurringClass, setIsRecurringClass] = useState(false);
   const [manager, setManager] = useState("배성진");
   const [guideline, setGuideline] = useState(defaultMatchMarkdown);
-  const [parkingGuidelines, setparkingGuidelines] = useState(defaultParkMarkdown);
+  const [parkingGuidelines, setparkingGuidelines] =
+    useState(defaultParkMarkdown);
 
   useEffect(() => {
     (async () => {
