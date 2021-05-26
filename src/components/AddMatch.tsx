@@ -50,7 +50,7 @@ const AddMatch = (props: { id: string }): JSX.Element => {
   const [isRecurringClass, setIsRecurringClass] = useState(false);
   const [manager, setManager] = useState("배성진");
   const [guideline, setGuideline] = useState(defaultMatchMarkdown);
-  const [parkGuide, setParkGuide] = useState(defaultParkMarkdown);
+  const [parkingGuidelines, setparkingGuidelines] = useState(defaultParkMarkdown);
 
   useEffect(() => {
     (async () => {
@@ -80,7 +80,7 @@ const AddMatch = (props: { id: string }): JSX.Element => {
       setIsRecurringClass(match.isRecurringClass);
       setManager(match.manager);
       setGuideline(match.guideline);
-      setParkGuide(match.parkGuide);
+      setparkingGuidelines(match.parkingGuidelines);
     })();
   }, [history, id]);
 
@@ -104,8 +104,8 @@ const AddMatch = (props: { id: string }): JSX.Element => {
     setGuideline(e.currentTarget.value);
   };
 
-  const changeParkGuide = (e: React.FormEvent<HTMLTextAreaElement>) => {
-    setParkGuide(e.currentTarget.value);
+  const changeParkingGuidelines = (e: React.FormEvent<HTMLTextAreaElement>) => {
+    setparkingGuidelines(e.currentTarget.value);
   };
 
   const changeMemberCount = (value: number) => {
@@ -192,7 +192,7 @@ const AddMatch = (props: { id: string }): JSX.Element => {
       isRecurringClass,
       manager,
       guideline,
-      parkGuide,
+      parkingGuidelines,
     };
     return match;
   };
@@ -379,9 +379,9 @@ const AddMatch = (props: { id: string }): JSX.Element => {
           </Col>
           <Col span={18}>
             <TextArea
-              data-testid="parkGuide"
-              onChange={changeParkGuide}
-              value={parkGuide}
+              data-testid="parkingGuidelines"
+              onChange={changeParkingGuidelines}
+              value={parkingGuidelines}
               autoSize={{ minRows: 2, maxRows: 50 }}
             />
           </Col>

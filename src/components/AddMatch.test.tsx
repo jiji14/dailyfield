@@ -44,7 +44,7 @@ describe("Test", () => {
       fireEvent.change(input, { target: { value: "# 매치안내" } });
     });
     await act(async () => {
-      const input = screen.getByTestId("parkGuide");
+      const input = screen.getByTestId("parkingGuidelines");
       fireEvent.change(input, { target: { value: "# 주차안내" } });
     });
     await fireAntEvent.actAndClick("등록하기");
@@ -63,7 +63,7 @@ describe("Test", () => {
     expect(match.isRecurringClass).toBe(true); // 기획반이 맞는지 확인
     expect(match.manager).toBe("배성진"); // 매니저가 "배성진"이 맞는지 확인
     expect(match.guideline).toBe("# 매치안내"); // 매치 내용 잘 나오는지 확인
-    expect(match.parkGuide).toBe("# 주차안내"); // 매치 내용 잘 나오는지 확인
+    expect(match.parkingGuidelines).toBe("# 주차안내"); // 매치 내용 잘 나오는지 확인
     expect(useHistory().push.mock.calls[0][0]).toBe("/"); // 등록후 메인페이지 옮겼는지 확인
   });
 

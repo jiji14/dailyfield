@@ -202,7 +202,7 @@ const MatchDetail = (): JSX.Element | null => {
         {match.canPark && (
           <>
             <h3 className="title">주차 안내</h3>
-            {<ReactMarkdown>{match.parkGuide}</ReactMarkdown>}
+            {<ReactMarkdown>{match.parkingGuidelines}</ReactMarkdown>}
           </>
         )}
         <h3 className="UlTitle">[운동 사진 & 영상 미리보기]</h3>
