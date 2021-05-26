@@ -26,7 +26,10 @@ describe("Test", () => {
     await fireAntEvent.actAndInput("제목을 입력해주세요.", "1자리 남음");
     await fireAntEvent.actAndInput("경기장을 입력해주세요.", "용산 더베이스");
     await fireAntEvent.actAndInput("멤버수를 입력해주세요.", "20");
-    await fireAntEvent.actAndInput("성별을 입력해주세요.", "혼성");
+    await fireAntEvent.actAndInput(
+      "멤버 성별을 선택해주세요. (ex) 남성, 여성",
+      "혼성"
+    );
     await fireAntEvent.actAndInput(
       "링크를 입력해주세요.",
       "www.dailyfield.info"

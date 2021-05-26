@@ -256,7 +256,7 @@ const AddMatch = (props: { id: string }): JSX.Element => {
             <Input
               onChange={changeMemberType}
               value={memberType}
-              placeholder="성별을 입력해주세요."
+              placeholder="멤버 성별을 선택해주세요. (ex) 남성, 여성"
             />
           </Col>
         </Row>
