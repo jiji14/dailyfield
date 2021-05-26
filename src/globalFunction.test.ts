@@ -8,7 +8,7 @@ import {
 
 describe("Test", () => {
   beforeEach(() => {
-    ((firebase.firestore as unknown) as jest.Mock).mockReturnValue({
+    (firebase.firestore as unknown as jest.Mock).mockReturnValue({
       // matches collection
       collection: jest.fn().mockReturnValue({
         doc: jest.fn().mockReturnValue({

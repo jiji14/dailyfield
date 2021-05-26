@@ -8,7 +8,7 @@ import { updateReservationStatus } from "../globalFunction";
 describe("Test", () => {
   beforeEach(() => {
     const fakeUser = { uid: "user123" } as firebase.User;
-    ((firebase.auth as unknown) as jest.Mock).mockReturnValue({
+    (firebase.auth as unknown as jest.Mock).mockReturnValue({
       currentUser: {},
       onAuthStateChanged: (callback: (user: firebase.User) => void) => {
         callback(fakeUser);
@@ -17,7 +17,7 @@ describe("Test", () => {
   });
 
   test("예약중인경우 신청중이고 예약취소 버튼 보이는지 테스트", async () => {
-    ((firebase.firestore as unknown) as jest.Mock).mockReturnValue({
+    (firebase.firestore as unknown as jest.Mock).mockReturnValue({
       collection: jest.fn().mockReturnValue({
         doc: jest.fn().mockReturnValue({
           get: jest.fn().mockResolvedValue({
@@ -83,7 +83,7 @@ describe("Test", () => {
   });
 
   test("예약이 선수 다 차서 마감이면 마감인지 테스트", async () => {
-    ((firebase.firestore as unknown) as jest.Mock).mockReturnValue({
+    (firebase.firestore as unknown as jest.Mock).mockReturnValue({
       collection: jest.fn().mockReturnValue({
         doc: jest.fn().mockReturnValue({
           get: jest.fn().mockResolvedValue({
@@ -133,7 +133,7 @@ describe("Test", () => {
   });
 
   test("예약 가능한 상태이면 예약하기 테스트", async () => {
-    ((firebase.firestore as unknown) as jest.Mock).mockReturnValue({
+    (firebase.firestore as unknown as jest.Mock).mockReturnValue({
       collection: jest.fn().mockReturnValue({
         doc: jest.fn().mockReturnValue({
           get: jest.fn().mockResolvedValue({
