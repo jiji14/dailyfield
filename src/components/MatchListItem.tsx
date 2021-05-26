@@ -13,9 +13,8 @@ const MatchListItem = (matchProps: {
   isAdmin: boolean;
 }): JSX.Element => {
   const { match, isAdmin } = matchProps;
-  const [reservationStatus, setReservationStatus] = useState<Status>(
-    "신청가능"
-  );
+  const [reservationStatus, setReservationStatus] =
+    useState<Status>("신청가능");
   const user = useUser();
 
   useEffect(() => {

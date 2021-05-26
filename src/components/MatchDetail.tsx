@@ -17,9 +17,8 @@ import { useUser } from "../customHooks/useUser";
 const MatchDetail = (): JSX.Element | null => {
   const history = useHistory();
   const [match, setMatch] = useState<Match | null>(null);
-  const [reservationStatus, setReservationStatus] = useState<Status>(
-    "신청가능"
-  );
+  const [reservationStatus, setReservationStatus] =
+    useState<Status>("신청가능");
   const { id } = useParams<{ id: string }>();
   const user = useUser();
 
