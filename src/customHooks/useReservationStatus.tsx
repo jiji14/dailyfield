@@ -7,9 +7,8 @@ export function useReservationStatus(
   match: Match | null,
   user: firebase.User | null
 ): Status {
-  const [reservationStatus, setReservationStatus] = useState<Status>(
-    "신청가능"
-  );
+  const [reservationStatus, setReservationStatus] =
+    useState<Status>("신청가능");
 
   useEffect(() => {
     (async () => {

@@ -7,7 +7,7 @@ describe("Test", () => {
   test("Sign In", async () => {
     const fakeUser = {} as firebase.User;
     let setUser: (user: firebase.User | null) => void = () => null;
-    ((firebase.auth as unknown) as jest.Mock).mockReturnValue({
+    (firebase.auth as unknown as jest.Mock).mockReturnValue({
       currentUser: null,
       onAuthStateChanged: (callback: (user: firebase.User | null) => void) => {
         setUser = callback;
@@ -19,7 +19,7 @@ describe("Test", () => {
         },
       }),
     });
-    ((firebase.firestore as unknown) as jest.Mock).mockReturnValue({
+    (firebase.firestore as unknown as jest.Mock).mockReturnValue({
       collection: jest.fn().mockReturnValue({
         doc: jest.fn().mockReturnValue({
           get: jest.fn().mockResolvedValue({ exists: true }),
@@ -48,7 +48,7 @@ describe("Test", () => {
   test("Sign Out", async () => {
     const fakeUser = {} as firebase.User;
     let setUser: (user: firebase.User | null) => void = () => null;
-    ((firebase.auth as unknown) as jest.Mock).mockReturnValue({
+    (firebase.auth as unknown as jest.Mock).mockReturnValue({
       onAuthStateChanged: (callback: (user: firebase.User | null) => void) => {
         setUser = callback;
         callback(fakeUser);
@@ -67,7 +67,7 @@ describe("Test", () => {
 
   test("Sign In Status", async () => {
     const fakeUser = {} as firebase.User;
-    ((firebase.auth as unknown) as jest.Mock).mockReturnValue({
+    (firebase.auth as unknown as jest.Mock).mockReturnValue({
       currentUser: {},
       onAuthStateChanged: (callback: (user: firebase.User) => void) => {
         callback(fakeUser);
@@ -81,7 +81,7 @@ describe("Test", () => {
   });
 
   test("Sign Out Status", async () => {
-    ((firebase.auth as unknown) as jest.Mock).mockReturnValue({
+    (firebase.auth as unknown as jest.Mock).mockReturnValue({
       onAuthStateChanged: jest.fn(),
       currentUser: null,
     });
