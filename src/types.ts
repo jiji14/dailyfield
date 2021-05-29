@@ -16,6 +16,7 @@ export interface Match {
   isRecurringClass: boolean;
   manager: string;
   guideline: string;
+  parkingGuidelines: string;
 }
 
 export interface Player {
