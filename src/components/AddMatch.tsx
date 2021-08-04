@@ -202,11 +202,13 @@ const AddMatch = (props: { id: string }): JSX.Element => {
       fee,
       canPark,
       isRecurringClass,
-      endDate: endDate?.toDate(),
       manager,
       guideline,
       parkingGuidelines,
     };
+
+    if (endDate) match.endDate = endDate.toDate();
+
     return match;
   };
 
