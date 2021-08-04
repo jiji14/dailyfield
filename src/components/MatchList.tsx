@@ -29,8 +29,18 @@ const MatchList = (props: { recurringClasses?: boolean }): JSX.Element => {
         .get();
 
       const dateKeyToMatches: Map<string, Match[]> = new Map();
+      const queryArray = recurringClasses //filter with an inequality 에러로 인하여 기획반일때 dateTime으로 한번더 소팅해주기
+        ? querySnapshot.docs.sort(
+            (
+              prevData: firebase.firestore.QueryDocumentSnapshot<firebase.firestore.DocumentData>,
+              nextData: firebase.firestore.QueryDocumentSnapshot<firebase.firestore.DocumentData>
+            ) => {
+              return prevData.data().dateTime - nextData.data().dateTime;
+            }
+          )
+        : querySnapshot.docs;
 
-      querySnapshot.docs.forEach((doc) => {
+      queryArray.forEach((doc) => {
         const data = doc.data();
         data.dateTime = data.dateTime.toDate();
         data.id = doc.id;
