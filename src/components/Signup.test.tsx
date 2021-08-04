@@ -25,7 +25,11 @@ describe("Test", () => {
   test("Signup", async () => {
     render(<Signup />);
     await fireAntEvent.actAndInput("이름을 입력해주세요.", "지정");
-    await fireAntEvent.actAndSetDate(screen.getByTestId("birthDate"), "Today");
+    await fireAntEvent.actAndSetDate(
+      screen.getByTestId("birthDate"),
+      "Today",
+      0
+    );
     await fireAntEvent.actAndSelect(screen.getByTestId("signUpSelect"), "여성");
     const sporty = screen.getByDisplayValue("sporty");
     userEvent.click(sporty);

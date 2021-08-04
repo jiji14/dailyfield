@@ -14,6 +14,7 @@ export interface Match {
   fee: number;
   canPark: boolean;
   isRecurringClass: boolean;
+  endDate?: Date | null;
   manager: string;
   guideline: string;
   parkingGuidelines: string;

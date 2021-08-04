@@ -48,6 +48,7 @@ const AddMatch = (props: { id: string }): JSX.Element => {
   const [fee, setFee] = useState(20000);
   const [canPark, setCanPark] = useState(true);
   const [isRecurringClass, setIsRecurringClass] = useState(false);
+  const [endDate, setEndDate] = useState<Moment | null>(null);
   const [manager, setManager] = useState("배성진");
   const [guideline, setGuideline] = useState(defaultMatchMarkdown);
   const [parkingGuidelines, setparkingGuidelines] =
@@ -79,6 +80,7 @@ const AddMatch = (props: { id: string }): JSX.Element => {
       setFee(match.fee);
       setCanPark(match.canPark);
       setIsRecurringClass(match.isRecurringClass);
+      setEndDate(moment(match.endDate?.toDate()));
       setManager(match.manager);
       setGuideline(match.guideline);
       setparkingGuidelines(match.parkingGuidelines);
@@ -184,6 +186,11 @@ const AddMatch = (props: { id: string }): JSX.Element => {
       return null;
     }
 
+    if (isRecurringClass && !endDate) {
+      window.alert("기획반 종료일을 입력해주세요.");
+      return null;
+    }
+
     const match: Match = {
       dateTime: gameDate.toDate(),
       title,
@@ -195,6 +202,7 @@ const AddMatch = (props: { id: string }): JSX.Element => {
       fee,
       canPark,
       isRecurringClass,
+      endDate: endDate?.toDate(),
       manager,
       guideline,
       parkingGuidelines,
@@ -344,6 +352,21 @@ const AddMatch = (props: { id: string }): JSX.Element => {
             </Checkbox>
           </Col>
         </Row>
+        {isRecurringClass && (
+          <Row align="middle" className="row">
+            <Col span={6} className="addMatchSubtitle">
+              기획반 종료일
+            </Col>
+            <Col span={18}>
+              <DatePicker
+                data-testid="endDate"
+                showTime={true}
+                onChange={setEndDate}
+                value={endDate}
+              />
+            </Col>
+          </Row>
+        )}
         <Row align="middle" className="row">
           <Col span={6} className="addMatchSubtitle">
             매니저

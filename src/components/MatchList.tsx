@@ -20,14 +20,12 @@ const MatchList = (props: { recurringClasses?: boolean }): JSX.Element => {
   useEffect(() => {
     async function getMatches() {
       const db = firebase.firestore();
-      const fourWeeksAgo = new Date();
-      fourWeeksAgo.setDate(fourWeeksAgo.getDate() - 28); //기획반이 4주 주기여서 4주동안 보여줄것
-      const dateThreshold = recurringClasses ? fourWeeksAgo : new Date();
+      const eventEndDateKey = recurringClasses ? "endDate" : "dateTime";
       const querySnapshot = await db
         .collection(CollectionName.matchesCollectionName)
-        .where("dateTime", ">=", dateThreshold)
+        .where(eventEndDateKey, ">=", new Date())
         .where("isRecurringClass", "==", recurringClasses)
-        .orderBy("dateTime", "asc")
+        .orderBy(eventEndDateKey, "asc")
         .get();
 
       const dateKeyToMatches: Map<string, Match[]> = new Map();
