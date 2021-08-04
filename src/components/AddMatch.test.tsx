@@ -22,7 +22,7 @@ describe("Test", () => {
 
     render(<AddMatch />);
 
-    await fireAntEvent.actAndSetDate(screen.getByTestId("gameDate"), "Now");
+    await fireAntEvent.actAndSetDate(screen.getByTestId("gameDate"), "Now", 0);
     await fireAntEvent.actAndInput("제목을 입력해주세요.", "1자리 남음");
     await fireAntEvent.actAndInput("경기장을 입력해주세요.", "용산 더베이스");
     await fireAntEvent.actAndInput("멤버수를 입력해주세요.", "20");
@@ -38,7 +38,7 @@ describe("Test", () => {
     await fireAntEvent.actAndInput("금액을 입력해주세요.", "40000");
     await fireAntEvent.actAndCheckbox("canPark");
     await fireAntEvent.actAndCheckbox("isRecurringClass");
-    await fireAntEvent.actAndSetDate(screen.getByTestId("endDate"), "Now");
+    await fireAntEvent.actAndSetDate(screen.getByTestId("endDate"), "Now", 1);
     await fireAntEvent.actAndInput("매니저를 입력해주세요.", "배성진");
     await fireAntEvent.actAndClick("등록하기");
 

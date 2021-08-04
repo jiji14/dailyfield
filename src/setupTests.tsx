@@ -47,12 +47,16 @@ export const fireAntEvent = {
       fireEvent.click(gender);
     });
   },
-  actAndSetDate: async function (id: HTMLElement, date: string): void {
+  actAndSetDate: async function (
+    id: HTMLElement,
+    date: string,
+    order: number // DatePicker가 여러개 일때 getByText를 쓰면 중복되기 때문에 몇번째 datePicker인지 받아주기
+  ): void {
     await act(async () => {
       fireEvent.mouseDown(id);
     });
     await act(async () => {
-      fireEvent.click(screen.getByText(date));
+      fireEvent.click(screen.getAllByText(date)[order]);
     });
   },
   actAndInput: async function (placeholder: string, text: string): void {
