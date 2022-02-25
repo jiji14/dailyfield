@@ -19,9 +19,6 @@
 .defaultLink {
   color: var(--white-color);
 }
-.dm {
-  color: var(--white-color);
-}
 .signin {
   display: flex;
   justify-content: flex-end;
