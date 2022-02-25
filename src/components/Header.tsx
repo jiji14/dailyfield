@@ -111,14 +111,6 @@ const Header = (): JSX.Element => {
           >
             MATCH
           </NavLink>
-          <a
-            className="dm"
-            href="http://pf.kakao.com/_vQNPK"
-            target="_blank"
-            rel="noreferrer"
-          >
-            문의
-          </a>
         </Col>
         <Col span={6} className="signin">
           {!user ? (
